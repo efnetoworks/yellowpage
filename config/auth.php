@@ -41,13 +41,8 @@ return [
             'provider' => 'users',
         ],
 
-        'agent' => [
-            'driver' => 'session',
-            'provider' => 'agents',
-        ],
-
         'api' => [
-            'driver' => 'jwt',
+            'driver' => 'token',
             'provider' => 'users',
             'hash' => false,
         ],
@@ -73,12 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
-        ],
-
-        'agents' => [
-            'driver' => 'eloquent',
-            'model' => App\Agent::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [
@@ -105,13 +95,6 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-        
-        'agents' => [
-            'provider' => 'agents',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
