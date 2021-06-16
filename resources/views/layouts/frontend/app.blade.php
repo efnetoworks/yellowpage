@@ -42,6 +42,8 @@
     <script src="{{ asset('assets/frontend/js/html5shiv.min.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/respond.min.js') }}"></script>
     <![endif]-->
+
+    @yield('extra-styles')
 </head>
 <body>
     @include('layouts.frontend.header')
@@ -78,5 +80,7 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ asset('assets/frontend/js/ie10-viewport-bug-workaround.js') }}"></script>
+
+    @yield('extra-scripts')
 </body>
 </html>
