@@ -1,0 +1,84 @@
+/*!
+ * Ibidapo Adeolu (https://bhekor.com.ng)
+ * Copyright 2019-2021 Bhekor (Webastry Designs)
+ * Copyright 2011-2018 Webastry Designs, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+@font-face {
+    font-family: "Roboto-regular";
+    src: url("/assets/fonts/Roboto/Roboto-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Poppins-Regular";
+    src: url("/assets/fonts/Poppins/Poppins-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    /* -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    background-image: url(/images/efcbg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; */
+    font-family: Poppins-Regular;
+}
+
+.top-header a, .main-header a{
+    font-family: Poppins-Regular;
+}
+.top-header a{
+    font-size: 12px;
+}
+.top-social-media a{
+    font-size: 12px !important;
+    text-transform: uppercase;
+}
+
+.main-header a{
+    text-transform: uppercase;
+}
+
+.navbar-top-post-btn a {
+    color: #fff !important;
+    border-radius: 200px;
+    border: none !important;
+    padding: 25px 20px;
+    background: #ca8309 !important;
+    cursor: pointer;
+    box-shadow: 0 0 0 rgba(204, 169, 44, 0.4);
+    animation: pulsePostBtn 1s infinite;
+}
+.navbar-top-post-btn a:hover{
+    color: #fff !important;
+    background: #fda711 !important;
+    transition: all .7s;
+}
+.pulsePostBtn:hover {
+    animation: none;
+}
+@keyframes pulsePostBtn {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.9);
+        box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.9);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 10px rgba(39, 230, 118, 0);
+        box-shadow: 0 0 0 10px rgba(43, 202, 109, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(43, 207, 112, 0);
+        box-shadow: 0 0 0 0 rgba(43, 207, 112, 0);
+    }
+}

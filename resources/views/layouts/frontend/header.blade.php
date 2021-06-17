@@ -42,27 +42,27 @@
                 <ul class="navbar-nav header-ml">
                     <li class="nav-item active">
                         <a class="nav-link" href="#" aria-expanded="false">
-                            Home
+                            Categories
                         </a>
                     </li>
                 </ul>
                 <ul class="navbar-nav header-ml">
                     <li class="nav-item active">
                         <a class="nav-link" href="#" aria-expanded="false">
-                            Home
+                            FAQS
                         </a>
                     </li>
                 </ul>
                 <ul class="navbar-nav header-ml">
                     <li class="nav-item active">
                         <a class="nav-link" href="#" aria-expanded="false">
-                            Home
+                            Become Our Agent
                         </a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto navbar-top-post-btn">
                     <li class="nav-item">
-                        <a href="submit-property.html" class="nav-link link-btn">Submit Property</a>
+                        <a href="submit-property.html" class="nav-link link-btn">Post A Service</a>
                     </li>
                 </ul>
             </div>

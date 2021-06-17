@@ -23,6 +23,8 @@
     <!-- Custom stylesheet -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/style.css') }}">
     <link rel="stylesheet" type="text/css" id="style_sheet" href="{{ asset('assets/frontend/css/skins/default.css') }}">
+    <!-- Override stylesheet -->
+    <link rel="stylesheet" type="text/css"  href="{{ asset('assets/frontend/main.css') }}">
 
     <!-- Favicon icon -->
     <link rel="shortcut icon" href="{{ asset('assets/frontend/img/favicon.ico" type="image/x-icon') }}" >
