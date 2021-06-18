@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EFContact - @yield('page-title')</title>
+    <title>@yield('page-title') - EFContact</title>
 
     <!-- External CSS libraries -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/bootstrap.min.css') }}">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css"  href="{{ asset('assets/frontend/main.css') }}">
 
     <!-- Favicon icon -->
-    <link rel="shortcut icon" href="{{ asset('assets/frontend/img/favicon.ico" type="image/x-icon') }}" >
+    <link rel="shortcut icon" href="{{ asset('assets/uploads/images/favicon.png') }}" type="image/x-icon">
 
     <!-- Google fonts -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CRoboto:300,400,500,700&amp;display=swap">
@@ -82,6 +82,7 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ asset('assets/frontend/js/ie10-viewport-bug-workaround.js') }}"></script>
+    <script src="{{ asset('assets/frontend/main.js') }}"></script>
 
     @yield('extra-scripts')
 </body>
