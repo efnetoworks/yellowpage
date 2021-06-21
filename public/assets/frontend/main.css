@@ -63,12 +63,12 @@ body {
 
 .main-header a{
     text-transform: uppercase;
-    box-shadow: 0 4px 4px -4px rgb(0 0 0 / 12%);
 }
 
 .main-header{
     text-transform: uppercase;
     background-color: #fff;
+    box-shadow: 0 4px 4px -4px rgb(0 0 0 / 12%);
 }
 .main-header .navbar-expand-lg .navbar-nav .active .nav-link{
     color: #000 !important;
@@ -98,6 +98,7 @@ body {
     background: var(--primary-light-color) !important;
     transition: all .7s;
 }
+
 .pulsePostBtn:hover {
     animation: none;
 }
@@ -116,49 +117,131 @@ body {
     }
 }
 
+.body-container {
+    margin: 0 10px;
+}
+.section-title{
+    text-align: center;
+    font-family: var(--primary-font);
+    text-transform:uppercase;
+    font-size:25px;
+    font-weight:700;
+    margin-bottom:30px;
+}
+
 .section-titles{
     font-family: var(--primary-font);
     font-size: 20px;
     text-transform: uppercase;
     font-weight: 800;
 }
-.search-section{
-    background-color: var(--primary-color);
+.banner-search-section{
+    background-color: #ffc37d5c;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.banner-search-section-area{
+    align-items: center;
+}
+.banner-search-section-area .form-group{
+    margin: 0 !important;
+    width: 100%;
+}
+.searchInput{
+    padding-top: 17px !important;
+    padding-left: 30px !important;
+    padding-bottom: 17px !important;
+    border-radius: 50px !important;
+    border: 2px solid var(--primary-light-color) !important;
+    font-size: 14px !important;
+}
+.banner-search-section .navbar-top-post-btn button {
+    font-size: 17px !important;
+    text-transform: uppercase;
+    border-radius: 200px;
+    border: 2px solid var(--primary-light-color);
+    padding: 13px 35px;
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    cursor: pointer;
+    box-shadow: 0 0 0 rgb(204 169 44 / 40%);
+}
+.banner-search-section .navbar-top-post-btn button:hover {
+    background: #ffffff !important;
+    color: var(--primary-color) !important;
+    border: 2px solid var(--primary-light-color);
+    transition: .7s background, color;
+}
+.banner-search-section .searchLocationBtn {
+    font-size: 15px !important;
+    text-transform: uppercase;
+    border-radius: 200px;
+    border: 2px solid var(--primary-light-color) !important;
+    padding: 15px 40px;
+    background: #ffffff !important;
+    color: var(--primary-light-color) !important;
+    cursor: pointer;
+    box-shadow: 0 0 0 rgb(204 169 44 / 40%);
+}
+.banner-search-section .searchCategoryBtn {
+    font-size: 14px !important;
+    text-transform: uppercase;
+    border-radius: 200px;
+    border: 2px solid var(--primary-light-color) !important;
+    padding: 15px 30px;
+    background: #ffffff !important;
+    color: var(--primary-light-color) !important;
+    cursor: pointer;
+    box-shadow: 0 0 0 rgb(204 169 44 / 40%);
+}
+.banner-search-section .searchLocationBtn:hover, .banner-search-section .searchCategoryBtn:hover, .banner-search-section .searchLocationBtn:hover span, .banner-search-section .searchCategoryBtn:hover span{
+    background: var(--primary-color) !important;
+    color: #ffffff !important;
+    transition: .7s all;
 }
 
-.header-banner-sidebar{
-    display: none;
+footer {
+    padding-top: 80px;
+    background: #212121;
+    color: rgb(24, 23, 23);
 }
-
-.header-banner-sidebar .properties-listing{
-    display: flex !important;
-    justify-content: space-between !important;
-    font-size: 14px;
+.footer .footer-inner li {
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: #fff !important;
+    font-weight: 400;
 }
-.header-banner-sidebar .properties-listing div{
-    padding: 10px 10px;
+.footer .footer-inner li a, .footer .footer-inner p{
+    color: #fff !important;
 }
-.header-banner-sidebar .properties-listing div:first-child{
-    padding: 10px 10px;
-    border-right: 1px solid #ebebeb;
+.footer .footer-inner .media-heading a{
+    color: rgb(175, 175, 175) !important;
 }
-.date-box{
-    background-color: var(--primary-color) !important;
+.footer .footer-inner .footer-item a, .footer .footer-inner .footer-item p{
+    color: rgb(175, 175, 175) !important;
+    font-family: var(--primary-font);
+}
+.footer-item h4{
+    color: rgb(175, 175, 175) !important;
+    font-family: var(--primary-font);
+    text-transform: uppercase;
+    font-size: 18px;
 }
 
 @media (min-width: 768px) {
-    .header-banner-sidebar{
-        padding: 15px;
-        display: block;
+    .body-container{
+        margin: 0 120px;
     }
-    .header-banner, .banner{
-        height: 600px;
+}
+
+
+@media (max-width: 768px) {
+    ul.navbar-nav.ml-auto.navbar-top-post-btn {
+        margin-bottom: 20px;
+        margin-top: 10px;
+        text-align: center;
     }
-    .header-banner .carousel-inner{
-        height: 602px;
-    }
-    .search-section{
-        background-color: var(--primary-color);
-        margin-top: 2px;
+    a.nav-link.link-btn {
+        color: #fff !important;
     }
 }

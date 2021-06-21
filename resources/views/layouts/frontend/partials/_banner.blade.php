@@ -1,7 +1,7 @@
 <!-- Banner start -->
 <div class="header-banner">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="" style="border-radius: 5px; ">
                 <div class="banner" id="banner">
                     <div id="bannerCarousole" class="carousel slide" data-ride="carousel">
@@ -18,7 +18,7 @@
                                                 </p>
                                             </div>
                                             <div class="btn-sections">
-                                                <a href="#" class="btn btn-lg btn-theme">Get Started Now</a>
+                                                <a href="#" class="btn btn-lg primary-btn">Get Started Now</a>
                                                 <a href="#" class="btn btn-lg btn-white-lg-outline">Learn More</a>
                                             </div>
                                         </div>
@@ -37,7 +37,7 @@
                                                 </p>
                                             </div>
                                             <div class="btn-sections">
-                                                <a href="#" class="btn btn-lg btn-theme">Get Started Now</a>
+                                                <a href="#" class="btn btn-lg primary-btn">Get Started Now</a>
                                                 <a href="#" class="btn btn-lg btn-white-lg-outline">Learn More</a>
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                                 </p>
                                             </div>
                                             <div class="btn-sections">
-                                                <a href="#" class="btn btn-lg btn-theme">Get Started Now</a>
+                                                <a href="#" class="btn btn-lg primary-btn">Get Started Now</a>
                                                 <a href="#" class="btn btn-lg btn-white-lg-outline">Learn More</a>
                                             </div>
                                         </div>
@@ -74,92 +74,6 @@
                                 <i class="fa fa-angle-right"></i>
                             </span>
                         </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-md-3">
-            <div class="header-banner-sidebar">
-                <h2 class="section-titles">Trending Services</h2>
-
-                <div class="row row-eq-height pb-5 mb-4">
-                    <div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
-                        <div class="property-box-5">
-                            <div class="property-photo" style="background-image: url(https://picsum.photos/150?iage=380); background-repeat:no-repeat; background-position:center;background-size:cover; height: 150px">
-                                {{-- <img class="img-fluid w-100" src="https://picsum.photos/150?iage=380" alt="properties"> --}}
-                                <div class="date-box">For Sale</div>
-                            </div>
-                            <div class="detail">
-                                <div class="heading">
-                                    <h3>
-                                        <a href="properties-details.html" tabindex="-1">Luxury Villa</a>
-                                    </h3>
-                                </div>
-                                <div class="properties-listing">
-                                    <div>3 Beds</div>
-                                    <div><i class="fa fa-map-marker"></i> 2 Baths</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
-                        <div class="property-box-5">
-                            <div class="property-photo" style="background-image: url(https://picsum.photos/150?iage=380); background-repeat:no-repeat; background-position:center;background-size:cover; height: 150px">
-                                {{-- <img class="img-fluid w-100" src="https://picsum.photos/150?iage=380" alt="properties"> --}}
-                                <div class="date-box">For Sale</div>
-                            </div>
-                            <div class="detail">
-                                <div class="heading">
-                                    <h3>
-                                        <a href="properties-details.html" tabindex="-1">Luxury Villa</a>
-                                    </h3>
-                                </div>
-                                <div class="properties-listing">
-                                    <div>3 Beds</div>
-                                    <div><i class="fa fa-map-marker"></i> 2 Baths</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
-                        <div class="property-box-5">
-                            <div class="property-photo" style="background-image: url(https://picsum.photos/150?iage=380); background-repeat:no-repeat; background-position:center;background-size:cover; height: 150px">
-                                {{-- <img class="img-fluid w-100" src="https://picsum.photos/150?iage=380" alt="properties"> --}}
-                                <div class="date-box">For Sale</div>
-                            </div>
-                            <div class="detail">
-                                <div class="heading">
-                                    <h3>
-                                        <a href="properties-details.html" tabindex="-1">Luxury Villa</a>
-                                    </h3>
-                                </div>
-                                <div class="properties-listing">
-                                    <div>3 Beds</div>
-                                    <div><i class="fa fa-map-marker"></i> 2 Baths</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 mb-4 mb-lg-0">
-                        <div class="property-box-5">
-                            <div class="property-photo" style="background-image: url(https://picsum.photos/150?iage=380); background-repeat:no-repeat; background-position:center;background-size:cover; height: 150px">
-                                {{-- <img class="img-fluid w-100" src="https://picsum.photos/150?iage=380" alt="properties"> --}}
-                                <div class="date-box">For Sale</div>
-                            </div>
-                            <div class="detail">
-                                <div class="heading">
-                                    <h3>
-                                        <a href="properties-details.html" tabindex="-1">Luxury Villa</a>
-                                    </h3>
-                                </div>
-                                <div class="properties-listing">
-                                    <div>3 Beds</div>
-                                    <div><i class="fa fa-map-marker"></i> 2 Baths</div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

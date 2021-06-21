@@ -1,57 +1,34 @@
 <!-- Search Section start -->
-<div class="search-section search-area-2 bg-grea">
+<div class="banner-search-section">
     <div class="container">
-        <div class="search-section-area">
-            <div class="search-area-inner">
-                <div class="search-contents">
-                    <form method="GET">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                                <div class="form-group">
-                                    <select class="selectpicker search-fields" name="area">
-                                        <option>Area From</option>
-                                        <option>3000</option>
-                                        <option>2600</option>
-                                        <option>2200</option>
-                                        <option>1800</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                                <div class="form-group">
-                                    <select class="selectpicker search-fields" name="property-status">
-                                        <option>Property Status</option>
-                                        <option>For Sale</option>
-                                        <option>For Rent</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                                <div class="form-group">
-                                    <select class="selectpicker search-fields" name="property-types">
-                                        <option>Property Types</option>
-                                        <option>Apartments</option>
-                                        <option>Houses</option>
-                                        <option>Commercial</option>
-                                        <option>Garages</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                                <div class="form-group">
-                                    <select class="selectpicker search-fields" name="location">
-                                        <option>Location</option>
-                                        <option>United States</option>
-                                        <option>United Kingdom</option>
-                                        <option>American Samoa</option>
-                                        <option>Belgium</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+        <form id="desktopSearchForm" action="" method="GET">
+            <div class="row banner-search-section-area">
+                <div class="col-lg-2 col-md-2 showStateFg">
+                    <div class="form-group">
+                        <button type="button" data-toggle="modal" data-target="#showStatesModal" id="searchStateBtn" class="btn btn-success searchLocationBtn"><i class="fa fa-map-marker"></i> All States</button>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="keyword" id="jxservice" class="form-control searchInput" placeholder="What are you looking for? (e.g Barber, Plumber...)">
+                        <div id="service_list" class="ajaxSearchList"></div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 showCatFg">
+                    <div class="form-group">
+                        <button type="button" data-toggle="modal" data-target="#showCategoriesModal" id="searchCategoryBtn" class="btn btn-success searchCategoryBtn"><i class="fa fa-archive"></i> All Categories</button>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <div class="navbar-top-post-btn" style="margin-left: 5px">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Search</button>
+                    </div>
                 </div>
             </div>
-        </div>
+            <input type="hidden" name="category" id="searchCategoryInput" value="">
+            <input type="hidden" name="subcategory" id="searchSubCategoryInput" value="">
+            <input type="hidden" name="state" id="searchStateInput" value="">
+            <input type="hidden" name="city" id="searchLGAInput" value="">
+        </form>
     </div>
 </div>

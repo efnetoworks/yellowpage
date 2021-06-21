@@ -68,7 +68,7 @@
                     <div class="popular-posts">
                         <div class="media">
                             <div class="media-left">
-                                <img class="media-object" src="img/sub-properties/sub-properties-3.jpg" alt="sub-properties">
+                                <img class="media-object" src="{{ asset('assets/frontend/img/sub-properties/sub-properties-3.jpg') }}" alt="sub-properties">
                             </div>
                             <div class="media-body align-self-center">
                                 <h3 class="media-heading">
@@ -79,7 +79,7 @@
                         </div>
                         <div class="media">
                             <div class="media-left">
-                                <img class="media-object" src="img/sub-properties/sub-properties-2.jpg" alt="sub-properties">
+                                <img class="media-object" src="{{ asset('assets/frontend/img/sub-properties/sub-properties-2.jpg') }}" alt="sub-properties">
                             </div>
                             <div class="media-body align-self-center">
                                 <h3 class="media-heading">
@@ -90,7 +90,7 @@
                         </div>
                         <div class="media">
                             <div class="media-left">
-                                <img class="media-object" src="img/sub-properties/sub-properties-1.jpg" alt="sub-properties">
+                                <img class="media-object" src="{{ asset('assets/frontend/img/sub-properties/sub-properties-1.jpg') }}" alt="sub-properties">
                             </div>
                             <div class="media-body align-self-center">
                                 <h3 class="media-heading">
@@ -114,7 +114,7 @@
                                 <input type="text" class="form-contact" name="email" placeholder="Enter Address">
                             </p>
                             <p>
-                                <button type="submit" name="submitNewsletter" class="btn btn-block button-theme">
+                                <button type="submit" name="submitNewsletter" class="btn btn-block primary-btn">
                                     Subscribe
                                 </button>
                             </p>

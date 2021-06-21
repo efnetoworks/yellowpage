@@ -25,6 +25,7 @@
     <link rel="stylesheet" type="text/css" id="style_sheet" href="{{ asset('assets/frontend/css/skins/default.css') }}">
     <!-- Override stylesheet -->
     <link rel="stylesheet" type="text/css"  href="{{ asset('assets/frontend/main.css') }}">
+    <link rel="stylesheet" type="text/css"  href="{{ asset('assets/frontend/utilities.css') }}">
 
     <!-- Favicon icon -->
     <link rel="shortcut icon" href="{{ asset('assets/uploads/images/favicon.png') }}" type="image/x-icon">
@@ -49,8 +50,6 @@
 </head>
 <body>
     @include('layouts.frontend.header')
-    @include('layouts.frontend.partials._banner')
-    @include('layouts.frontend.partials._search')
 
     @yield('content')
 
