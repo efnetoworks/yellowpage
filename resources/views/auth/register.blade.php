@@ -44,7 +44,8 @@
                             @else
                              <a  href="{{route('register')}}" disabled class="link-btn btn-1 active-bg">Register</a>
                             @endif
-                            <a data-toggle="modal" data-target="#launchAgentModal" href="#" class="link-btn btn-2 default-bg">Agent</a>
+                            <a data-toggle="modal" data-target="#launchAgentModal" href="#"
+                            class="link-btn btn-2 default-bg">Agent</a>
 
                         </div>
 
