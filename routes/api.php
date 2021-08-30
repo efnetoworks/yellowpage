@@ -28,7 +28,7 @@ Route::post('logintestPayment/{user_id}', 'AuthController@logintestPayment');
 Route::post('logintestPayment', 'AuthController@gt_response');
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function(Request $request) {
     return $request->user();
 });
 

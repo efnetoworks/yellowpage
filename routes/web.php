@@ -271,6 +271,30 @@ Route::get('upload', 'ImageController@upload');
 Route::post('upload/store', 'ImageController@store');
 Route::post('delete', 'ImageController@delete');
 
+Route::get('logistics/register', 'LogisticController@registerLogistics')->name('register_logistics');
+Route::post('logistics/create', 'LogisticController@createLogistics')->name('submit_application');
+Route::get('logistics/login', 'LogisticController@loginView')->name('logistics_login');
+Route::post('logistics/login', 'LogisticController@login')->name('login_dashboard');
+
+Route::middleware(['auth:logistic'])->prefix('logistics')->group(function () {
+
+    Route::get('dashboard', 'LogisticController@dashboard')->name('logistics_dashboard');
+    Route::get('my-profile', 'LogisticController@logisticProfile')->name('logistics_profile');
+    Route::get('requests/incoming-requests', 'LogisticController@incomingRequests')->name('logistics_incoming_requests');
+    Route::get('requests/in-transit', 'LogisticController@requestsInTransit')->name('logistics_requests_in_transit');
+    Route::get('requests/delivered', 'LogisticController@delivered')->name('delivered_requests');
+    Route::get('requests/history', 'LogisticController@history')->name('logistics_payment_history');
+    Route::put('update-profile', 'LogisticController@updateProfile')->name('logistic.profile.updates');
+    Route::put('update-password', 'LogisticController@updatePassword')->name('logistic.update.password');
+    Route::put('update-identification', 'LogisticController@updateId')->name('logistic.update.id');
+
+    Route::get('details/{id}', 'LogisticController@details')->name('logistic.request.detail');
+    Route::put('/set-transit-mode/{id}', 'LogisticController@transitMode')->name('logistic.transit.mode');
+    Route::put('/product-delivered/{id}', 'LogisticController@deliveredMode')->name('logistic.delivered.mode');
+
+});
+
+
 
 
 
@@ -288,6 +312,7 @@ Route::post('dropzone/store', 'DropzoneController@dropzoneStore')->name('dropzon
 
 Route::get('/', 'ServiceController@index2')->name('home');
 Route::get('/serviceDetail/{slug}', 'ServiceController@serviceDetail')->name('serviceDetail');
+Route::post('/ship-product/{id}', 'ServiceController@ship_service')->name('ship_service');
 Route::get('job-applicant/details/{slug}', 'SeekingWorkController@seekingWorkDetails')->name('job.applicant.detail');
 Route::post('saveContacts', 'ServiceController@saveContacts')->name('saveContacts');
 Route::get('/contacts', 'ServiceController@showContacts')->name('contacts');
@@ -489,6 +514,11 @@ Route::middleware(['seller'])->group(function () { //Seller Middleware protectio
 
 
         Route::post('badge_paid_for/', 'OperationalController@paidForBadge')->name('provider.paid.for.badge');
+
+        Route::get('dispatch/pending', 'SellerController@pendingDispatchRequests')->name('pending_dispatch_requestss');
+        Route::get('dispatch/in-transit', 'SellerController@transitDispatchRequests')->name('transit_dispatch_requests');
+        Route::get('dispatch/delivered', 'SellerController@deliveredDispatchRequests')->name('delivered_dispatch_requests');
+        Route::get('dispatch/requests-history', 'SellerController@historyDispatchRequests')->name('history_dispatch_requests');
     });
 
 

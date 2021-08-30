@@ -133,6 +133,26 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
+        'logistic_id' => [
+            'required' => 'Please select a logistic company!'
+        ],
+
+        'customer_name' => [
+            'required' => 'Please enter the name of the customer!'
+        ],
+
+        'customer_phone' => [
+            'required' => 'Please enter the phone number of the customer!'
+        ],
+
+        'customer_email' => [
+            'required' => 'Please enter the email address of the customer!'
+        ],
+
+        'customer_address' => [
+            'required' => 'Please enter the valid address of the customer!'
+        ],
     ],
 
     /*

@@ -149,6 +149,21 @@
             </span>
           </a>
         </li>
+        <li class="treeview" style="{{ url()->current() == route('pending_dispatch_requestss') ? 'background-color: #CA8309; color: #fff !important' : '' }} {{ url()->current() == route('transit_dispatch_requests') ? 'background-color: #CA8309; color: #fff !important' : '' }} {{ url()->current() == route('delivered_dispatch_requests') ? 'background-color: #CA8309; color: #fff !important' : '' }} {{ url()->current() == route('history_dispatch_requests') ? 'background-color: #CA8309; color: #fff !important' : '' }}">
+            <a href="#" style="{{ url()->current() == route('transit_dispatch_requests') ? 'color: #fff !important' : '' }}">
+                <i class="fa fa-truck"></i>
+                <span> Dispatch Requests </span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href=" {{ route('pending_dispatch_requestss') }} "><i class="fa fa-circle-o"></i> Pending</a></li>
+                <li><a href=" {{ route('transit_dispatch_requests') }} "><i class="fa fa-circle-o"></i> In Transit </a></li>
+                <li><a href=" {{ route('delivered_dispatch_requests') }} "><i class="fa fa-circle-o"></i> Delivered </a></li>
+                <li><a href=" {{ route('history_dispatch_requests') }} "><i class="fa fa-circle-o"></i> Requests history </a></li>
+            </ul>
+        </li>
         {{-- <li class="treeview" style=" {{ url()->current() == route('admin.service.active') ? 'background-color: #f8d053' : '' }} {{ url()->current() == route('admin.service.pending') ? 'background-color: #f8d053' : '' }} {{ url()->current() == route('admin.service.all') ? 'background-color: #f8d053' : '' }}">
           <a href="#">
             <i class="fa fa-briefcase"></i>
