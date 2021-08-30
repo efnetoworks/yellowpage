@@ -290,7 +290,7 @@ class AuthController extends Controller
             if ($saveIdOfRefree) {
                 $request->refererId = $saveIdOfRefree->id;
             } else {
-                session()->flash('fail', ' The referer link used is incorrect. Please Confirm the correct link or register without a link');
+                session()->flash('fail', ' The referer link used is incorrect. Please confirm the correct link or register without a link');
                 return redirect()->route('home');
             }
         }
