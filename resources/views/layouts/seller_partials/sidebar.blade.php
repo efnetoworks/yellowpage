@@ -40,13 +40,13 @@
                 <li><a href=" {{ route('seller.service.all') }} "><i class="fa fa-circle-o"></i> My Services </a></li>
             </ul>
         </li>
-        <li class="{{ url()->current() == route('seller.sub.create') ? 'active' : '' }}" style="">
+        {{-- <li class="{{ url()->current() == route('seller.sub.create') ? 'active' : '' }}" style="">
           <a href=" {{route('seller.sub.create') }}">
             <i class="fa fa-money"></i> <span>My Subscriptions </span>
             <span class="pull-right-container">
             </span>
           </a>
-        </li>
+        </li> --}}
 
         <li class="{{ url()->current() == route('seller.message.all') ? 'active' : '' }}">
           <a href=" {{route ('seller.message.all') }}">

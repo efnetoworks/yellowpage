@@ -15,7 +15,7 @@ class BuyerController extends Controller
 
   public function allService()
   {
-    $all_service = Service::where('status', 1)->where('subscription_end_date', '>', now())->get();
+    $all_service = Service::where('status', 1)->get();
     return view ('buyer.service.index', compact('all_service') );
   }
 

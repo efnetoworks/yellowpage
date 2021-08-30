@@ -263,6 +263,98 @@ class AuthController extends Controller
         return mt_rand(1000000000, 9999999999);
     }
 
+    public function validate_form(Request $request)
+    {
+        $request->validate([
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'role'     => ['required', Rule::in(['seller', 'buyer']),]
+        ]);
+
+    }
+
+    public function save_buyer(Request $request)
+    {
+       $this->validate_form($request);
+        //save user
+
+        // $slug3 = Str::random(8);
+        // $random = Str::random(3);
+        // $userSlug = Str::of($request->name)->slug('-') . '' . $random;
+
+
+        // Get id of owner of $link_from_url if available
+        if ($request->referParam) {
+            $saveIdOfRefree = User::where('refererLink', $request->referParam)->first();
+            if ($saveIdOfRefree) {
+                $request->refererId = $saveIdOfRefree->id;
+            } else {
+                session()->flash('fail', ' The Referer link used is incorrect. Please
+                confirm the correct link or register without a link');
+                return redirect()->route('home');
+            }
+        }
+
+        // Get id of owner of $agent code if available
+        if ($request->agent_code) {
+            $saveIdOfAgent = Agent::where('agent_code', $request->agent_code)->first();
+            $saveIdOfRefree = User::where('refererLink', $request->agent_code)->first();
+            if ($saveIdOfAgent) {
+                $request->agent_Id = $saveIdOfAgent->id;
+            } elseif ($saveIdOfRefree) {
+                $request->refererId = $saveIdOfRefree->id;
+            } else {
+                session()->flash('fail', ' Your referer code is incorrect. Please Confirm the correct code or register without a code');
+                return redirect()->route('home');
+                // return   session()->flash('message', 'there was an error with your payment, please contact admin.');
+            }
+        }
+
+        $user           = new User;
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role     = 'seller';
+        $user->slug     = $this->createSlug($request->name, new User());
+        //save id of referer if user was reffererd
+        // $user->idOfReferer = $request->refererId;
+        //save id of agent if user was brought by agent
+        $user->idOfAgent = $request->agent_Id;
+        // $user->refererLink = $slug3;
+        //send mail
+
+        if ($user->save()) {
+            $name         = "$user->name, Your registration was successfull! Have a great time enjoying our services!";
+            $name         = $user->name;
+            $email        = $user->email;
+            $origPassword = $request->password;
+            $userRole     = $user->role;
+
+            try {
+                Mail::to($user->email)->send(new UserRegistered($name, $email, $origPassword, $userRole));
+                Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+            } catch (\Exception $e) {
+                $failedtosendmail = 'Failed to Mail!';
+            }
+        }
+
+        if (Auth::check()) {
+            $present_user = Auth::user();
+            // if referrer link is available, save it to referer table
+            $link              = new Refererlink();
+            $link->user_id     = $present_user->id;
+            $link->refererlink = $present_user->refererLink;
+            $link->save();
+
+            // if (Auth::user()->role == 'buyer') {
+            //     return  Redirect::to(session(url()->previous()));
+            // }
+            if (Auth::user()->role == 'seller') {
+                return redirect()->route('seller.dashboard');
+            }
+        }
+    }
 
     public function pay_with_gtpay(Request $request)
     {
@@ -343,21 +435,6 @@ class AuthController extends Controller
 
             return redirect()->intended('/');
         }
-
-        // //pay with Paystack
-        // $paystack_Data = [
-        //     'name'          => $request->name,
-        //     'email'         => $request->email,
-        //     'password'      => $request->password,
-        //     'slug3'         => $request->slug3,
-        //     'agent_Id'      => $request->agent_Id,
-        //     'refererId'     => $request->refererId,
-        //     'role'          => $request->role,
-        // ];
-
-        // return view('paystackRegView', $paystack_Data);
-
-
         //pay with GTPay
         $gtpay_mert_id        = 14435;
         $gtpay_tranx_id       = $this->gen_transaction_id();
