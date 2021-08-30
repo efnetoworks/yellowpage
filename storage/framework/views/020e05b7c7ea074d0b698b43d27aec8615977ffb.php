@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-
 <?php echo $__env->make('layouts.frontend_partials.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <body>
 
 	<?php echo $__env->make('layouts.frontend_partials.navbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <!-- <?php echo $__env->make('layouts.frontend_partials.status', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> -->
+
 
 		<?php echo $__env->yieldContent('content'); ?>
 
@@ -21,6 +21,9 @@
     </a>
 
     <style>
+        h1, h2, h3, h5, h6{
+            font-family: Poppins-Regular !important;
+        }
         .float-feedback{
             position:fixed;
             width:120px;
@@ -69,6 +72,10 @@
             font-size: 14px !important;
         }
 
+        ul li{
+            font-size: 14px !important;
+        }
+
         thead tr th{
             font-size: 14px !important;
         }
@@ -98,98 +105,44 @@
             <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" style="text-transform: uppercase">Become our Agent</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-header" style="background-color: #cc8a19; color: #fff">
+                        <h5 class="modal-title text-white" style="text-transform: uppercase">Agent Info</h5>
+                        <button type="button" class="close" data-dismiss="modal" style="color: #fff">&times;</button>
                     </div>
                         <div class="modal-body">
                             <div class="tabbing tabbing-box agent-registration-modal">
                                 <ul class="nav nav-tabs" id="carTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active show" id="one-tab" data-toggle="tab" href="#aboutAgent" role="tab" aria-controls="two" aria-selected="false">Who is an Agent?</a>
+                                        <a class="nav-link active show" id="one-tab" data-toggle="tab" href="#aboutAgent" role="tab" aria-controls="two" aria-selected="false">Agent Info</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="two-tab" data-toggle="tab" href="#agentRegister" role="tab" aria-controls="one" aria-selected="false" style="margin-left: 3px">Register Here</a>
+                                        <a class="nav-link" id="two-tab" data-toggle="tab" href="#agentRegister" role="tab" aria-controls="one" aria-selected="false" style="margin-left: 3px">Request Form</a>
+                                    </li>
+                                     <li class="nav-item">
+                                        <a class="nav-link" id="three-tab" data-toggle="tab" href="#agentBenefit" role="tab" aria-controls="three" aria-selected="false" style="margin-left: 3px">Agent Benefits</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="carTabContent">
                                     <div class="tab-pane fade active show" id="aboutAgent" role="tabpanel" aria-labelledby="one-tab">
                                         <div class="card">
                                             <div class="card-body">
+                                                
+
+                                                
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <ul>
-                                                            <li>1.	When You Are Approved, You Will Receive Your Agent Code Which You Will Use For All Your Transactions, Referrals And Commission Payments.</li>
-                                                            <li>2.	You Will Receive Your Commission Every Two Weeks.</li>
-                                                            <li>3.	You Have A Chance Of Making At Minimum Income Of Between N50,000 To N100,000 Monthly.</li>
-                                                            <li>4.	When You Are Approved, You Can Recruit People Under You (Sub-Agents) Or Refer Them To Us And When Anyone Subscribes You Get N100 Each.  We Will Issue To You A Daily Report On Your Sub-Agents And Activities. See Chart Below For Commission Scales.</li>
+                                                            
+
+                                                            <li>We are happy to work with you and offer to you one of the best marketing careers in the country, where you have an opportunity to make millions of Naira yearly.</li>
+                                                            <li><strong>Note:</strong> The registration to be an agent on EFContact will attract a fee of <strong>&#8358;500.</strong></li>
+                                                            <li>To become our agent, you will be required to fill out the form below and be accepted by the company. When we receive your online request, a reference code and another form would be sent to you to finalize your application.</li>
+                                                            <li>EFContact provides an opportunity for a part-time agent to make on average &#8358;50,000.00 monthly and a full time agent to make on average &#8358;100,000.00  or monthly. On top of your basic commission, there are other incentives which may generate millions of Naira to you yearly.</li>
+                                                            <li>When you are approved, you will receive your agent code and a dashboard. The dashboard is where all your activities and daily income are displayed.  We pay commissions weekly not monthly.  You will also be able to refer people to
+                                                                market the EFcontact and make extra money on top of your own sales. If you are interested please click <a  id="two-tab" data-toggle="tab" href="#agentRegister" role="tab" aria-controls="one" aria-selected="false" href="#" style="color: #cc8a19; font-weight: 700">HERE</a> :</li>
                                                         </ul>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <ul>
-                                                            <li>5.	You Can Work At Anytime You Want, Create Your Schedule Or Use This To Suppliment Your Income.</li>
-                                                            <li>6.	You Can Make An Extra 20% On Any Other Adverts Request By Your Subscribers.  Say For An Example Your Subscriber Buys An Advert Of N100,000 A Month, You Will Make An Additional N20,000.00 Monthly. If That Advert Is For A Year You Will Make N240,000.00 On That Case Alone. If You Have Five Of Such In A Year It Is N24000 X 5= N1,200,000.00. Upon That You Will Still Get Commissions On Adverts And Your Recruits. We Estimated That A Good Agent Should Average N5,000,000.00  Yearly.</li>
-                                                        </ul>
-                                                    </div>
 
-                                                    <div class="col-md-12">
-                                                        <div class="table-responsive">
-                                                            <table class="table">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>WEEKLY SALES  BY YOU</th>
-                                                                        <th>N200 EACH SALE</th>
-                                                                        <th>YOUR  TOTAL RECRUITS</th>
-                                                                        <th>1ST LEVEL N100</th>
-                                                                        <th>2ND LEVEL</th>
-                                                                        <th>N50</th>
-                                                                        <th>TOTAL WEEKLY INCOME</th>
-                                                                    </tr>
-                                                                </thead>
-
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>50 X N200</td>
-                                                                        <td>N10,000</td>
-                                                                        <td>100 X 1 sell </td>
-                                                                        <td>10,000</td>
-                                                                        <td>100 X 50</td>
-                                                                        <td>5000</td>
-                                                                        <td>25,000</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>100 X N200</td>
-                                                                        <td>N20,000</td>
-                                                                        <td>200 X 1 sell</td>
-                                                                        <td>20,000</td>
-                                                                        <td>100 X 50</td>
-                                                                        <td>5000</td>
-                                                                        <td>45,000</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>50 X N200</td>
-                                                                        <td>N40,000</td>
-                                                                        <td>400 X 1 sell </td>
-                                                                        <td>40,000</td>
-                                                                        <td>200 X 50</td>
-                                                                        <td>10,000</td>
-                                                                        <td>90,000</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <p>
-                                                            Efcontact Is A Product Which Anybody Can Sell From Home And Outdoor. Due To The Simplicity Of Enrolling Subscribers Online, By Phone Calls Or Visting Businesses. Our Experience Is That An Average Agent Shall Register 25 Subscribers Daily Or 150 Subscribers Weekly Working 6 Days A Work. <br> If An Agent Can Maintain This, It Will Result In Average Weekly Income Of N30,000.00, Plus Other Incomes From Sub-Agents And Advertisements By Subscribers Which Our Sales Handbook Will Explain More. <br>
-                                                            All These The Agent Will Find On His/Her Own Dashboard- See Daily Income Displayed And Make Commission Withdrawals Request Online. Nothing Hidden And Very Transparent.
-
-                                                        </p>
-                                                    </div>
-
-
-                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -201,7 +154,7 @@
                                                 <form method="POST" action="<?php echo e(route('agent.register')); ?>">
                                                     <?php echo csrf_field(); ?>
                                                     <div class="row">
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label class="form-label">Your Full Name</label><small class="text-danger">*</small>
                                                                 <input type="text" class="form-control" name="name" value="<?php echo e(old('name')); ?>" autofocus placeholder="Full Name" required>
@@ -211,88 +164,68 @@
                                                                     </span>
                                                                 <?php endif; ?>
                                                             </div>
-                                                            <!-- <div class="form-group">
-                                                                <label class="form-label">Phone Number</label><small class="text-danger">*</small>
-                                                                <input type="phone" placeholder="Phone Number" class="form-control" name="phone" value="<?php echo e(old('phone')); ?>" required>
-                                                                <?php if($errors->has('phone')): ?>
-                                                                    <span class="helper-text" data-error="wrong" data-success="right">
-                                                                        <strong class="text-danger"><?php echo e($errors->first('phone')); ?></strong>
-                                                                    </span>
-                                                                <?php endif; ?>
-                                                            </div> -->
                                                             <div class="form-group">
-                                                                <label for="email">Email Address</label><small class="text-danger">*</small>
-                                                                <input type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>" placeholder="Your email address" required>
-                                                            </div>
-
-                                                         <!--    <div class="form-group">
-                                                                <label class="form-label">Select your State</label><small class="text-danger">*</small>
-                                                                <select class="form-control" required id="state" name="state" required>
-                                                                    <option value="">-- Select State --</option>
-                                                                    <?php if(isset($states)): ?>
-                                                                        <?php $__currentLoopData = $states; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $state): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                            <option value="<?php echo e($state->name); ?>"> <?php echo e($state->name); ?>  </option>
-                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                    <?php endif; ?>
-                                                                </select>
-                                                            </div> -->
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                           <!--  <div class="form-group">
-                                                                <label class="form-label">LGA</label><small class="text-danger">*</small>
-                                                                <select class="form-control" id="lgas" name="lga" required>
-                                                                    <option disabled selected>- Select Local Government -</option>
-                                                                </select>
-                                                            </div> -->
-                                                            <div class="row">
-                                                                <div class="col-md-7">
-                                                                  <!--   <div class="form-group">
-                                                                        <label class="form-label" for="identification_type">Identification Type</label><small class="text-danger">*</small>
-                                                                        <select class="form-control" name="identification_type" required>
-                                                                            <option selected disabled>- Select an option -</option>
-                                                                            <option value="national_id">National ID</option>
-                                                                            <option value="driver_license">Driver License</option>
-                                                                            <option value="voter_id">Voter's Card</option>
-                                                                            <option value="international_passport">International Passport</option>
-                                                                        </select>
-                                                                    </div> -->
-                                                                </div>
-                                                                <div class="col-md-5">
-                                                                  <!--   <div class="form-group">
-                                                                        <label class="form-label">ID Number</label><small class="text-danger">*</small>
-                                                                        <input type="text" class="form-control" name="identification_id" value="<?php echo e(old('identification_id')); ?>" placeholder="ID Number" required>
-                                                                    </div> -->
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="form-label">Choose Password</label><small class="text-danger">*</small>
-                                                                <input type="password" class="form-control" name="password" placeholder="Password (min: 6 characters)" required>
-                                                                <?php if($errors->has('password')): ?>
-                                                                <span class="helper-text" data-error="wrong" data-success="right">
-                                                                    <strong class="text-danger"><?php echo e($errors->first('password')); ?></strong>
+                                                                <label for="email">Email Address</label><small class="text-danger">*</small> <small class="text-success">(A Link Will Be Sent To Your Email Address To Complete Your Registration)</small>
+                                                                <input type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>"
+                                                                placeholder="Enter A Valid Email Address" required>
+                                                                <?php if($errors->has('email')): ?>
+                                                                <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                                    <strong class="text-danger"><?php echo e($errors->first('email')); ?></strong>
                                                                 </span>
-                                                                <?php endif; ?>
+                                                            <?php endif; ?>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="form-label">Confirm Password</label><small class="text-danger">*</small>
-                                                                <input class="form-control" placeholder="Confirm Password" type="password" name="password_confirmation" required>
+                                                                <label for="phone">Phone Number</label>
+                                                                <input type="number" class="form-control" name="phone" value="<?php echo e(old('phone')); ?>"
+                                                                placeholder="Enter Your Phone Number" required>
+                                                                <?php if($errors->has('phone')): ?>
+                                                                <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                                    <strong class="text-danger"><?php echo e($errors->first('phone')); ?></strong>
+                                                                </span>
+                                                            <?php endif; ?>
                                                             </div>
-                                                        </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <button type="submit" class="btn btn-lg btn-warning text-white">Submit</button>
+                                                                    <!-- <small class="">Or,
+                                                                        <a type="submit" class="text-success">CLICK HERE</a> To Resend Link</small> -->
+                                                                </div>
+                                                            </div>
+                                                            <div style="margin-top: 20px;">
+                                                                <div class="col-md-12">
+                                                                    <small class="text-danger">Please, If You Are Not Contacted In Ten Days after Your Request
+                                                                        , Kindly Contact Us Again At, <a href="mailto:agent@efcontact.com">agent@efcontact.com</a>
+                                                                        or call <a href="tel:<?php echo e($general_info->hot_line ? $general_info->hot_line : ''); ?>"><?php echo e(substr($general_info->hot_line,0,4).'-'.substr($general_info->hot_line,4,3).'-'.substr($general_info->hot_line,7,5)); ?></a>
+                                                                        When you send this contact, kindly indicate the day of your first request or the reference code sent to you
+                                                                        . Be aware that the position
+                                                                        is limited per state so rush your application
+                                                                         soonest before the positions are filled.
+                                                                        </small>
+                                                                    
+                                                                </div>
+                                                                <div style="margin-top: 20px;">
+                                                                    <ul style="list-style: none">
 
-                                                      <!--   <div class="col-md-12">
-                                                            <label>
-                                                                <input type="checkbox" name="terms" class="filled-in" required/>
-                                                                <span>By registering you accept our <a href="<?php echo e(route('terms')); ?>" target="_blank" style="color: blue">Terms of Use</a> and <a href="<?php echo e(route('privacy')); ?>" target="_blank" style="color: blue"> Privacy</a> and agree that we and our selected partners may contact you with relevant offers and services.</span>
-                                                            </label>
-                                                        </div> -->
-                                                    </div>
 
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <button type="submit" class="btn btn-lg btn-warning pull-right text-white">Register</button>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="agentBenefit" role="tabpanel" aria-labelledby="three-tab">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                            <?php echo $pages_contents->benefit_of_efcontact ? $pages_contents->benefit_of_efcontact : ''; ?>
+
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -301,7 +234,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-md btn-default text-dark" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-md" data-dismiss="modal" style="background-color: #cc8a19; color: #fff">Close</button>
                         </div>
                 </div>
 
@@ -322,7 +255,7 @@
                     <?php echo csrf_field(); ?>
                     <div class="modal-body">
                         <div class="form-group">
-                            <textarea name="userfeedback" id="userfeedback" class="form-control" cols="30" rows="5" placeholder="Tell us your experience on this site..." style="border-radius: 0"></textarea>
+                            <textarea name="userfeedback" id="userfeedback" class="form-control" cols="30" rows="5" placeholder="Tell us your experience on this website..." style="border-radius: 0"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -379,7 +312,7 @@
     <?php endif; ?>
 
 
-	<a id="page_scroller" href="#scroll-top" style="position: fixed; z-index: 2147483647;"><i class="fa fa-chevron-up"></i></a>
+	<a class="scrollToTopBtn" id="page_scroller" style="position: fixed; z-index: 2147483647;"><i class="fa fa-chevron-up"></i></a>
 
 
     <script>
@@ -405,7 +338,62 @@
                 $("#lgas").empty();
             }
         });
+
+
+        $(function() {
+            document.addEventListener("scroll", handleScroll);
+            // get a reference to our predefined button
+            var scrollToTopBtn = document.querySelector(".scrollToTopBtn");
+
+            function handleScroll() {
+                var scrollableHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                var GOLDEN_RATIO = 0.5;
+
+                if ((document.documentElement.scrollTop / scrollableHeight ) > GOLDEN_RATIO) {
+                    //show button
+                    scrollToTopBtn.style.display = "block";
+                } else {
+                    //hide button
+                    scrollToTopBtn.style.display = "none";
+                }
+            }
+
+            scrollToTopBtn.addEventListener("click", scrollToTop);
+
+            function scrollToTop() {
+                // window.scrollTo({
+                //     top: 0,
+                //     behavior: "smooth"
+                // });
+
+                $('body').animate({ scrollTop: top }, {duration: 2000});
+            }
+        });
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php if(Session::has('agent-reg-success')): ?>
+    <script>
+        Swal.fire({
+            title: 'Thank you!',
+            html: "<?php echo Session::get('agent-reg-success'); ?>",
+            icon: 'success',
+            confirmButtonText: 'Close'
+        })
+    </script>
+<?php endif; ?>
+
+
+
+
+    <?php echo $__env->yieldContent('script'); ?>
+
+
+    
+    <?php echo \Livewire\Livewire::scripts(); ?>
+
+
+
 
 </body>
 

@@ -181,6 +181,15 @@
     </div>
 </div>
 
+@auth
+    @if(auth()->user()->isServiceOwner($serviceDetail))
+        <a href="#" class="float-ship-btn" data-toggle="modal" data-target="#launchMobileAgentModal">
+            <i class="fa fa-taxi"></i>
+            Ship product
+            {{-- <i class="fa fa-plus my-float"></i> --}}
+        </a>
+    @endif
+@endauth
     <!-- Properties Details page start -->
     <div class="properties-details-page content-area-7 service-page-sidebar">
         <div class="service-detail-container">
@@ -198,6 +207,7 @@
                                         <p><span><i class="fa fa-archive"></i> Service Category: </span><span style="color: #ca8309" class="tt-capitalize"> {{$serviceDetail->category->name}}</span></p>
                                         <p><span><i class="fa fa-clock-o"></i> Posted on: </span><span style="color: #ca8309"> {{ $serviceDetail->created_at->diffForHumans() }}</span></p>
                                         <p><span><i class="fa fa-eye"></i> Views: </span><span style="color: #ca8309"> {{ $serviceDetail->views->count() }}</span></p>
+                                        {{-- <p><span><i class="fa fa-taxi"></i> Deliver: </span><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#launchMobileAgentModal" style="color: #fff">Click here</button></p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -733,6 +743,108 @@
 
         </div>
     </div>
+
+    {{-- launch delivery modal --}}
+
+    <div id="launchMobileAgentModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #cc8a19; color: #fff">
+                    <h5 class="modal-title text-white" style="text-transform: uppercase">Deliver {{ $serviceDetail->name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" style="color: #fff">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="tabbing tabbing-box agent-registration-modal">
+                        <div class="tab-content" id="carTabContent">
+                            <div class="tab-pane fade active show" id="aboutAgent" role="tabpanel" aria-labelledby="one-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                 <form id="" action="{{ route('ship_service', $serviceDetail->id) }}" method="POST">
+                                                    @csrf
+
+
+                                                    <input type="hidden" name="provider_id" id="provider_id" value="{{ $serviceDetail->user->id }}">
+
+                                                    <div class="form-group">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Deliver with</label>
+                                                        <select class="form-control text-dark" id="logistic_id" name="logistic_id" value="{{ old('logistic_id') }}">
+                                                            @foreach($logistic_companies as $logistic)
+                                                                <option value="{{ $logistic->id }}">{{ $logistic->company_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->has('logistic_id'))
+                                                            <span>
+                                                                <strong class="text-danger">{{ $errors->first('logistic_id') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer name</label>
+                                                        <input type="text" id="customer_name" name="customer_name" class="text-dark form-control" placeholder="Enter the customer name" value="{{ old('customer_name') }}">
+                                                        @if ($errors->has('customer_name'))
+                                                            <span>
+                                                                <strong class="text-danger">{{ $errors->first('customer_name') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer phone number</label>
+                                                        <input type="text" id="customer_phone" name="customer_phone" class="text-dark form-control" placeholder="Customer phone number" value="{{ old('customer_phone') }}">
+                                                        @if ($errors->has('customer_phone'))
+                                                            <span>
+                                                                <strong class="text-danger">{{ $errors->first('customer_phone') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer email</label>
+                                                        <input type="text" id="customer_email" name="customer_email" class="text-dark form-control" placeholder="Customer email" value="{{ old('customer_email') }}">
+                                                        @if ($errors->has('customer_email'))
+                                                            <span>
+                                                                <strong class="text-danger">{{ $errors->first('customer_email') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer address</label>
+                                                        <input type="text" id="customer_address" name="customer_address" class="text-dark form-control" placeholder="Customer address" value="{{ old('customer_address') }}">
+                                                        @if ($errors->has('customer_address'))
+                                                            <span>
+                                                                <strong class="text-danger">{{ $errors->first('customer_address') }}</strong>
+                                                            </span>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-md btn-warning" style="border-radius:25px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Request</button>
+                                                                <p class="text-success" style="font-size: 15px" id="successMessage">
+                                                       <div class="send-btn">
+                                                                </p>
+                                                            </div>
+                                                    </div>
+
+                                                   
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-md" data-dismiss="modal" style="background-color: #cc8a19; color: #fff">Close</button>
+                </div>
+        </div>
+
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -972,6 +1084,7 @@
                     $("#btn-submit2").css({"opacity": "1", "cursor":"pointer"});
 
 
+
                     toastr.success('Message sent successfully!')
                     // alert(data.success2);
                 },
@@ -982,6 +1095,7 @@
             });
         });
 
+       
         function printMsg (msg) {
             if((msg.success)){
                 console.log(msg.success);
@@ -1006,6 +1120,51 @@
         //     }
         // });
     });
+</script>
+<script>
+    var baseUrl = "{{url('/')}}"
+     //request delivery
+        $(document).ready(function() {
+        $(".btn-logistic").click(function(e){
+            e.preventDefault();
+
+            $(".btn-submit2").text('Please wait, sending!!!')
+            $("#btn-submit2").css({"opacity": "0.5", "cursor":"default"});
+
+            var _token = $("input[name='_token']").val();
+            var provider_id = $("#provider_id").val();
+            var logistic_id = $("#logistic_id").val();
+            var customer_name = $("#customer_name").val();
+            var service_id = $("#service_id").val();
+            var customer_phone = $("#customer_phone").val();
+            var customer_email = $("#customer_email").val();
+            var customer_address = $("#customer_address").val();
+
+
+            $.ajax({
+                url: baseUrl + '/ship-product/' + service_id,
+                method:'POST',
+                data: {_token:_token, provider_id:provider_id, service_id:service_id, logistic_id:logistic_id, customer_name:customer_name, customer_phone:customer_phone, customer_email:customer_email, customer_address:customer_address },
+                success: function(data) {
+                    $("#customer_name").val('')
+                    $("#customer_phone").val('')
+                    $("#customer_email").val('')
+                    $("#customer_address").val('')
+                    $("#successMessage").text('Message sent successfully!')
+                    $(".btn-logistic").text('Send Message')
+                    $(".btn-logistic").css({"opacity": "1", "cursor":"pointer"});
+
+                    console.log(data);
+                    toastr.success('Request sent successfully!')
+                    // alert(data.success2);
+                },
+                error: function(error){
+                    toastr.error('Request not sent! Try again.')
+                    console.log(error)
+                }
+            });
+        });
+
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -1150,6 +1309,7 @@
         }
     });
 </script>
+
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCY2buDtbYIot8Llm_FkQXHW36f0Cme6TI&callback=initMap">
 </script>

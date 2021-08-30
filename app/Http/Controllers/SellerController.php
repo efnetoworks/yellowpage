@@ -13,6 +13,7 @@ use App\State;
 use App\Agent;
 use App\Refererlink;
 use Image;
+use App\DeliveryRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailable;
 
@@ -574,5 +575,49 @@ class SellerController extends Controller
 
         // $myreferrals = Agent::find(50)->referals;
         return view('seller.myreferrals', compact('myreferrals'));
+    }
+
+    public function pendingDispatchRequests()
+    {
+        $user = Auth::user();
+        
+        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 0)->get();
+
+        return view('seller.dispatch.pending', [
+            'deliveries' => $deliveries
+        ]);
+    }
+
+    public function transitDispatchRequests()
+    {
+        $user = Auth::user();
+        
+        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 1)->get();
+
+        return view('seller.dispatch.transit', [
+            'deliveries' => $deliveries
+        ]);
+    }
+
+    public function deliveredDispatchRequests()
+    {
+        $user = Auth::user();
+        
+        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('is_delivered', 1)->get();
+
+        return view('seller.dispatch.delivered', [
+            'deliveries' => $deliveries
+        ]);
+    }
+
+    public function historyDispatchRequests()
+    {
+        $user = Auth::user();
+        
+        $deliveries = User::find($user->id)->delivery_requests;
+
+        return view('seller.dispatch.history', [
+            'deliveries' => $deliveries
+        ]);
     }
 }

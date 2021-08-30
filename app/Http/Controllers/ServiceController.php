@@ -11,7 +11,7 @@ use App\Message;
 use App\Badge;
 use Illuminate\Support\Str;
 use DB;
-
+use App\Helpers\SmsHelper;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -26,8 +26,8 @@ use App\Image;
 use App\Mail\NewMessage;
 use App\Traits\ReusableCode;
 use App\Subscription;
-
-
+use App\Logistic;
+use App\DeliveryRequest;
 //use Illuminate\Support\Str;
 
 
@@ -308,7 +308,9 @@ class ServiceController extends Controller
             $user111 = null;
         }
 
-        return view('serviceDetail', compact(['serviceDetail', 'ww2', 'serviceDetail_id', 'approvedServices', 'user111', 'similarProducts', 'service_likes', 'all_states', 'userser3', 'featuredServices', 'featuredServices2', 'userMessages', 'images_4_service', 'the_provider_f_name', 'likecheck', 'allServiceComments']));
+        $logistic_companies = Logistic::all();
+
+        return view('serviceDetail', compact(['serviceDetail', 'ww2', 'serviceDetail_id', 'approvedServices', 'user111', 'similarProducts', 'service_likes', 'all_states', 'userser3', 'featuredServices', 'featuredServices2', 'userMessages', 'images_4_service', 'the_provider_f_name', 'likecheck', 'allServiceComments', 'logistic_companies']));
     }
 
 
@@ -1613,5 +1615,58 @@ public function show($id)
             }
         }
     dd($names);
+    }
+
+    public function ship_service(Request $request, $id)
+    {
+        $find_service = Service::findOrFail($id);
+
+        $data = array(
+            'service_id' => $id,
+            'user_id' => Auth::user()->id,
+            'logistic_id' => $request->logistic_id,
+            'tracking_id' => 'TRCK' . $this->gen_tracking_id(),
+            'customer_name' => $request->customer_name,
+            'customer_email' => $request->customer_email, 
+            'customer_phone' => $request->customer_phone,
+            'customer_address' => $request->customer_address
+        );
+
+        $this->validate($request, [
+            'customer_name' => 'required',
+            'customer_email' => 'required',
+            'customer_address' => 'required',
+            'customer_phone' => 'required',
+            'logistic_id' => 'required',
+        ]);
+
+       DeliveryRequest::create($data);
+        // dd($request->all());
+        $phone = $request->customer_phone;
+            // dd($phone);
+
+        $get_logistic = Logistic::where('id', $request->logistic_id)->first();
+        $message = 'You have recieved a delivery request from ' . Auth::user()->name . ' for ' . $request->customer_name;
+        $sender = 'EFContact';
+
+        try {
+          SmsHelper::send_sms($message, $phone, $sender);
+        } 
+        catch (\Exception $e) {
+        }
+        $success_notification = array(
+            'message' => 'Request sent successfully!',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->back()->with($success_notification);
+        
+        
+        
+    }
+
+    public function gen_tracking_id()
+    {
+        return mt_rand(1000000000, 9999999999);
     }
 }

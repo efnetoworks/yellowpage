@@ -46,6 +46,11 @@ return [
             'provider' => 'agents',
         ],
 
+        'logistic' => [
+            'driver' => 'session',
+            'provider' => 'logistics',
+        ],
+
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
@@ -81,6 +86,11 @@ return [
             'model' => App\Agent::class,
         ],
 
+        'logistics' => [
+            'driver' => 'eloquent',
+            'model' => App\Logistic::class,
+        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -112,6 +122,13 @@ return [
         
         'agents' => [
             'provider' => 'agents',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'logistics' => [
+            'provider' => 'logistics',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
