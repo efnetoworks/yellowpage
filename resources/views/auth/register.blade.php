@@ -36,7 +36,7 @@
             <div class="row login-box">
                 <div class="col-lg-6 align-self-center pad-0">
                     <div class="form-section clearfix">
-                        <h3>Create an account now</h3>
+                        <h3>Create an account</h3>
                         <div class="btn-section clearfix">
                             <a href="{{route('login')}}" class="link-btn active btn-1 default-bg">Login</a>
                             @if($referParam)
@@ -148,9 +148,10 @@
                 </div>
 
                 <div class="col-lg-6 bg-color-15 align-self-center pad-0 p-3 registerSidebar">
-                    <div>
+                    {{-- promo image --}}
+                    {{-- <div>
                         <img src="{{ asset('promos.svg') }}" alt="" id="probonanza" class="animate__animated" style="width: 80%;margin: 0 auto;display: block;">
-                    </div>
+                    </div> --}}
                     @if(isset($general_info->register_section_1_title))
                         <h6 class="text-center"> {{ $general_info->register_section_1_title ? $general_info->register_section_1_title : '' }} </h6>
                         <hr>
