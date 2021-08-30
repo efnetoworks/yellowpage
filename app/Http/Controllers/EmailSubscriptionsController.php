@@ -22,7 +22,7 @@ class EmailSubscriptionsController extends Controller
 
         if ($request->service_category == 'all') {
             $category = "All Category";
-            $services = Service::where('status', 1)->where('subscription_end_date', '>', now())->inRandomOrder()->limit(6)->get();
+            $services = Service::where('status', 1)->inRandomOrder()->limit(6)->get();
 
             if ($services->isEmpty()) {
                 return redirect()->back()->with([
@@ -33,7 +33,7 @@ class EmailSubscriptionsController extends Controller
         }
         else {
             $category = Category::find($request->service_category);
-            $services = Service::where('status', 1)->where('subscription_end_date', '>', now())->where('category_id', $request->service_category)->inRandomOrder()->limit(6)->get();
+            $services = Service::where('status', 1)->where('category_id', $request->service_category)->inRandomOrder()->limit(6)->get();
 
             if ($services->isEmpty()) {
                 return redirect()->back()->with([

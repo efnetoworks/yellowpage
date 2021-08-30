@@ -23,7 +23,7 @@ use Symfony\Contracts\Service\Attribute\Required;
 class OldCodeController extends Controller
 {
 
-
+    ->where('subscription_end_date', '>', now())
 
 //original create agent
     public function createAgent(Request $request)

@@ -470,13 +470,11 @@ class OperationalController extends Controller
             $services = Service::query()
             ->where('name', 'LIKE', "%{$request->service}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('description', 'LIKE', "%{$request->service}%");
 
             $seekingworks = SeekingWork::query()
             ->where('job_title', 'LIKE', "%{$request->service}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('fullname', 'LIKE', "%{$request->service}%");
 
 
@@ -504,7 +502,7 @@ class OperationalController extends Controller
     public function dapSearch(Request $request)
     {
         $keyword = $request->keyword ? $request->keyword : 'Nothing!';
-        $featuredServices = Service::where('is_featured', 1)->where('status', 1)->where('subscription_end_date', '>', now())->with('user')->inRandomOrder()->limit(4)->get();
+        $featuredServices = Service::where('is_featured', 1)->where('status', 1)->with('user')->inRandomOrder()->limit(4)->get();
         $categories = Category::orderBy('name', 'asc')->get();
 
         if ($request->category == null && $request->city == null && $request->keyword == null && $request->state == null) {
@@ -530,7 +528,6 @@ class OperationalController extends Controller
                 ->where('city', '=', "$request->city")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('sub_categories')
                 ->whereHas('sub_categories', function ($query) use ($subcategoryId) {
                     $query->where('sub_categorable_id', $subcategoryId);
@@ -546,7 +543,6 @@ class OperationalController extends Controller
                 ->where('status', 1)
                 ->where('user_lga', '=', "$request->city")
                 ->where('user_state', '=', "$request->state")
-                ->where('subscription_end_date', '>', now())
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
                 })
@@ -573,7 +569,6 @@ class OperationalController extends Controller
                 ->where('name', 'LIKE', "%{$request->keyword}%")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('sub_categories')
                 ->whereHas('sub_categories', function ($query) use ($subcategoryId) {
                     $query->where('sub_categorable_id', $subcategoryId);
@@ -593,7 +588,6 @@ class OperationalController extends Controller
                 $services = Service::query()
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('sub_categories')
                 ->whereHas('sub_categories', function ($query) use ($subcategoryId) {
                     $query->where('sub_categorable_id', $subcategoryId);
@@ -624,7 +618,6 @@ class OperationalController extends Controller
                 ->where('city', '=', "$request->city")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -633,7 +626,6 @@ class OperationalController extends Controller
                 $seekingworks = SeekingWork::query()
                 ->where('job_title', 'LIKE', "%{$request->keyword}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
                 })
@@ -664,7 +656,6 @@ class OperationalController extends Controller
                 ->where('name', 'LIKE', "%{$request->keyword}%")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -680,7 +671,6 @@ class OperationalController extends Controller
                 $services = Service::query()
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -695,7 +685,6 @@ class OperationalController extends Controller
             } else {
                 $services = Service::query()
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -726,13 +715,11 @@ class OperationalController extends Controller
                 ->where('city', '=', "%{$request->city}%")
                 ->where('state', '=', "%{$request->state}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->get();
 
                 $seekingworks = SeekingWork::query()
                 ->where('job_title', 'LIKE', "%{$request->keyword}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->where('user_lga', '=', "%{$request->city}%")
                 ->where('user_state', '=', "%{$request->state}%")
                 ->orWhere('fullname', 'LIKE', "%{$request->keyword}%")
@@ -763,13 +750,12 @@ class OperationalController extends Controller
                 ->where('name', 'LIKE', "%{$request->keyword}%")
                 ->where('state', $request->state)
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->get();
 
                 $seekingworks = SeekingWork::query()
                 ->where('job_title', 'LIKE', "%{$request->keyword}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
+
                 ->where('user_state', '=', $request->state)
                 ->orWhere('fullname', 'LIKE', "%{$request->keyword}%")
                 ->get();
@@ -793,13 +779,12 @@ class OperationalController extends Controller
                 $services = Service::query()
                 ->where('state', $request->state)
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->get();
 
                 $seekingworks = SeekingWork::query()
                 ->where('user_state', '=', $request->state)
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
+
                 ->get();
 
                 if (!$services->isEmpty() && !$services->isEmpty()) {
@@ -824,7 +809,6 @@ class OperationalController extends Controller
             $services = Service::query()
             ->where('name', 'LIKE', "%{$request->keyword}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('city', '=', "$request->city")
             ->orWhere('state', '=', "$request->state")
             ->get();
@@ -832,7 +816,6 @@ class OperationalController extends Controller
             $seekingworks = SeekingWork::query()
             ->where('job_title', 'LIKE', "%{$request->keyword}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('user_lga', '=', "$request->city")
             ->orWhere('user_state', '=', "$request->state")
             ->orWhere('fullname', 'LIKE', "%{$request->keyword}%")
