@@ -367,8 +367,10 @@ Route::get('/register', 'AuthController@showRegister')->name('register');
 Route::get('/groupreg', 'AuthController@showGroupRegister')->name('register');
 Route::post('/register2', 'AuthController@createUser')->name('register2');
 //original payment and registration with gtpay
-Route::post('/register', 'AuthController@pay_with_gtpay')->name('register');
+// Route::post('/register', 'AuthController@pay_with_gtpay')->name('register');
 //end original payment and registration with gtpay
+Route::post('/register', 'AuthController@save_buyer')->name('register');
+
 
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');

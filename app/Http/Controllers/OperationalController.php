@@ -394,12 +394,14 @@ class OperationalController extends Controller
             'message' => 'Please renew your subscription to view this page!',
             'alert-type' => 'error'
         );
-        $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        // uncomment this if you want to implement subscription to allow users access their messages
 
-        if (Carbon::now() > Carbon::parse($user_sub_date)) {
-            // return redirect()->route('seller.sub.create')->with($success_notification);
-            return redirect()->route('seller.sub.create');
-        }
+        // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+
+        // if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //     // return redirect()->route('seller.sub.create')->with($success_notification);
+        //     return redirect()->route('seller.sub.create');
+        // }
 
         $all_services = Service::where('user_id', Auth::id())->get();
 
@@ -421,12 +423,14 @@ class OperationalController extends Controller
             'message' => 'Please renew your subscription to view this page!',
             'alert-type' => 'error'
         );
-        $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        //uncomment this if you want to reuse subscription
 
-        if (Carbon::now() > Carbon::parse($user_sub_date)) {
-            // return redirect()->route('seller.sub.create')->with($success_notification);
-            return redirect()->route('seller.sub.create');
-        }
+        // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+
+        // if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //     // return redirect()->route('seller.sub.create')->with($success_notification);
+        //     return redirect()->route('seller.sub.create');
+        // }
 
         $user = $request->user();
         $likecheck = Like::where(['user_id' => $user->id])->get();
