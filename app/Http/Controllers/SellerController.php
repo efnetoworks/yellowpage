@@ -41,12 +41,14 @@ class SellerController extends Controller
             'message' => 'Please renew your subscription to view this page!',
             'alert-type' => 'error'
         );
-        $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        //use this to implement subscriptions
 
-        if (Carbon::now() > Carbon::parse($user_sub_date)) {
-            // return redirect()->route('seller.sub.create')->with($success_notification);
-            return redirect()->route('seller.sub.create');
-        }
+        // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+
+        // if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //     // return redirect()->route('seller.sub.create')->with($success_notification);
+        //     return redirect()->route('seller.sub.create');
+        // }
         $category = Category::orderBy('name', 'asc')->get();
         $subcategory = SubCategory::orderBy('name', 'asc')->get();
         $states = State::all();
@@ -69,7 +71,7 @@ class SellerController extends Controller
             'name' => 'required',
             'state' => 'required',
             'video_link' => 'nullable',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif', 
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
             //|max:2048
         ]);
         $image = $request->file('image');

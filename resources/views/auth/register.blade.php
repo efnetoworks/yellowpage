@@ -36,7 +36,7 @@
             <div class="row login-box">
                 <div class="col-lg-6 align-self-center pad-0">
                     <div class="form-section clearfix">
-                        <h3>Create an account</h3>
+                        <h3>Create an account now</h3>
                         <div class="btn-section clearfix">
                             <a href="{{route('login')}}" class="link-btn active btn-1 default-bg">Login</a>
                             @if($referParam)
@@ -50,7 +50,99 @@
 
                         <div class="clearfix"></div>
 
-                          @livewire('user.register', ['referParam' => $referParam])
+
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+                            <div class="form-group form-box">
+
+
+                                <input id="name" type="text" class="input-text" name="name" value="{{ old('name') }}" autofocus placeholder="Full Name">
+                                @if ($errors->has('name'))
+                                <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                    <strong class="text-danger">{{ $errors->first('name') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-group form-box">
+                                <input id="email" type="email" placeholder="Email Address" class="input-text" name="email" value="{{ old('email') }}" required>
+                                @if ($errors->has('email'))
+                                <span class="helper-text" data-error="wrong" data-success="right">
+                                    <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                         {{-- <div class="form-group form-box">                                                            <label for="state"> Choose Your State </label>
+                            </select>                    @if ($errors->has('state'))
+                                <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                    <strong>{{ $errors->first('state') }}</strong>
+                                </span>
+                                @endif
+                            </div>--}}
+                            <div class="form-group form-box">
+                            <input type="hidden" class="input-text" name="refer" value="{{$referParam}}">
+                             {{--    <p style="color: black;">ffjhgfghfg {{$referParam}}</p>
+                                <p style="color: black;">{{$referParam}}</p> --}}
+
+                            </div>
+                            <div class="form-group form-box clearfix">
+                                <input id="password" type="password" class="input-text" name="password" placeholder="Password" required>
+                                @if ($errors->has('password'))
+                                <span class="helper-text" data-error="wrong" data-success="right">
+                                    <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-group form-box clearfix">
+                                <input class="input-text" placeholder="Confirm Password" type="password" name="password_confirmation" required>
+                            </div>
+                            <div class="form-group form-box clearfix">
+                                <input class="input-text" type="hidden" name="role" value="seller" required>
+                            </div>
+                              {{--   <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="form-group col-md-12">
+                                     <div class="captcha">
+                                        <span>{!! captcha_img('math') !!}</span>
+                                        <button type="button" class="btn btn-success"><i class="fa fa-refresh refresh" ></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="form-group col-md-12">
+                                 <input id="captcha" type="text" class="form-control" placeholder="Enter the answer to the question above" name="captcha" required></div>
+
+                                 @if ($errors->has('captcha'))
+                                 <span class="helper-text" data-error="wrong" data-success="right">
+                                    <strong class="text-danger">  Invalid answer </strong>
+                                </span>
+                                @endif
+
+
+                            </div> --}}
+                            {{-- <h6>Account Type</h6>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                  <select class="custom-select my-1 mr-sm-2"
+                                  id="inlineFormCustomSelectPref" name="role" required>
+                                    <option selected> Choose... </option>
+                                    <option value="seller"> Seller </option>
+                                    <option value="buyer"> Buyer </option>
+                                </select>
+
+                            </div>
+                        </div> --}}
+
+                        <label>
+                            <input type="checkbox" name="terms" class="filled-in" required/>
+                            <span>By registering you accept our <a href="{{route('terms')}}" target="_blank" style="color: blue">Terms of Use</a> and <a href="{{route('privacy')}}" target="_blank" style="color: blue"> Privacy</a> and agree that we and our selected partners may contact you with relevant offers and services.</span>
+                        </label>
+                    <div class="form-group clearfix mb-0">
+                        <button type="submit" class="btn-md btn-warning float-left">Create Account</button>
+                    </div>
+                </form>
+
+                          {{-- @livewire('user.register', ['referParam' => $referParam]) --}}
                     </div>
                 </div>
 
@@ -97,7 +189,7 @@
     </div>
 
 
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $('.refresh').click(function(){
             $.ajax({
                 type:'GET',
@@ -107,9 +199,9 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
-<script>
+{{-- <script>
     function showPassword() {
         var passField = document.getElementById("passwordField");
         if (passField.type === "password") {
@@ -123,10 +215,10 @@
             $("#probonanza").toggleClass('animate__flash');
         }, 4000);
     });
-</script>
+</script> --}}
 
 {{-- reg with paystack --}}
-<script>
+{{-- <script>
     base_Url = "{{url('/')}}"
 
 
@@ -182,7 +274,7 @@
     });
     handler.openIframe();
   }
-  </script>
+  </script> --}}
 
 
 @endsection

@@ -1,4 +1,4 @@
-<form wire:submit.prevent='save_user_without_pay'>
+<form wire:submit.prevent='validate_form'>
     {{-- End form for paystack pay --}}
     {{-- {{ csrf_field() }} --}}
 
@@ -56,7 +56,7 @@
     </div> -->
     <div>
 
-        {{-- <h6>What do you want to do?</h6>
+        <h6>What do you want to do?</h6>
 
 
         <div class="col-lg-12">
@@ -72,7 +72,7 @@
                 <strong class="text-danger">{{ $message }}</strong>
             </span>
             @enderror
-        </div> --}}
+        </div>
 
     </div>
     <div>
@@ -98,7 +98,7 @@
         @endif
     </div>
     </div>
-{{-- @if($role != 'buyer' )
+@if($role != 'buyer' )
      <div>
         <h6>Choose a plan</h6>
         <div class="col-lg-12">
@@ -118,7 +118,7 @@
             @enderror
         </div>
     </div>
-@endif --}}
+@endif
     <div>
         <label>
             <input type="checkbox" name="terms" class="filled-in" wire:model='terms'/>
@@ -151,13 +151,11 @@
 
     <div id="btn-container" class="form-group clearfix mb-0">
         {{-- btn for without pay --}}
-        {{-- <button type="submit" class="btn-md float-left"
-        style="background-color: #cc8a19; color: #fff">Create Account</button> --}}
+        {{-- <button type="submit" class="btn-md float-left" style="background-color: #cc8a19; color: #fff">Create Account</button> --}}
         {{-- btn for pay --}}
-        {{-- <script src="https://js.paystack.co/v1/inline.js"></script> --}}
+        <script src="https://js.paystack.co/v1/inline.js"></script>
 
-        <button id="paystack_btn_control1"
-        type="submit" class="btn-md float-left" style="background-color: #cc8a19; color: #fff">Create Account</button>
+        <button id="paystack_btn_control1" type="submit" class="btn-md float-left" style="background-color: #cc8a19; color: #fff">Create Account</button>
 
         <small id="error_msg_paystack1" class="text-danger"></small>
     </div>
