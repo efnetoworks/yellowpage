@@ -85,6 +85,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return $this->hasMany('\App\Service'); //Product Model Name
     }
 
+    public function isServiceOwner($service)
+    {
+        return $this->id === $service->user->id;
+    }
+
     public function payments()
     {
         return $this->hasMany('\App\Payment'); //Product Model Name
@@ -128,6 +133,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
     public function requests()
     {
         return $this->hasMany('App\PaymentRequest');
+    }
+
+    public function delivery_requests()
+    {
+        return $this->hasMany(DeliveryRequest::class);
     }
 
     public function likes()
