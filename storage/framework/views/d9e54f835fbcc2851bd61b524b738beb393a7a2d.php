@@ -1,3 +1,16 @@
+<div style="background-color: rgba(255, 255, 255, 0.76); padding: 0px; border-top: 10px solid #03a84d; border-bottom: 10px solid #03a84d;">
+    
+    <marquee onmouseover="this.stop();" onmouseout="this.start();" direction="left" style="color: black; font-size: 15px; padding-top: 8px;">
+        <strong>
+            No. 1 &emsp13; e-DIRECTORY IN NIGERIA    ****    PROMOTING EMPLOYMENT BY GIVING YOUTHS ACCESS TO PROSPECTIVE EMPLOYERS NATIONWIDE    ****    PROVIDE GOVERNMENT SKILL ACQUISITION BENEFICIARIES ACCESS TO MARKET & ADVERTISE THEIR PRODUCTS AND SERVICES    ****    PROMOTING THE SMALL AND MEDIUM BUSINESS ENTERPRISES. (SMEs)    ****    PROVIDE A PLATFORM FOR EMPLOYERS TO POST THEIR JOB OPENINGS    ****    DRAWING BUSINESS TRAFFIC TO BUSINESSES FOR BETTER INCOME **** HELPING ARTISANS AND CUSTOMERS FIND EACH OTHER. 
+        </strong>
+    </marquee>
+</div>
+<!-- Previous content -->
+<!-- E.F. CONTACT (efcontact) IS THE NEW OFFICIAL WEBSITE FOR ALL MICRO, SMALL, MEDIUM ENTERPRISES’ (MSMEs) IN NIGERIA. WE ADVERTISE YOUR REQUESTS, PRODUCTS AND SERVICES **** E.F. CONTACT IS THE NEW  MINI-WEBSITE FOR  ANY OR  ALL SMALL BUSINESSES IN NIGERIA WHO LACK A PLATFORM TO SHOW CASE THEIR PRODUCTS, SKILLS OR SERVICES MECHANICS, HAIR DRESSERS, FARMERS, CARPENTERS, SELLERS, GRADUATES LOOKING FOR JOBS, EMPLOYERS OF LABOR, ETC. YOU NAME IT EFCONTACT IS YOUR AFFORDABLE PLATFORM. **** -->
+<!-- Previous content end-->
+
+
 <div class="banner homepage-top-banner" id="banner">
 	<div id="bannerCarousole" class="carousel slide" data-ride="carousel" data-interval="5000">
 		<div class="carousel-inner">

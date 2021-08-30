@@ -1,4 +1,4 @@
-<div class="blog content-area bg-grea-3 hm-feat-ser-mid-sec">
+<div class="blog content-area bg-grea-3 bg-grea-3-hft hm-feat-ser-mid-sec">
     <div class="service-detail-container">
             <!-- Main title -->
         <div class="main-title" style="margin-top: -50px;">
@@ -29,13 +29,14 @@
                                     </div>
                                     <div class="detail">
                                         <div>
-                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 21)); ?></a>
+                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 30)); ?></a>
                                             <a class="title title-mb" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 12)); ?></a>
                                         </div>
 
                                         <ul class="d-flex flex-row justify-content-between info">
                                             <li>
-                                                <i class="fa fa-thumbs-up text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->likes->count()); ?> Likes
+                                                <i class="fa fa-eye text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->views->count()); ?> View<?php echo e($featuredService->views->count() > 1 ? 's' : ''); ?>
+
                                             </li>
                                             <li>
                                                 <a class="pull-right" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>">
@@ -67,13 +68,14 @@
                                     </div>
                                     <div class="detail">
                                         <div>
-                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 21)); ?></a>
+                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 30)); ?></a>
                                             <a class="title title-mb" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 12)); ?></a>
                                         </div>
 
                                         <ul class="d-flex flex-row justify-content-between info">
                                             <li>
-                                                <i class="fa fa-thumbs-up text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->likes->count()); ?> Likes
+                                                <i class="fa fa-eye text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->views->count()); ?> View<?php echo e($featuredService->views->count() > 1 ? 's' : ''); ?>
+
                                             </li>
                                             <li>
                                                 <a class="pull-right" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>">
@@ -105,13 +107,14 @@
                                     </div>
                                     <div class="detail">
                                         <div>
-                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 21)); ?></a>
+                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 30)); ?></a>
                                             <a class="title title-mb" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 12)); ?></a>
                                         </div>
 
                                         <ul class="d-flex flex-row justify-content-between info">
                                             <li>
-                                                <i class="fa fa-thumbs-up text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->likes->count()); ?> Likes
+                                                <i class="fa fa-eye text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->views->count()); ?> View<?php echo e($featuredService->views->count() > 1 ? 's' : ''); ?>
+
                                             </li>
                                             <li>
                                                 <a class="pull-right" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>">
@@ -140,13 +143,14 @@
                                     </div>
                                     <div class="detail">
                                         <div>
-                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 21)); ?></a>
+                                            <a class="title title-dk" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 30)); ?></a>
                                             <a class="title title-mb" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>"><?php echo e(Str::limit($featuredService->name, 12)); ?></a>
                                         </div>
 
                                         <ul class="d-flex flex-row justify-content-between info">
                                             <li>
-                                                <i class="fa fa-thumbs-up text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->likes->count()); ?> Likes
+                                                <i class="fa fa-eye text-warning" aria-hidden="true" style="font-size: 11px;"></i> <?php echo e($featuredService->views->count()); ?> View<?php echo e($featuredService->views->count() > 1 ? 's' : ''); ?>
+
                                             </li>
                                             <li>
                                                 <a class="pull-right" href="<?php echo e(route('serviceDetail', $featuredService->slug)); ?>">
@@ -165,13 +169,7 @@
         <?php endif; ?>
     </div>
 
-    <div id="" class="search-section search-area-2">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <a href="<?php echo e(route('allSellers')); ?>" class="btn font-weight-bold btn-outline-warning">See all Featured Services</a>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 <?php /**PATH C:\xampp\htdocs\yellowpage\resources\views/frontend_section/feature.blade.php ENDPATH**/ ?>

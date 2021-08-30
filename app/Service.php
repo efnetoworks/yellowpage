@@ -154,6 +154,10 @@ public function scopeSearchCategory($query, $category)
         return $this->hasMany('\App\Like'); //Product Model Name
     }
 
+    public function delivery_requests(){
+        return $this->hasMany(DeliveryRequest::class); //Product Model Name
+    }
+
     public function getImageAttribute($value)
     {
         return json_decode($value);

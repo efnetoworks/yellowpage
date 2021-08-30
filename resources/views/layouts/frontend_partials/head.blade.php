@@ -64,7 +64,34 @@
 
 @livewireStyles
 
+<style>
+  .float-ship-btn{
+    position:fixed;
+    /*width:60px;*/
+/*    height: 30px;*/
+    /*bottom:40px;*/
+    z-index: 999999;
+    font-size: 14px;
+    border-top-right-radius: 250px;
+    border-bottom-right-radius: 250px;
+    left:0;
+    background-color:#03A84E;
+    color:#FFF;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+    top: 400px;
+    padding: 10px 15px;
+  }
 
+  .float-ship-btn:hover{
+      background-color: #0e8543;
+      color: rgb(230, 227, 227);
+  }
+
+  .my-float{
+    margin-top:12px;
+  }
+</style>
 
 
 <!-- Facebook Pixel Code -->
