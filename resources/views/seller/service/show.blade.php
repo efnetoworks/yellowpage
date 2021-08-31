@@ -88,11 +88,11 @@
                                 <form>
                                     @csrf
                                     <input id="user_email" type="hidden" name="" value="{{Auth::user()->email}}">
-                                    <input id="featured_amount" type="hidden" name="amount" value="2000">
+                                    <input id="featured_amount" type="hidden" name="amount" value="1000">
                                     <input id="service_id" type="hidden" name="service_id" value="{{$service->id}}">
                                     <script src="https://js.paystack.co/v1/inline.js"></script>
 
-                                    <button id="featuredPay" type="button" class="btn btn-lg" style="cursor: pointer; display: block; margin-top: 5px; background-color: #cc8a19; color: #fff" onclick="payWithPaystack1(2000)">Make Payment</button>
+                                    <button id="featuredPay" type="button" class="btn btn-lg" style="cursor: pointer; display: block; margin-top: 5px; background-color: #cc8a19; color: #fff" onclick="payWithPaystack1(1000)">Make Payment</button>
                                 </form>
 
                             </li>
@@ -225,7 +225,7 @@
                     var handler = PaystackPop.setup({
                         key: paystack_pk,
                         email: document.getElementById("user_email").value,
-                        amount: 200000,
+                        amount: 100000,
                         ref: ''+'FEATURED-'+Math.floor((Math.random() * 1000000000) + 1),
                         metadata: {
                             custom_fields: [{
