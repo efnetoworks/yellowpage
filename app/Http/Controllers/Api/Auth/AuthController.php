@@ -81,7 +81,6 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'referParam'     => ['nullable', 'string', 'max:255'],
             'name'           => ['required', 'string', 'max:255'],
@@ -125,7 +124,7 @@ class AuthController extends Controller
         else{
             $amount = $request->amount;
             $tranxRef = $request->trans_ref;
-            $this->saveUser();
+            $this->saveUser($request);
         }
 
 
@@ -197,8 +196,8 @@ class AuthController extends Controller
                         'error' => 'Unauthorized!'
                     ], 401);
                 }
-                // return $this->respondWithToken($token);
-                  $present_user = $this->guard()->user();
+            // return $this->respondWithToken($token);
+            $present_user = $this->guard()->user();
             // if referrer link is available, save it to referer table
             $link              = new Refererlink();
             $link->user_id     = $present_user->id;
@@ -460,6 +459,10 @@ class AuthController extends Controller
 
     public function saveUser(Request $request)
     {
+        $slug3 = Str::random(8);
+        $random = Str::random(3);
+        $userSlug = Str::of($this->name)->slug('-').''.$random;
+
         // Get id of owner of $link_from_url if available
         if ($request->referParam) {
             $saveIdOfRefree = User::where('refererLink', $request->referParam)->first();
@@ -531,12 +534,125 @@ class AuthController extends Controller
 
                 // return $this->respondWithToken($token);
 
-                return response()->json([
-            'token' => $token,
-            'token_validity' => $token_validity,
-            'token_type' => 'bearer',
-            'user_role' => $this->guard()->user()->role,
-        ]);
+            /* level 1 start */
+            $agent_that_refered = $present_user->idOfAgent;
+            if ($agent_that_refered) {
+                $referer2 = Agent::where('id', $agent_that_refered)->first();
+                if ($referer2) {
+                    $referer2->refererAmount = $referer2->refererAmount + 200;
+
+                    //if my referee is an agent, save my id  as level 1 on the table of the Agent that reffered me
+                    $referer2->level1 = $this->guard()->user()->id;
+                    $referer2->save();
+
+                    $referer2->referals()->create(['user_id' => $this->guard()->user()->id]);
+                }
+            }
+
+        /* end level 1 payment */
+
+            $person_that_refered = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    $person_that_refered2 = $referer->idOfAgent;
+                    if ($person_that_refered2) {
+                        $referer2 = Agent::where('id', $person_that_refered2)->first();
+                        if ($referer2) {
+                            $referer2->refererAmount = $referer2->refererAmount + 150;
+                            $referer2->level2 = $this->guard()->user()->id;
+                            $referer2->save();
+                            // $present_user->level2 = $referer3->id;                    }
+                        }
+                        // $present_user->level2 = $referer3->id;
+                    }
+                }
+            }
+        /* end level 2 payment */
+
+
+            //level 1 referer id
+            $person_that_refered = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                //level 1 referer
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    //level 2 referer id
+                    $person_that_refered2 = $referer->idOfReferer;
+                    //level 2 referer
+                    if ($person_that_refered2) {
+                        $referer3 = User::where('id', $person_that_refered2)->first();
+                        if ($referer3) {
+                            //level 3 agent id
+                            $person_that_refered3 = $referer3->idOfAgent;
+                            if ($person_that_refered3) {
+                                //level 3 agent
+                                $referer4 = Agent::where('id', $person_that_refered3)->first();
+                                if ($referer4) {
+                                    // add amount to level 3 referer amount
+                                    $referer4->refererAmount = $referer4->refererAmount + 100;
+                                    $referer4->level3 = $this->guard()->user()->id;
+                                    $referer4->save();
+                                    // $present_user->level2 = $referer3->id;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        /* End level 3 payment  */
+
+
+        /*  start level 4 payment */
+
+            //level 1 referer id
+            $person_that_refered = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                //level 1 referer
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    //level 2 referer id
+                    $person_that_refered2 = $referer->idOfReferer;
+                    //level 2 referer
+                    if ($person_that_refered2) {
+                        $referer3 = User::where('id', $person_that_refered2)->first();
+                        if ($referer3) {
+                            //level 3 referer id
+                            $person_that_refered3 = $referer3->idOfReferer;
+                            if ($person_that_refered3) {
+                                //level 3 referer
+                                $referer4 = User::where('id', $person_that_refered3)->first();
+
+                                if ($referer4) {
+                                    $person_that_refered4 = $referer4->idOfAgent;
+
+                                    if ($person_that_refered4) {
+                                        $referer5 = Agent::where('id', $person_that_refered4)->first();
+
+                                        if ($referer5) {
+                                            // add amount to level 4 referer amount
+                                            $referer5->refererAmount = $referer5->refererAmount + 50;
+                                            $referer5->level4 = $this->guard()->user()->id;
+                                            $referer5->save();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        /* End level 4 payment */
+
+            // return $this->respondWithToken($token);
+
+            return response()->json([
+        'token' => $token,
+        'token_validity' => $token_validity,
+        'token_type' => 'bearer',
+        'user_role' => $this->guard()->user()->role,
+    ]);
         }
 
     }

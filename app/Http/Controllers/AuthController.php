@@ -26,7 +26,7 @@ use App\Traits\ReusableCode;
 class AuthController extends Controller
 {
     //This is a trait for createSlug code
-        use ReusableCode;
+    use ReusableCode;
 
     public function show_agent_Login(Request $request)
     {
@@ -56,13 +56,13 @@ class AuthController extends Controller
             );
             return redirect()->route('agent.dashboard')->with($success_notification);
         } else {
-        // $success_notification = array(
-        //     'message' => 'Incorrect credentials! Try again.',
-        //     'alert-type' => 'error'
-        // );
-        session()->flash('fail', 'Incorrect username or password');
+            // $success_notification = array(
+            //     'message' => 'Incorrect credentials! Try again.',
+            //     'alert-type' => 'error'
+            // );
+            session()->flash('fail', 'Incorrect username or password');
 
-        return redirect()->route('show_agent_Login');
+            return redirect()->route('show_agent_Login');
 
             //   $success_notification = array(
             //     'fail' => 'You are successfully logged in!',
@@ -110,12 +110,12 @@ class AuthController extends Controller
             $userRole = 'Agent';
 
             try {
-            Mail::to($user->email)->send(new AgentRegistration($messages, $name, $email, $userRole));
+                Mail::to($user->email)->send(new AgentRegistration($messages, $name, $email, $userRole));
             } catch (\Exception $e) {
                 $failedtosendmail = 'Failed to Mail!';
             }
 
-            return back()->with('agent-reg-success', 'Please check your email for verification link! <br><b>'.$user->email.'</b>');
+            return back()->with('agent-reg-success', 'Please check your email for verification link! <br><b>' . $user->email . '</b>');
         }
     }
 
@@ -271,12 +271,11 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'role'     => ['required', Rule::in(['seller', 'buyer']),]
         ]);
-
     }
 
     public function save_buyer(Request $request)
     {
-       $this->validate_form($request);
+        $this->validate_form($request);
         //save user
 
         // $slug3 = Str::random(8);
@@ -322,9 +321,13 @@ class AuthController extends Controller
         //save id of agent if user was brought by agent
         $user->idOfAgent = $request->agent_Id;
         // $user->refererLink = $slug3;
+        $user->refererLink = $this->createRefererLink(new User());
+
         //send mail
 
         if ($user->save()) {
+            session()->forget('current_param');
+
             $name         = "$user->name, Your registration was successfull! Have a great time enjoying our services!";
             $name         = $user->name;
             $email        = $user->email;
@@ -350,6 +353,158 @@ class AuthController extends Controller
             // if (Auth::user()->role == 'buyer') {
             //     return  Redirect::to(session(url()->previous()));
             // }
+
+
+            //level 1 payment start
+
+            $agent_that_refered = $present_user->idOfAgent;
+            if ($agent_that_refered) {
+                $referer2 = Agent::where('id', $agent_that_refered)->first();
+                if ($referer2) {
+                    //if my referee is an agent, save my id  as level 1 on the table of the Agent that reffered me
+                    $referer2->level1 = Auth::id();
+                    $referer2->save();
+
+                    $referer2->referals()->create(['user_id' => Auth::id()]);
+
+                    //if your agent is an efmarketer staff, redirect user to dashboard
+                    if ($referer2->is_ef_marketer) {
+
+                        if (Auth::user()->role == 'seller') {
+                            return redirect()->route('seller.dashboard');
+                        } else if (Auth::user()->role == 'buyer') {
+                            return  Redirect::to(Session::get('url.intended'));
+                        } else {
+                            return redirect()->route('admin.dashboard');
+                        }
+                    }
+                    $referer2->refererAmount = $referer2->refererAmount + 200;
+                    $referer2->save();
+                }
+            }
+
+            //end level 1 payment
+
+            //start level 2
+
+            $person_that_refered = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    $person_that_refered2 = $referer->idOfAgent;
+                    if ($person_that_refered2) {
+                        $referer2 = Agent::where('id', $person_that_refered2)->first();
+                        if ($referer2) {
+                            if ($referer2->level2) {
+                                if (Auth::user()->role == 'seller') {
+                                    return redirect()->route('seller.dashboard');
+                                } else if (Auth::user()->role == 'buyer') {
+                                    return  Redirect::to(Session::get('url.intended'));
+                                } else {
+                                    return redirect()->route('admin.dashboard');
+                                }
+                            }
+
+                            $referer2->refererAmount = $referer2->refererAmount + 150;
+                            $referer2->level2 = Auth::id();
+                            $referer2->save();
+                            // $present_user->level2 = $referer3->id;                    }
+                        }
+
+                        // $present_user->level2 = $referer3->id;
+                    }
+                }
+            }
+            //end level 2 payment
+
+            //level 1 referer id
+            $person_that_refered = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                //level 1 referer
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    //level 2 referer id
+                    $person_that_refered2 = $referer->idOfReferer;
+                    //level 2 referer
+                    if ($person_that_refered2) {
+                        $referer3 = User::where('id', $person_that_refered2)->first();
+                        if ($referer3) {
+                            //level 3 agent id
+                            $person_that_refered3 = $referer3->idOfAgent;
+                            if ($person_that_refered3) {
+                                //level 3 agent
+                                $referer4 = Agent::where('id', $person_that_refered3)->first();
+                                if ($referer4) {
+                                    if ($referer4->level3) {
+                                        if (Auth::user()->role == 'seller') {
+                                            return redirect()->route('seller.dashboard');
+                                        } else if (Auth::user()->role == 'buyer') {
+                                            return  Redirect::to(Session::get('url.intended'));
+                                        }
+                                    }
+
+                                    // add amount to level 3 referer amount
+                                    $referer4->refererAmount = $referer4->refererAmount + 100;
+                                    $referer4->level3 = Auth::id();
+                                    $referer4->save();
+                                    // $present_user->level2 = $referer3->id;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //end level 3 payment
+
+
+            //level 1 referer id
+            $person_that_refered = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                //level 1 referer
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    //level 2 referer id
+                    $person_that_refered2 = $referer->idOfReferer;
+                    //level 2 referer
+                    if ($person_that_refered2) {
+                        $referer3 = User::where('id', $person_that_refered2)->first();
+                        if ($referer3) {
+                            //level 3 referer id
+                            $person_that_refered3 = $referer3->idOfReferer;
+                            if ($person_that_refered3) {
+                                //level 3 referer
+                                $referer4 = User::where('id', $person_that_refered3)->first();
+                                if ($referer4) {
+
+                                    $person_that_refered4 = $referer4->idOfAgent;
+
+                                    if ($person_that_refered4) {
+                                        $referer5 = Agent::where('id', $person_that_refered4)->first();
+
+                                        if ($referer5) {
+                                            if ($referer5->level4) {
+                                                if (Auth::user()->role == 'seller') {
+                                                    return redirect()->route('seller.dashboard');
+                                                } else if (Auth::user()->role == 'buyer') {
+                                                    return  Redirect::to(Session::get('url.intended'));
+                                                }
+                                            }
+
+                                            // add amount to level 4 referer amount
+                                            $referer5->refererAmount = $referer5->refererAmount + 50;
+                                            $referer5->level4 = Auth::id();
+                                            $referer5->save();
+                                            // $present_user->level2 = $referer3->id;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // end level 4 payment
             if (Auth::user()->role == 'seller') {
                 return redirect()->route('seller.dashboard');
             }
@@ -745,7 +900,7 @@ class AuthController extends Controller
 
 
 
-         if ($current_param) {
+        if ($current_param) {
             $referParam = $current_param;
         }
 
@@ -790,7 +945,7 @@ class AuthController extends Controller
         // 	  return redirect('/')->with($success_notification)->withErrors($validator)->withInput();
         // }
 
-        $remember_me  = ( !empty( $request->remember ) )? TRUE : FALSE;
+        $remember_me  = (!empty($request->remember)) ? TRUE : FALSE;
 
         $credentials = $request->only('email', 'password');
 
@@ -830,14 +985,13 @@ class AuthController extends Controller
                     'alert-type' => 'success'
                 );
                 return redirect()->route('cmo.dashboard')->with($success_notification);
-            }  elseif (Auth::user()->role == 'customerservice') {
+            } elseif (Auth::user()->role == 'customerservice') {
                 $success_notification = array(
                     'message' => 'You are successfully logged in!',
                     'alert-type' => 'success'
                 );
                 return redirect()->route('customer_service.dashboard')->with($success_notification);
-            }
-            else if (Auth::user()->role == 'data') {
+            } else if (Auth::user()->role == 'data') {
                 $success_notification = array(
                     'message' => 'You are successfully logged in!',
                     'alert-type' => 'success'
@@ -878,14 +1032,14 @@ class AuthController extends Controller
         return view('auth/login');
     }
 
-     public function addSlug()
-        {
+    public function addSlug()
+    {
         $buyers = User::where('slug', null)->get();
         foreach ($buyers as $buyer) {
-        $random = Str::random(3);
-        $slug = Str::of($buyer->name)->slug('-').''.$random;
-        $buyer->slug = $slug;
-        $buyer->save();
+            $random = Str::random(3);
+            $slug = Str::of($buyer->name)->slug('-') . '' . $random;
+            $buyer->slug = $slug;
+            $buyer->save();
         }
 
         // Category::orderBy('id', 'asc')->paginate(35);
@@ -894,17 +1048,17 @@ class AuthController extends Controller
 
     public function addSlug4Agents()
     {
-    $agents = Agent::where('slug', null)->get();
-    foreach ($agents as $agent) {
-    // $random = Str::random(3);
-    // $slug = Str::of($buyer->name)->slug('-').''.$random;
-    $buyer->slug = $this->createSlug($request->name, new Agent());
-    $buyer->save();
-    }
+        $agents = Agent::where('slug', null)->get();
+        foreach ($agents as $agent) {
+            // $random = Str::random(3);
+            // $slug = Str::of($buyer->name)->slug('-').''.$random;
+            $buyer->slug = $this->createSlug($request->name, new Agent());
+            $buyer->save();
+        }
 
-    // Category::orderBy('id', 'asc')->paginate(35);
-    return redirect()->route('home');
-}
+        // Category::orderBy('id', 'asc')->paginate(35);
+        return redirect()->route('home');
+    }
 
     public function updateProfile(Request $request, $id)
     {
@@ -918,7 +1072,7 @@ class AuthController extends Controller
 
         // Image set up
         if ($request->hasFile('file')) {
-            $image_name = Str::of($request->name)->slug('-').'-'.time().'.' . $request->file->extension();
+            $image_name = Str::of($request->name)->slug('-') . '-' . time() . '.' . $request->file->extension();
             $request->file->move(public_path('uploads/users'), $image_name);
             $user->image = $image_name;
         }

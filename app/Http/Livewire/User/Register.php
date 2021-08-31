@@ -250,9 +250,6 @@ class Register extends Component
                 $failedtosendmail = 'Failed to Mail!';
             }
         }
-
-
-
         if (Auth::check()) {
             $present_user = Auth::user();
             // if referrer link is available, save it to referer table
@@ -284,16 +281,6 @@ class Register extends Component
             }
 
             $current_date_time = Carbon::now()->toDateTimeString();
-
-            // $sub_check = new ProviderSubscription();
-            // $sub_check->user_id = Auth::id();
-            // $sub_check->sub_type = $sub_type;
-            // $sub_check->user_type = 'provider';
-            // $sub_check->last_amount_paid = $this->plan;
-            // $sub_check->subscription_end_date = Carbon::now()->addDays($added_days);
-            // $sub_check->last_subscription_starts = $current_date_time;
-            // $sub_check->save();
-
 
             Auth::user()->subscriptions()->create(['sub_type' => $sub_type,
              'last_amount_paid' => $this->plan,
