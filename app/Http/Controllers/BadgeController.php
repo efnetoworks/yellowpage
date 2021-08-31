@@ -156,9 +156,9 @@ class BadgeController extends Controller
 		$services = Service::where('user_id', Auth::id() )->get();
 
         $badge_data = [
-            'badge_one_cost' => 15000,
-            'badge_two_cost' => 10000,
-            'badge_three_cost' => 5000
+            'badge_one_cost' => 7000,
+            'badge_two_cost' => 5000,
+            'badge_three_cost' => 3000
         ];
 
 		return view('seller.service.service_badges', compact('services', 'badge_data'));

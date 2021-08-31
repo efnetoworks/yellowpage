@@ -99,7 +99,7 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="form-label" id="servicePriceRange">How much do you want to charge for this service?</label>
+                                                <label class="form-label" id="servicePriceRange">How much do you want to charge for this service?</label><small class="text-danger">*</small>
                                                 <input id="min_price" type="text" value="{{ old('min_price') }}" placeholder="Enter the amount you want on this service (e.g. 20000)" name="min_price" class="form-control">
                                             </div>
                                         </div>
@@ -182,7 +182,7 @@
                                                     <input id="featured" class="form-check-input" type="checkbox" value="1" name="is_featured" onclick="featuredCheckbox()">
                                                     <label class="form-check-label" for="featured"> Do you want this service featured?  <small class="infoLinkNote">(<a data-toggle="modal" data-target="#featuredInfoModal">How it works?</a>)</small></label>
                                                 </div>
-                                                <p id="featuredText" class="text-info">This will attract a fee of &#8358;2000 which will be paid before the service is displayed.</p>
+                                                <p id="featuredText" class="text-info">This will attract a fee of &#8358;1000 which will be paid before the service is displayed.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
                                         <span> Back</span>
                                     </a>
 
-                                    <button id="save_btn"  class="btn btn-warning btn-submit_service btn-lg m-t-15 waves-effect">
+                                    <button id="save_btn" class="btn btn-warning btn-submit_service btn-lg m-t-15 waves-effect">
                                         <span>Next </span>
                                         <i class="fa fa-arrow-right"></i>
                                     </button>
@@ -461,7 +461,7 @@
                                             <input id="swfeatured" class="form-check-input" type="checkbox" value="1" name="is_featured" onclick="swfeaturedCheckbox()">
                                             <label class="form-check-label" for="swfeatured"> Do you want this CV featured?  <small class="infoLinkNote">(<a data-toggle="modal" data-target="#featuredInfoModal">How it works?</a>)</small></label>
                                         </div>
-                                        <p id="swfeaturedText" class="text-info">This will attract a fee of &#8358;2000 which will be paid before the service is displayed.</p>
+                                        <p id="swfeaturedText" class="text-info">This will attract a fee of &#8358;1000 which will be paid before the service is displayed.</p>
                                     </div>
                                 </div>
 

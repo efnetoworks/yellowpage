@@ -134,7 +134,7 @@ class SellerController extends Controller
         $service->max_price = $data['category_id'];
         $service->video_link = $data['video_link'];
         // $service->subscription_end_date = Auth::user()->subscription_end_date;
-        $service->subscription_end_date =  Auth::user()->subscriptions->first()->subscription_end_date;
+        // $service->subscription_end_date =  Auth::user()->subscriptions->first()->subscription_end_date;
 
 
 
@@ -311,9 +311,11 @@ class SellerController extends Controller
         }
     }
 
-    public function create_pay_featured(Request $request)
+      public function create_pay_featured(Request $request)
     {
+
         $data = $request->all();
+        // return ($data['amount']);
         $this->validate($request, [
             'service_id' => 'required',
             'email' => 'required',
@@ -582,7 +584,7 @@ class SellerController extends Controller
     public function pendingDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 0)->get();
 
         return view('seller.dispatch.pending', [
@@ -593,7 +595,7 @@ class SellerController extends Controller
     public function transitDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 1)->get();
 
         return view('seller.dispatch.transit', [
@@ -604,7 +606,7 @@ class SellerController extends Controller
     public function deliveredDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = DeliveryRequest::where('user_id',$user->id)->where('is_delivered', 1)->get();
 
         return view('seller.dispatch.delivered', [
@@ -615,7 +617,7 @@ class SellerController extends Controller
     public function historyDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = User::find($user->id)->delivery_requests;
 
         return view('seller.dispatch.history', [
