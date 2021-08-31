@@ -291,6 +291,7 @@ Route::middleware(['auth:logistic'])->prefix('logistics')->group(function () {
     Route::get('details/{id}', 'LogisticController@details')->name('logistic.request.detail');
     Route::put('/set-transit-mode/{id}', 'LogisticController@transitMode')->name('logistic.transit.mode');
     Route::put('/product-delivered/{id}', 'LogisticController@deliveredMode')->name('logistic.delivered.mode');
+    Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
 
 });
 

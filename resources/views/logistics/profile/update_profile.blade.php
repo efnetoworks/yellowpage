@@ -24,10 +24,24 @@ Update Profile |
 				<div class="box box-warning">
 					<div class="box-body box-profile">
 
-						<img class="profile-user-img img-responsive img-circle" src="{{ Auth::guard('logistic')->user()->image == null ? '/images/user-icon.png' : '/images/'.''.Auth::guard('logistic')->user()->image  }}" alt="User profile picture">
+						<img class="profile-user-img img-responsive img-circle" src="{{ Auth::guard('logistic')->user()->image = null ? '/images/user-icon.png' : asset("/storage/".Auth::guard('logistic')->user()->profile_image) }}" alt="User profile picture">
 
 						<h3 class="profile-username text-center"> {{ Auth::guard('logistic')->user()->name }} </h3>
+						<form action="{{ route('logistic.upload.image') }}" method="POST" enctype="multipart/form-data">
+							@csrf
+							@method('PUT')
+							<div class="text-center" style="padding-top: 10px;">
+								<div class="custom-file">
+								  <input type="file" class="custom-file-input" id="customFile" name="profile_image" style="padding-left: 150px; display: none;">
+								  <label class="custom-file-label" for="customFile">Click to choose profile image/logo</label>
+								</div>
 
+								<div class="form-group">
+									<button type="submit" class="btn btn-warning">Upload</button>
+								</div>
+							</div>
+							
+						</form>
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="profile-user-info">
