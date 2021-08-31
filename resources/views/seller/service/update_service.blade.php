@@ -119,7 +119,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Sub Category <small class="text-info">(You can select multiple sub category)</small></label>
+                            <label>Sub Category <small class="text-info">(You can select multiple sub-categories)</small></label>
                             <select name="sub_category[]" class="form-control show-tick" id="sub_categories" multiple>
                                 {{-- @foreach($subcategory as $subcategories)
                                     <option value="{{ $subcategories->id }}" {{ $service->category_id == $subcategories->category_id  ? 'selected' : '' }}> {{ $subcategories->name }} </option>
