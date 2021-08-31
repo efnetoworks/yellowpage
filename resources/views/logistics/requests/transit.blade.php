@@ -1,6 +1,6 @@
 @extends('layouts.logistic')
 
-@section('title', 'Requests in transit| ')
+@section('title', 'Requests in transit | ')
 
 @section('content')
 

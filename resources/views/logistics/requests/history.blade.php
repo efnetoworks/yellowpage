@@ -1,6 +1,6 @@
 @extends('layouts.logistic')
 
-@section('title', 'History| ')
+@section('title', 'History | ')
 
 @section('content')
 

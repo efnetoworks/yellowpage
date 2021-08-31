@@ -81,13 +81,13 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6 top-box-card">
                     <div class="info-box">
-                        <a href="">
+                        <a href="{{ route('logistics_payment_history') }}">
                             <span class="info-box-icon push-bottom bg-warning">
                                 <i class="fa fa-users text-white" aria-hidden="true"></i>
                             </span>
                             <div class="info-box-content">
                                 <span class="info-box-text"> My Requests </span>
-                                <span class="info-box-number"> {{ count($requests) }} </span>
+                                <span class="info-box-number"> {{ $requests_count }} </span>
                             </div>
                             <!-- /.info-box-content -->
                         </a>
