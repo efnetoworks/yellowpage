@@ -125,14 +125,14 @@ class AuthController extends Controller
         else{
             $amount = $request->amount;
             $tranxRef = $request->trans_ref;
-            $this->saveUser($amount, $tranxRef);
+            $this->saveUser();
         }
 
 
     }
 
 
-    public function saveUser($amount, $tranxRef, Request $request)
+    public function saveUserWithPay($amount, $tranxRef, Request $request)
     {
         $slug3 = Str::random(8);
 
@@ -225,7 +225,7 @@ class AuthController extends Controller
             }
 
             $current_date_time = Carbon::now()->toDateTimeString();
-            $this->guard()->user()->subscriptions()->create(['sub_type' => $sub_type, 
+            $this->guard()->user()->subscriptions()->create(['sub_type' => $sub_type,
             'subscription_end_date' => Carbon::now()->addDays($added_days),
             'trans_ref' => $tranxRef,
             'email' => $this->guard()->user()->email ]);
@@ -442,6 +442,92 @@ class AuthController extends Controller
                 }
 
             /* End level 4 payment */
+
+                // return $this->respondWithToken($token);
+
+                return response()->json([
+            'token' => $token,
+            'token_validity' => $token_validity,
+            'token_type' => 'bearer',
+            'user_role' => $this->guard()->user()->role,
+        ]);
+        }
+
+    }
+
+
+
+
+    public function saveUser(Request $request)
+    {
+        // Get id of owner of $link_from_url if available
+        if ($request->referParam) {
+            $saveIdOfRefree = User::where('refererLink', $request->referParam)->first();
+            if ($saveIdOfRefree) {
+                $request->refererId = $saveIdOfRefree->id;
+            } else {
+                return response()->json([
+                    'error' => 'The referer link used is incorrect. Please Confirm the correct link or register without a link!'
+                ], 422);
+            }
+        }
+
+        // Get id of owner of $agent code if available
+        if ($request->agent_code) {
+            $saveIdOfAgent = Agent::where('agent_code', $request->agent_code)->first();
+            if ($saveIdOfAgent) {
+                $request->agent_Id = $saveIdOfAgent->id;
+            } else {
+                return response()->json([
+                    'error' => 'Your agent code is incorrect. Please Confirm the correct agent code or register without a code'
+                ], 422);
+            }
+        }
+
+        //save user
+        $user           = new User;
+        $user->name     = $request->name;
+        $user->email    = $request->email;
+        $user->phone    = $request->phone;
+        $user->password = Hash::make($request->password);
+        $user->role     = 'seller';
+        $user->slug = $this->createSlug($request->name, new User());
+        //save id of referer if user was reffererd
+        $user->idOfReferer = $request->refererId;
+        //save id of agent if user was brought by agent
+        $user->idOfAgent = $request->agent_Id;
+        $user->refererLink = $this->createRefererLink(new User());
+        //send mail
+
+        if ($user->save()) {
+            $name         = "$user->name, Your registration was successfull! Have a great time enjoying our services!";
+            $name         = $user->name;
+            $email        = $user->email;
+            $origPassword = $request->password;
+            $userRole     = $user->role;
+
+            try {
+                Mail::to($user->email)->send(new UserRegistered($name, $email, $origPassword, $userRole));
+            } catch (\Exception $e) {
+                $failedtosendmail = 'Failed to Mail!';
+            }
+        $token_validity = (1680 * 60);
+
+                $this->guard()->factory()->setTTL($token_validity);
+                $credentials = $request->only(['email', 'password']);
+
+                if (!$token = $this->guard()->attempt($credentials)) {
+                    return response()->json([
+                        'error' => 'Unauthorized!'
+                    ], 401);
+                }
+                // return $this->respondWithToken($token);
+                  $present_user = $this->guard()->user();
+            // if referrer link is available, save it to referer table
+            $link              = new Refererlink();
+            $link->user_id     = $present_user->id;
+            $link->refererlink = $present_user->refererLink;
+            $link->save();
 
                 // return $this->respondWithToken($token);
 

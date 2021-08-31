@@ -311,9 +311,11 @@ class SellerController extends Controller
         }
     }
 
-    public function create_pay_featured(Request $request)
+      public function create_pay_featured(Request $request)
     {
+
         $data = $request->all();
+        // return ($data['amount']);
         $this->validate($request, [
             'service_id' => 'required',
             'email' => 'required',

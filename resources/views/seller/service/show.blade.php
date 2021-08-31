@@ -92,7 +92,8 @@
                                     <input id="service_id" type="hidden" name="service_id" value="{{$service->id}}">
                                     <script src="https://js.paystack.co/v1/inline.js"></script>
 
-                                    <button id="featuredPay" type="button" class="btn btn-lg" style="cursor: pointer; display: block; margin-top: 5px; background-color: #cc8a19; color: #fff" onclick="payWithPaystack1(1000)">Make Payment</button>
+                                    <button id="featuredPay" type="button" class="btn btn-lg" style="cursor: pointer;
+                                    display: block; margin-top: 5px; background-color: #cc8a19; color: #fff" onclick="payWithPaystack1(1000)">Make Payment</button>
                                 </form>
 
                             </li>
@@ -217,7 +218,7 @@
                 var service_id = document.getElementById("service_id").value;
                 function payWithPaystack1() {
 
-                    // return;
+                    // return console.log('sasas');
                      const featuredButton = document.getElementById("featuredPay");
                         // $("#featuredPay").attr("disabled", true);
                         featuredButton.disabled  = true;
@@ -235,6 +236,7 @@
                             }]
                         },
                         callback: function(response) {
+                            // return console.log('sasas');
                             const featuredButton = document.getElementById("featuredPay");
                             featuredButton.disabled  = true;
                             var email = document.getElementById("user_email").value;
@@ -255,6 +257,8 @@
                               },
                               success: function (data) {
                                   console.log(data)
+                                  toastr.success("Your Service has been successfully featured");
+
                               },
                               error: function(error) {
                                   console.log(error)
