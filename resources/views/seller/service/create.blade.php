@@ -98,8 +98,8 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <div class="form-group"><small class="text-danger">*</small>
-                                                <label class="form-label" id="servicePriceRange">How much do you want to charge for this service?</label>
+                                            <div class="form-group">
+                                                <label class="form-label" id="servicePriceRange">How much do you want to charge for this service?</label><small class="text-danger">*</small>
                                                 <input id="min_price" type="text" value="{{ old('min_price') }}" placeholder="Enter the amount you want on this service (e.g. 20000)" name="min_price" class="form-control">
                                             </div>
                                         </div>
