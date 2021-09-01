@@ -314,6 +314,9 @@
         .postServiceModal .modal-body{
             padding: 10px !important;
         }
+        .navbar-top-post-btn{
+            margin-top: -20px;
+        }
     }
 
 </style>
@@ -326,25 +329,26 @@
         @include('layouts.backend_partials.status')
 
         <section class="content-header">
-
-            @if(isset($linkcheck->refererlink))
-            <div class="refererArea">
-                <h4>My Referral Link <small class="infoLinkNote">(<a data-toggle="modal" data-target="#referralInfoModal">How it works?</a>)</small></h4>
-                <div class="referralContainer">
-                    <div>
-                        <button class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink}}" onclick="copyToClipboard('#refererlinkText') ">
-                            Click here to copy link
-                        </button>
+            @if (Auth::user()->is_ef_marketer == 0)
+                @if(isset($linkcheck->refererlink))
+                    <div class="refererArea">
+                        <h4>My Referral Link <small class="infoLinkNote">(<a data-toggle="modal" data-target="#referralInfoModal">How it works?</a>)</small></h4>
+                        <div class="referralContainer">
+                            <div>
+                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink}}" onclick="copyToClipboard('#refererlinkText') ">
+                                    Click here to copy link
+                                </button>
+                            </div>
+                            <div>
+                                <p id="refererlinkText" hidden>{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}</p>
+                            </div>
+                            {{-- <div style="padding-top: 5px; padding-left:5px">
+                                <div class="addthis_inline_share_toolbox_k39l" data-url="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}" data-title="Your Referral Link 👍"></div>
+                                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60643ce977f333d6"></script>
+                            </div> --}}
+                        </div>
                     </div>
-                    <div>
-                        <p id="refererlinkText" hidden>{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}</p>
-                    </div>
-                    {{-- <div style="padding-top: 5px; padding-left:5px">
-                        <div class="addthis_inline_share_toolbox_k39l" data-url="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}" data-title="Your Referral Link 👍"></div>
-                        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60643ce977f333d6"></script>
-                    </div> --}}
-                </div>
-            </div>
+                @endif
             @endif
             <div>
                 <p class="navbar-top-post-btn">
