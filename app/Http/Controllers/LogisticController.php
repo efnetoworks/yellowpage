@@ -15,6 +15,9 @@ use App\State;
 use App\Local_government;
 use App\DeliveryRequest;
 use Illuminate\Support\Facades\Mail;
+use Closure;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 
 class LogisticController extends Controller
 {
@@ -73,7 +76,7 @@ class LogisticController extends Controller
     //end notifications
     public function registerLogistics()
     {
-        if(Auth::guard('logistic')) {
+        if(Auth::guard('logistic')->check()) {
             return redirect()->route('logistics_dashboard');
         }
         return view('auth.register_logistics');
@@ -144,7 +147,7 @@ class LogisticController extends Controller
 
     public function loginView()
     {
-        if(Auth::guard('logistic')) {
+        if(Auth::guard('logistic')->check()) {
             return redirect()->route('logistics_dashboard');
         }
         return view('auth.login_logistics');
@@ -190,19 +193,32 @@ class LogisticController extends Controller
     
     public function dashboard()
     {
+        //check if dispatch company is logged in 
 
-        if(Auth::guard('logistic')->user()->phone = '' || Auth::guard('logistic')->user()->identification_type = '' || Auth::guard('logistic')->user()->identification_id = '' || Auth::guard('logistic')->user()->bvn = '')
+        if(Auth::guard('logistic')->check())
         {
+            //get the authenticated dispatch company
+            $dispatch_company = Auth::guard('logistic')->user();
+            
+            //check if credentials are incomplete
+            if($dispatch_company->phone == '' || $dispatch_company->identification_type == '' || $dispatch_company->identification_id == '' || $dispatch_company->bvn == '')
+            {
+                
+                //if either has been provided redirect dispatch company to profile page with error message
+                return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+            }
 
-            return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+            //if credentials are complete, get all of the company's requests
+            $requests = Logistic::find($dispatch_company->id)->delivery_request;
+            $requests_count = DeliveryRequest::where('logistic_id', $dispatch_company->id)->count();
+
+            return view('logistics.dashboard', [
+                'requests' => $requests,
+                'requests_count' => $requests_count
+            ]);
+
         }
 
-        $user = Auth::guard('logistic')->user();
-        $requests = Logistic::find($user->id)->delivery_requests;
-
-        return view('logistics.dashboard', [
-            'requests' => $requests
-        ]);
     }
 
     public function logisticProfile()
@@ -215,7 +231,7 @@ class LogisticController extends Controller
 
     public function updateProfile(Request $request)
     {
-        if(Auth::check())
+        if(Auth::guard('logistic')->check())
         {
             $this->validate($request, [
             'phone' => 'required'
@@ -241,7 +257,7 @@ class LogisticController extends Controller
 
     public function updateId(Request $request)
     {
-        if(Auth::check())
+        if(Auth::guard('logistic')->check())
         {
             $this->validate($request, [
                 'identification_type' => 'required',
@@ -264,16 +280,33 @@ class LogisticController extends Controller
 
         }
     }
+    public function check_if_profile_is_complete()
+    {
 
+        //check if credentials are incomplete
+        if(Auth::guard('logistic')->user()->phone == '' || Auth::guard('logistic')->user()->identification_type == '' || Auth::guard('logistic')->user()->identification_id == '' || Auth::guard('logistic')->user()->bvn == '')
+        {
+            return true;
+            
+        }
+
+        return false;
+        // return view($view, $params);
+        
+    }
 
     public function delivered()
     {
-        if(Auth::guard('logistic')->user()->phone = '' || Auth::guard('logistic')->user()->identification_type = '' || Auth::guard('logistic')->user()->identification_id = '' || Auth::guard('logistic')->user()->bvn = '')
-        {
+        $delivered_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 1)->where('in_transit', 0)->get();
+        
+        $incomplete = $this->check_if_profile_is_complete();
 
+        if($incomplete)
+        {
             return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
         }
-        $delivered_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 1)->where('in_transit', 0)->get();
+        
+        
         return view('logistics.requests.delivered', [
             'requests' => $delivered_requests
         ]);
@@ -281,9 +314,10 @@ class LogisticController extends Controller
 
     public function history()
     {
-        if(Auth::guard('logistic')->user()->phone = '' || Auth::guard('logistic')->user()->identification_type = '' || Auth::guard('logistic')->user()->identification_id = '' || Auth::guard('logistic')->user()->bvn = '')
-        {
+        $incomplete = $this->check_if_profile_is_complete();
 
+        if($incomplete)
+        {
             return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
         }
 
@@ -296,9 +330,10 @@ class LogisticController extends Controller
 
     public function incomingRequests()
     {
-        if(Auth::guard('logistic')->user()->phone = '' || Auth::guard('logistic')->user()->identification_type = '' || Auth::guard('logistic')->user()->identification_id = '' || Auth::guard('logistic')->user()->bvn = '')
-        {
+        $incomplete = $this->check_if_profile_is_complete();
 
+        if($incomplete)
+        {
             return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
         }
 
@@ -311,9 +346,10 @@ class LogisticController extends Controller
 
     public function requestsInTransit()
     {
-        if(Auth::guard('logistic')->user()->phone = '' || Auth::guard('logistic')->user()->identification_type = '' || Auth::guard('logistic')->user()->identification_id = '' || Auth::guard('logistic')->user()->bvn = '')
-        {
+        $incomplete = $this->check_if_profile_is_complete();
 
+        if($incomplete)
+        {
             return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
         }
 
@@ -366,6 +402,45 @@ class LogisticController extends Controller
         }
 
         return redirect()->back()->with($this->transit_success());
+    }
+
+    public function profileImage(Request $request)
+    {
+        if(Auth::guard('logistic')->check())
+        {
+            $this->validate($request, [
+                'profile_image' => 'required|image'
+            ]);
+
+            // if ( $request->hasFile('profile_image') ) {
+            //   $image_name = time().'.'.$request->profile_image->extension();
+            //   $request->profile_image->move(public_path('uploads/logistics'),$image_name);
+            //   $request->profile_image = $image_name;
+            // }
+
+            $image = $request->profile_image->store('uploads/logistics', 'public');
+
+
+            $get_user = Auth::guard('logistic')->user();
+
+            //check if there's an existing image
+            if($request->hasFile('profile_image'))
+            {
+                Storage::disk('public')->delete($get_user->image);
+                $image = $request->profile_image->store('uploads/logistics', 'public');
+                // $path = public_path('uploads/logistics/').$get_user->profile_image;
+                // if (file_exists($path)) {
+                //     unlink($path);
+                // }
+            }
+
+            // $image = $request->profile_image->public('uploads/logistics', 'public');
+            DB::table('logistics')->where('id', '=', $get_user->id)->update(['profile_image' => $image ?? $get_user->profile_image]);
+
+            return redirect()->back()->with($this->success_notice_profile());
+
+
+        }
     }
 
 
