@@ -314,6 +314,9 @@
         .postServiceModal .modal-body{
             padding: 10px !important;
         }
+        .navbar-top-post-btn{
+            margin-top: -20px;
+        }
     }
 
 </style>
@@ -326,25 +329,26 @@
         @include('layouts.backend_partials.status')
 
         <section class="content-header">
-
-            @if(isset($linkcheck->refererlink))
-            <div class="refererArea">
-                <h4>My Referral Link <small class="infoLinkNote">(<a data-toggle="modal" data-target="#referralInfoModal">How it works?</a>)</small></h4>
-                <div class="referralContainer">
-                    <div>
-                        <button class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink}}" onclick="copyToClipboard('#refererlinkText') ">
-                            Click here to copy link
-                        </button>
+            @if (Auth::user()->is_ef_marketer == 1)
+                @if(isset($linkcheck->refererlink))
+                    <div class="refererArea">
+                        <h4>My Referral Link <small class="infoLinkNote">(<a data-toggle="modal" data-target="#referralInfoModal">How it works?</a>)</small></h4>
+                        <div class="referralContainer">
+                            <div>
+                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink}}" onclick="copyToClipboard('#refererlinkText') ">
+                                    Click here to copy link
+                                </button>
+                            </div>
+                            <div>
+                                <p id="refererlinkText" hidden>{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}</p>
+                            </div>
+                            {{-- <div style="padding-top: 5px; padding-left:5px">
+                                <div class="addthis_inline_share_toolbox_k39l" data-url="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}" data-title="Your Referral Link 👍"></div>
+                                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60643ce977f333d6"></script>
+                            </div> --}}
+                        </div>
                     </div>
-                    <div>
-                        <p id="refererlinkText" hidden>{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}</p>
-                    </div>
-                    {{-- <div style="padding-top: 5px; padding-left:5px">
-                        <div class="addthis_inline_share_toolbox_k39l" data-url="{{ url('/register') . '/' . '?' . 'invite' . '=' . $linkcheck->refererlink }}" data-title="Your Referral Link 👍"></div>
-                        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60643ce977f333d6"></script>
-                    </div> --}}
-                </div>
-            </div>
+                @endif
             @endif
             <div>
                 <p class="navbar-top-post-btn">
@@ -572,31 +576,32 @@
                     </div>
                     <!-- /.info-box -->
                 </div>
+                @if (Auth::user()->is_ef_marketer == 1)
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                        <div class="info-box">
+                            <span class="info-box-icon push-bottom bg-warning">
+                                <i class="fa fa-money text-white" aria-hidden="true"></i>
+                            </span>
+                            <div class="info-box-content">
+                                @if (Auth::user()->is_ef_marketer == 0)
+                                <span class="info-box-text"> Referral Bonus: <br> &#8358;{{$accruedAmount ?? 0}}</span>
+                                @else
+                                <span class="info-box-text"> Total Referrals: <br>{{Auth::user()->referals->count() ?? 0}}</span>
+                                @endif
+                                {{-- <span class="progress-description">
+                                    <button class="btn btn-success btn-sm" style="cursor: pointer; display: block; margin-top: 5px;" data-toggle="modal" data-target="#exampleModal">Make Withdrawal</button>
+                                </span> --}}
+                                {{-- <div class="progress">
+                                    <div class="progress-bar progress-bar-danger" style="width: {{$accruedAmount ?? 0}}%"></div>
+                                </div> --}}
 
-                <div class="col-md-3 col-sm-6 col-xs-6">
-                    <div class="info-box">
-                        <span class="info-box-icon push-bottom bg-warning">
-                            <i class="fa fa-money text-white" aria-hidden="true"></i>
-                        </span>
-                        <div class="info-box-content">
-                            @if (Auth::user()->is_ef_marketer == 0)
-                            <span class="info-box-text"> Referral Bonus: <br> &#8358;{{$accruedAmount ?? 0}}</span>
-                            @else
-                            <span class="info-box-text"> Total Referrals: <br>{{Auth::user()->referals->count() ?? 0}}</span>
-                            @endif
-                            {{-- <span class="progress-description">
-                                <button class="btn btn-success btn-sm" style="cursor: pointer; display: block; margin-top: 5px;" data-toggle="modal" data-target="#exampleModal">Make Withdrawal</button>
-                            </span> --}}
-                            {{-- <div class="progress">
-                                <div class="progress-bar progress-bar-danger" style="width: {{$accruedAmount ?? 0}}%"></div>
-                            </div> --}}
-
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-                        <!-- /.info-box-content -->
+                        <!-- /.info-box -->
                     </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
+                    <!-- /.col -->
+                @endif
             </div>
 
 
