@@ -402,7 +402,7 @@
         <ul class="treeview-menu">
           <li><a href=" {{ route('admin.users_yesterday') }} "><i class="fa fa-circle-o"></i> Yesterday </a></li>
           <li><a href=" {{ route('admin.users_last_week') }} "><i class="fa fa-circle-o"></i> One Week  </a></li>
-          <li><a href=" {{ route('admin.users_last_month') }} "><i class="fa fa-circle-o"></i> One Month </a></li>
+          {{-- <li><a href=" {{ route('admin.users_last_month') }} "><i class="fa fa-circle-o"></i> One Month </a></li> --}}
         </ul>
       </li>
 
