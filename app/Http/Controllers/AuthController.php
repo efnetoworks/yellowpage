@@ -317,7 +317,7 @@ class AuthController extends Controller
         $user->role     = 'seller';
         $user->slug     = $this->createSlug($request->name, new User());
         //save id of referer if user was reffererd
-        // $user->idOfReferer = $request->refererId;
+        $user->idOfReferer = $request->refererId;
         //save id of agent if user was brought by agent
         $user->idOfAgent = $request->agent_Id;
         // $user->refererLink = $slug3;
@@ -356,6 +356,26 @@ class AuthController extends Controller
 
 
             //level 1 payment start
+            $person_that_refered = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    $referer->referals()->create(['user_id' => Auth::id()]);
+                    //save my id  as level 1 on the table of the one that reffered me
+                    $referer->level1 = Auth::id();
+                    $referer->save();
+
+                    //if your referer is an efmarketer staff, redirect user to dashboard
+                    if ($referer->is_ef_marketer) {
+
+                        if (Auth::user()->role == 'seller') {
+                            return redirect()->route('seller.dashboard');
+                        } else {
+                            return redirect()->route('admin.dashboard');
+                        }
+                    }
+                }
+            }
 
             $agent_that_refered = $present_user->idOfAgent;
             if ($agent_that_refered) {
