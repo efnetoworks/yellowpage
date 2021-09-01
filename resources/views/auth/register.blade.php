@@ -25,7 +25,9 @@
         background: #fff;
         outline: none;
         z-index: 1;
+        position: relative;
     }
+
     .registerSidebar h6{
         color: #af7615
     }
@@ -85,14 +87,20 @@
                                 <p style="color: black;">{{$referParam}}</p> --}}
 
                             </div>
-                            <div class="form-group form-box clearfix">
-                                <input id="password" type="password" class="input-text" name="password" placeholder="Password" required>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <input id="passwordField" type="password" class="form-control" name="password" placeholder="Password (min: 6 chars)" required>
+                                    <div class="input-group-append" id="showpasswordtoggle" name="showpasswordtoggle" onclick="showPassword()">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-eye"></i></span>
+                                    </div>
+                                </div>
                                 @if ($errors->has('password'))
                                 <span class="helper-text" data-error="wrong" data-success="right">
                                     <strong class="text-danger">{{ $errors->first('password') }}</strong>
                                 </span>
                                 @endif
                             </div>
+
                             <div class="form-group form-box clearfix">
                                 <input class="input-text" placeholder="Confirm Password" type="password" name="password_confirmation" required>
                             </div>
@@ -198,6 +206,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function showPassword() {
+            var passField = document.getElementById("passwordField");
+            if (passField.type === "password") {
+                passField.type = "text";
+            } else {
+                passField.type = "password";
+            }
+        }
+    </script>
 
 
     {{-- <script type="text/javascript">
