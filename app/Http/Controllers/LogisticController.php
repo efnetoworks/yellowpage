@@ -86,17 +86,19 @@ class LogisticController extends Controller
     {
 
         $this->validate($request, [
-            'name'                  => ['required', 'string', 'max:255'],
+            'first_name'            => ['required', 'string', 'max:255'],
+            'last_name'             => ['required', 'string', 'max:255'],
             'company_name'          => ['required', 'string', 'max:255'],
             'email'                 => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone'                 => ['required', 'numeric'],
-            'password'              => ['required', 'string', 'min:6'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
             'terms'                 => ['accepted'],
 
         ]);
         $number = mt_rand(3, 5);
         $data = array(
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'company_name' => $request->company_name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -200,12 +202,22 @@ class LogisticController extends Controller
             //get the authenticated dispatch company
             $dispatch_company = Auth::guard('logistic')->user();
             
-            //check if credentials are incomplete
-            if($dispatch_company->phone == '' || $dispatch_company->identification_type == '' || $dispatch_company->identification_id == '' || $dispatch_company->bvn == '')
-            {
+            // //check if credentials are incomplete
+            // if($dispatch_company->phone == '' || $dispatch_company->identification_type == '' || $dispatch_company->identification_id == '' || $dispatch_company->bvn == '')
+            // {
                 
-                //if either has been provided redirect dispatch company to profile page with error message
+            //     //if either has been provided redirect dispatch company to profile page with error message
+            //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+            // }
+            $incomplete = $this->check_if_profile_is_complete();
+            if($incomplete)
+            {
                 return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+            }
+
+
+            if($dispatch_company->paid == NULL) {
+                return redirect()->route('logistic.pay')->with($this->incomplete_profile_notification());
             }
 
             //if credentials are complete, get all of the company's requests
@@ -234,25 +246,86 @@ class LogisticController extends Controller
         if(Auth::guard('logistic')->check())
         {
             $this->validate($request, [
-            'phone' => 'required'
+            'identification_type' => 'required',
+            'identification_number' => 'required',
+            'bvn' => 'required',
+            'phone' => 'required',
+            'cac' => 'nullable',
+            'cac_document' => 'nullable',
+            'address' => 'required',
+            'profile_image' => 'nullable',
+            'type_of_bike' =>'nullable',
+            'plate_number' => 'nullable',
+
             ]);
 
+            
+
+
+            $get_user = Auth::guard('logistic')->user();
+            // $image = $request->profile_image->store('uploads/logistics', 'public') ?? $get_user->profile_image;
+            //check if there's an existing image
+            if($request->hasFile('profile_image'))
+            {
+                Storage::disk('public')->delete($get_user->image);
+                $image = $request->profile_image->store('uploads/logistics', 'public');
+            }
+
             $data = array(
-                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'email' => $request->email,
                 'company_name' => $request->company_name,
-                'phone' => $request->phone
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'cac' => $request->cac,
+                'cac_document' => $request->cac_document,
+                'profile_image' => $image ?? $get_user->profile_image,
+                'bvn' => $request->bvn,
+                'identification_type' => $request->identification_type,
+                'identification_id' => $request->identification_number,
+                'type_of_bike' => $request->type_of_bike,
+                'plate_number' => $request->plate_number
             );
+
+            
+
 
             $get_user = Auth::guard('logistic')->user();
 
             DB::table('logistics')->where('id', '=', $get_user->id)->update($data);
 
-            return redirect()->back()->with($this->success_notice_profile());
+            return redirect()->route('logistic.pay')->with($this->success_notice_profile());
 
 
         }
         
+    }
+
+    public function makePayment()
+    {
+        //check if user has made payment
+        $user = Auth::guard('logistic')->user();
+        if($user->paid == NULL || $user->paid == 0)
+        {
+          return view('logistics.payment');  
+        }
+
+        return redirect()->route('logistics_dashboard');
+        
+    }
+
+    public function confirmPayment(Request $request, $ref)
+    {
+        // $response = Http::withHeaders([
+        //     'content-type' => 'application/json',
+        // ])
+
+
+        $get_user = Auth::guard('logistic')->user();
+        DB::table('logistics')->where('id', '=', $get_user->id)->update(['payment_id' => $ref, 'paid' => 1, 'paid_amount' => 2000]);
+
+        return response()->json('successful', 200);
     }
 
     public function updateId(Request $request)
@@ -284,7 +357,7 @@ class LogisticController extends Controller
     {
 
         //check if credentials are incomplete
-        if(Auth::guard('logistic')->user()->phone == '' || Auth::guard('logistic')->user()->identification_type == '' || Auth::guard('logistic')->user()->identification_id == '' || Auth::guard('logistic')->user()->bvn == '')
+        if(Auth::guard('logistic')->user()->phone == '' || Auth::guard('logistic')->user()->identification_type == '' || Auth::guard('logistic')->user()->identification_id == '' || Auth::guard('logistic')->user()->bvn == '' || Auth::guard('logistic')->user()->type_of_bike == ''|| Auth::guard('logistic')->user()->plate_number == '')
         {
             return true;
             

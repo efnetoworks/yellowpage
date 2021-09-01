@@ -271,7 +271,7 @@ Route::get('upload', 'ImageController@upload');
 Route::post('upload/store', 'ImageController@store');
 Route::post('delete', 'ImageController@delete');
 
-Route::get('logistics/register', 'LogisticController@registerLogistics')->name('register_logistics');
+Route::get('logistics', 'LogisticController@registerLogistics')->name('register_logistics');
 Route::post('logistics/create', 'LogisticController@createLogistics')->name('submit_application');
 Route::get('logistics/login', 'LogisticController@loginView')->name('logistics_login');
 Route::post('logistics/login', 'LogisticController@login')->name('login_dashboard');
@@ -287,11 +287,12 @@ Route::middleware(['auth:logistic'])->prefix('logistics')->group(function () {
     Route::put('update-profile', 'LogisticController@updateProfile')->name('logistic.profile.updates');
     Route::put('update-password', 'LogisticController@updatePassword')->name('logistic.update.password');
     Route::put('update-identification', 'LogisticController@updateId')->name('logistic.update.id');
-
+    Route::get('payment', 'LogisticController@makePayment')->name('logistic.pay');
     Route::get('details/{id}', 'LogisticController@details')->name('logistic.request.detail');
     Route::put('/set-transit-mode/{id}', 'LogisticController@transitMode')->name('logistic.transit.mode');
     Route::put('/product-delivered/{id}', 'LogisticController@deliveredMode')->name('logistic.delivered.mode');
     Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
+    Route::post('payment-confirmation/{ref}', 'LogisticController@confirmPayment')->name('logistic.confirm.payment');
 
 });
 
