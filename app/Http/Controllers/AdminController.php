@@ -1166,7 +1166,7 @@ class AdminController extends Controller
           // if( $efmarketers[$key]->ref == 0) {
           //   dd(0);
           // }
-        
+
 
         }
 
@@ -1214,24 +1214,24 @@ class AdminController extends Controller
         // foreach($efmarketers as $key => $efmarketer) {
         //   $ref = $efmarketer->referals()->get();
         // $efmarketers[$key]->ref = $efmarketer->ref;
-      
-        // } 
-        
-        
+
+        // }
+
+
         // ->with('referals')->get();
         // foreach($efmarketers as $key => $efmarketer) {
         //   $ref = $efmarketer->referals()->get();
         // $efmarketers[$key]->ref = $efmarketer->ref;
-      
+
         // }
 
-        // $userList = User::query()              
+        // $userList = User::query()
         //      ->with(['userAttendance' => function($q) use($attDate,$type) {
         //          $q->where('present_date', $attDate);
         //          $q->wherePresentType($type);
         //      }])
         //      ->get();
-        
+
 
         // $sellers = User::where('is_ef_marketer', '1')->with('referals')
         //   ->whereHas('referals', function($query) {
@@ -1253,9 +1253,9 @@ class AdminController extends Controller
                 //  return back()->with('success', 'Task was successful!');
 
 
-        
+
                   // $services = Service::
-          // whereBetween('created_at', 
+          // whereBetween('created_at',
           // [$request->start_date, $request->end_date])->get();
 
         }
@@ -1362,7 +1362,7 @@ class AdminController extends Controller
         public function users_last_month()
         {
           $users = User::all();
-          $users = Referal::where('referalable_type', 'App\Agent')->get();
+          $users = Referal::where('referalable_type', 'App\User')->get();
 
           foreach ($users as $key => $user) {
             // $agents[$key]->total_refers = $serv->total_refers;
