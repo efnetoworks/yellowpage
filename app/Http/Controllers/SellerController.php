@@ -576,6 +576,8 @@ class SellerController extends Controller
     public function myreferrals()
     {
         $myreferrals = Auth::user()->referals;
+        // $myreferrals = Auth::user()->referals->first();
+        // dd($myreferrals->hasBadge->first() ? 'yes' : 'no');
 
         // $myreferrals = Agent::find(50)->referals;
         return view('seller.myreferrals', compact('myreferrals'));
