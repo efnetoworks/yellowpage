@@ -241,6 +241,16 @@ class LogisticController extends Controller
         ]);
     }
 
+    function get_file_name_from_path($path) {
+
+        $path_parts = pathinfo($path);
+        $file_name = $path_parts['filename'];
+        $file_ext = $path_parts['extension'];
+
+        return $file_name . '.' . $file_ext;
+
+    }
+
     public function updateProfile(Request $request)
     {
         if(Auth::guard('logistic')->check())
@@ -265,11 +275,25 @@ class LogisticController extends Controller
             $get_user = Auth::guard('logistic')->user();
             // $image = $request->profile_image->store('uploads/logistics', 'public') ?? $get_user->profile_image;
             //check if there's an existing image
+
+            $imagename = Str::of($get_user->first_name)->slug('-').'-'.time().'.' . $request->profile_image->extension();
             if($request->hasFile('profile_image'))
             {
-                Storage::disk('public')->delete($get_user->image);
-                $image = $request->profile_image->store('uploads/logistics', 'public');
+                
+
+                // $path = 
+                // Storage::disk('public')->delete($get_user->image);
+                $image = $request->profile_image->move(public_path('uploads/users'), $imagename);
             }
+
+            if($request->hasFile('cac_document'))
+            {
+                $document = $request->cac_document->store('/public/documents');
+
+                $get_user->cac_document = $this->get_file_name_from_path($document);
+            }
+
+           
 
             $data = array(
                 'first_name' => $request->first_name,
@@ -279,8 +303,8 @@ class LogisticController extends Controller
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'cac' => $request->cac,
-                'cac_document' => $request->cac_document,
-                'profile_image' => $image ?? $get_user->profile_image,
+                'cac_document' => $get_user->cac_document,
+                'profile_image' => $imagename ?? $get_user->profile_image,
                 'bvn' => $request->bvn,
                 'identification_type' => $request->identification_type,
                 'identification_id' => $request->identification_number,
@@ -300,6 +324,20 @@ class LogisticController extends Controller
 
         }
         
+    }
+
+    public function downloadDocument($slug)
+    {
+        $user = DB::table('logistics')->where('slug', '=', $slug)->get();
+        
+        if(!$user)
+        {
+            abort(404);
+        }
+
+        $path = 'public/documents/' . $user[0]->cac_document;
+        $name = $user[0]->first_name . ' ' . $user[0]->last_name . ' cac-document';
+        return Storage::download($path, $name);   
     }
 
     public function makePayment()

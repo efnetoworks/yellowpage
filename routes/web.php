@@ -293,6 +293,7 @@ Route::middleware(['auth:logistic'])->prefix('logistics')->group(function () {
     Route::put('/product-delivered/{id}', 'LogisticController@deliveredMode')->name('logistic.delivered.mode');
     Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
     Route::post('payment-confirmation/{ref}', 'LogisticController@confirmPayment')->name('logistic.confirm.payment');
+    Route::get('/download_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.doc');
 
 });
 
