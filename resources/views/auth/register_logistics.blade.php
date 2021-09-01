@@ -45,19 +45,35 @@
                             @csrf
                                 {{-- End form for paystack pay --}}
                                 {{-- {{ csrf_field() }} --}}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group form-box">
+                                            <input type="text" id="name" class="input-text @error('name') is-invalid @enderror" name="first_name"  autofocus placeholder="First Name" value="{{ old('first_name') }}">
 
-                                <div class="form-group form-box">
-                                    <input type="text" id="name" class="input-text @error('name') is-invalid @enderror" name="name"  autofocus placeholder="Full Name">
+                                            @error('name')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
 
-                                    @error('name')
-                                    <span class="helper-text text-danger" data-error="wrong" data-success="right">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <div class="col-lg-6">
+                                        <div class="form-group form-box">
+                                            <input type="text" id="name" class="input-text @error('name') is-invalid @enderror" name="last_name"  autofocus placeholder="Last Name" value="{{ old('last_name') }}">
+
+                                            @error('name')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
+                                
 
                                 <div class="form-group form-box">
-                                    <input type="text" id="company_name" class="input-text" name="company_name"  autofocus placeholder="Company Name">
+                                    <input type="text" id="company_name" class="input-text" name="company_name"  autofocus placeholder="Company Name" value="{{ old('company_name') }}">
 
                                     @error('company_name')
                                     <span class="helper-text text-danger" data-error="wrong" data-success="right">
@@ -65,45 +81,62 @@
                                     </span>
                                     @enderror
                                 </div>
-
-                                <div class="form-group form-box">
-                                    <input type="text" id="email" placeholder="Company Email Address" class="input-text"  name='email'>
-                                    @if ($errors->has('email'))
-                                    <span class="helper-text" data-error="wrong" data-success="right">
-                                        <strong class="text-danger">{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group form-box">
-                                    <input type="number" id="phone" placeholder="Phone Number, e.g 080XXXXXXXX" class="input-text" minlength="11" maxlength="11"  name='phone'>
-                                    @if ($errors->has('phone'))
-                                        <span class="helper-text" data-error="wrong" data-success="right">
-                                            <strong class="text-danger">{{ $errors->first('phone') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group">
-                                    {{-- <div class="input-group mb-3">
-                                        <input type="password" id="password" name="password" id="passwordField" class="form-control" placeholder="Password (min: 6 chars)" aria-label="Password" aria-describedby="Password" wire:model='password'>
-                                        <div class="input-group-append" id="showpasswordtoggle" name="showpasswordtoggle" onclick="showPassword()">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-eye"></i></span>
-                                        </div>
-                                    </div> --}}
-
-                                    <div class="input-group mb-3">
-                                        <input type="password" id="password" name="password" id="passwordField" class="form-control" placeholder="Password (min: 6 chars)" aria-label="Password" aria-describedby="Password" name='password'>
-                                        <div class="input-group-append" id="showpasswordtoggle" name="showpasswordtoggle" wire:click="showPassword">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-eye"></i></span>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group form-box">
+                                            <input type="text" id="email" placeholder="Company Email Address" class="input-text"  name='email' value="{{ old('email') }}">
+                                            @if ($errors->has('email'))
+                                            <span class="helper-text" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                                            </span>
+                                            @endif
                                         </div>
                                     </div>
-                                    @if ($errors->has('password'))
-                                    <span class="helper-text" data-error="wrong" data-success="right">
-                                        <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
+                                    <div class="col-lg-6">
+                                        <div class="form-group form-box">
+                                            <input type="number" id="phone" placeholder="Phone Number, e.g 080XXXXXXXX" class="input-text" minlength="11" maxlength="11"  name='phone' value="{{ old('phone') }}">
+                                            @if ($errors->has('phone'))
+                                                <span class="helper-text" data-error="wrong" data-success="right">
+                                                    <strong class="text-danger">{{ $errors->first('phone') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+
+                                            <div class="input-group mb-3">
+                                                <input type="password" id="password" name="password" id="passwordField" class="form-control" placeholder="Password (min: 6 chars)" aria-label="Password" aria-describedby="Password" name='password'>
+                                                
+                                            </div>
+                                            @if ($errors->has('password'))
+                                            <span class="helper-text" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+
+                                            <div class="input-group mb-3">
+                                                <input type="password" id="password" name="password_confirmation" id="passwordField" class="form-control" placeholder="Confirm Password" aria-label="Password" aria-describedby="Password">
+                                                
+                                            </div>
+                                            @if ($errors->has('password_confirmation'))
+                                            <span class="helper-text" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                
                             <!--
                                 <div class="form-group form-box clearfix">
                                     <input class="input-text" placeholder="Confirm Password" type="password" wire:model='password_confirmation'>
