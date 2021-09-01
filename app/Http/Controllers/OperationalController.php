@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Image;
 use App\Payment;
+use App\Referal;
 use App\Siteemaillist;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -854,6 +855,7 @@ class OperationalController extends Controller
 
         $badge = new Badge();
         $badge->user_id = $user->id;
+        $is_refered = Referal::where('user_id', Auth::id())->first();
 
         if ($request->get('badge_type') == 1) {
             $badge->badge_type = 'Super User';
@@ -866,6 +868,8 @@ class OperationalController extends Controller
         $badge->amount = $request->get('amount');
         $badge->ref_no = $request->get('trans_reference');
         $badge->seller_name = $user->name;
+        $badge->referree_id = $is_refered ? $is_refered->referalable_id : null;
+        $badge->referal_id = $is_refered ? $is_refered->id : null;
         $badge->save();
 
 

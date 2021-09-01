@@ -51,7 +51,7 @@
                                                     <td> {{ $myreferral->user->agent_code }} </td>
                                                     <td> {{ $myreferral->user->refererAmount }} </td>
                                                     <td> {{ $myreferral->created_at->diffForHumans() }} </td>
-                                              
+
 
                                                 </tr>
                                             @endforeach
@@ -70,18 +70,18 @@
 
 
 
-    <div id="main_referer_table" class="box-body">
-                  <div class="table-responsive">
-                    <table class="display table table-bordered data_table_main">
-                        <thead>
-                            <tr>
-                             <th> S/N </th>
-                        <th> Referee Name </th>
-                       
-<!-- <th> Referer Link </th> -->
-<!-- <th> Agent Code </th> -->
-<!-- <th> Bonus </th> -->
-<th> Date Created </th>
+                        <div id="main_referer_table" class="box-body">
+                                    <div class="table-responsive">
+                                        <table class="display table table-bordered data_table_main">
+                                            <thead>
+                                                <tr>
+                                                <th> S/N </th>
+                                            <th> Referee Name </th>
+
+                    <!-- <th> Referer Link </th> -->
+                    <!-- <th> Agent Code </th> -->
+                    <th> Has Badge? </th>
+                    <th> Date Created </th>
                                         <!-- <th> Status </th>
                                             <th> Action </th> -->
                                         </tr>
@@ -97,6 +97,7 @@
                                            <td> {{ $myreferral->user->name }} </td>
                                            <!-- <td> {{ $myreferral->user->refererLink }} </td> -->
                                            <!-- <td> {{ $myreferral->user->refererAmount }} </td> -->
+                                            <td> {{ $myreferral->hasBadge->first() ? 'Yes' : 'No' }} </td>
                                            <td> {{ $myreferral->created_at->diffForHumans() }} </td>
                                            <!-- <td> {{ $myreferral->status == 1 ? 'read' : 'unread' }} </td> -->
 
