@@ -117,7 +117,7 @@
           </a>
         </li> --}}
 
-       @if (Auth::user()->usertype == 'digitalmarketer')
+       @if (Auth::user()->is_ef_marketer == 1)
         <li class="{{ url()->current() == route('provider.myreferrals') ? 'active' : '' }}">
             <a href=" {{ route ('provider.myreferrals') }} ">
             <i class="fa fa-group"></i> <span> My Referrals </span>
