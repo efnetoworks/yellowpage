@@ -178,14 +178,14 @@
                         </p>
                     @endif
 
-                    <hr>
-                    @if(isset($general_info->register_section_2_title))
+                    {{-- <hr>
+                    @if(isset($general_info->register_section_3_title))
                         <h6 class="text-center"> {{ $general_info->register_section_3_title ? $general_info->register_section_3_title : '' }} </h6>
                         <hr>
                         <p>
                             {!! $general_info->register_section_3 ? $general_info->register_section_3 : '' !!}
                         </p>
-                    @endif
+                    @endif --}}
                     {{-- <hr>
                     <div class="info clearfix">
                         <div class="logo-2">
