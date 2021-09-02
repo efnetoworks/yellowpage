@@ -37,7 +37,7 @@
                         <th> Package </th>
                         <th> Tracking ID </th>
                         <th> Status </th>
-                        <th> Date Requested </th>
+                        <th> Time Requested </th>
                         <th> Action </th>
 
                                         <!-- <th> Status </th>
