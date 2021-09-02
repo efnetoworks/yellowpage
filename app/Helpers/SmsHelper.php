@@ -7,8 +7,8 @@ class SmsHelper {
     static function send_sms($message, $mobiles, $sender)
     {
 
-        $username = 'eben@eftechnology.net';
-        $password = 'Cookies';
+        $username = 'info@eftechnology.net';
+        $password = 'eftechnology@123';
             
         $postdata = http_build_query(
 

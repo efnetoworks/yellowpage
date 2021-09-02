@@ -14,6 +14,7 @@ use App\Logistic;
 use App\State;
 use App\Local_government;
 use App\DeliveryRequest;
+use App\Helpers\SmsHelper;
 use Illuminate\Support\Facades\Mail;
 use Closure;
 use Illuminate\Support\Facades\View;
@@ -269,22 +270,27 @@ class LogisticController extends Controller
 
             ]);
 
-            
+            // dd($request->profile_image);
 
 
             $get_user = Auth::guard('logistic')->user();
             // $image = $request->profile_image->store('uploads/logistics', 'public') ?? $get_user->profile_image;
             //check if there's an existing image
 
-            $imagename = Str::of($get_user->first_name)->slug('-').'-'.time().'.' . $request->profile_image->extension();
-            if($request->hasFile('profile_image'))
-            {
-                
+            // $imagename = Str::of($get_user->first_name)->slug('-').'-'.time().'.' . $request->profile_image;
 
-                // $path = 
-                // Storage::disk('public')->delete($get_user->image);
-                $image = $request->profile_image->move(public_path('uploads/users'), $imagename);
+            // if($request->hasFile('profile_image'))
+            // {
+               
+            //     $image = $request->profile_image->move(public_path('uploads/users'), $imagename);
+            // }
+
+            if ( $request->hasFile('profile_image') ) {
+              $image_name = Str::of($get_user->first_name)->slug('-').'-'.time().'.'.$request->profile_image->extension();
+              $request->profile_image->move(public_path('uploads/users'),$image_name);
+              $request->profile_image = $image_name;
             }
+
 
             if($request->hasFile('cac_document'))
             {
@@ -304,7 +310,7 @@ class LogisticController extends Controller
                 'address' => $request->address,
                 'cac' => $request->cac,
                 'cac_document' => $get_user->cac_document,
-                'profile_image' => $imagename ?? $get_user->profile_image,
+                'profile_image' => $image_name ?? $get_user->profile_image,
                 'bvn' => $request->bvn,
                 'identification_type' => $request->identification_type,
                 'identification_id' => $request->identification_number,
@@ -349,7 +355,7 @@ class LogisticController extends Controller
           return view('logistics.payment');  
         }
 
-        return redirect()->route('logistics_dashboard');
+        return redirect()->route('logistics_dashboard')->with($this->success_notice_profile());
         
     }
 
