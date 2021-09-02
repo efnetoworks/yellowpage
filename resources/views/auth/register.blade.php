@@ -74,6 +74,15 @@
                                 </span>
                                 @endif
                             </div>
+
+                            <div class="form-group form-box">
+                                <input type="number" name="phone" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" id="phone" placeholder="Phone Number, e.g 080XXXXXXXX" class="input-text" minlength="11" maxlength="11">
+                                @if ($errors->has('phone'))
+                                    <span class="helper-text" data-error="wrong" data-success="right">
+                                        <strong class="text-danger">{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                          {{-- <div class="form-group form-box">                                                            <label for="state"> Choose Your State </label>
                             </select>                    @if ($errors->has('state'))
                                 <span class="helper-text text-danger" data-error="wrong" data-success="right">
