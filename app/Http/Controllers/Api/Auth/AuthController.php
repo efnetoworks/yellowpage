@@ -122,7 +122,7 @@ class AuthController extends Controller
         } else {
             $amount = $request->amount;
             $tranxRef = $request->trans_ref;
-            $this->saveUser($request);
+            return $this->saveUser($request);
         }
     }
 
@@ -456,9 +456,21 @@ class AuthController extends Controller
 
     public function saveUser(Request $request)
     {
+
+        $request->validate([
+        'referParam'     => ['nullable', 'string', 'max:255'],
+        'name'           => ['required', 'string', 'max:255'],
+        'email'          => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'phone'          => ['required', 'numeric'],
+        'password'       => ['required', 'string', 'min:6'],
+        // 'role'           => ['required', Rule::in(['seller', 'buyer'])],
+        // 'agent_code'     => ['nullable', 'exists:agents,agent_code'],
+        // 'plan'           => ['nullable', Rule::in([200, 600, 1200, 2400])],
+    ]);
+
         $slug3 = Str::random(8);
         $random = Str::random(3);
-        $userSlug = Str::of($this->name)->slug('-') . '' . $random;
+        $userSlug = Str::of($request->name)->slug('-') . '' . $random;
 
         // Get id of owner of $link_from_url if available
         if ($request->referParam) {
@@ -530,6 +542,30 @@ class AuthController extends Controller
             $link->save();
 
             // return $this->respondWithToken($token);
+
+            /* level 1 start */
+            $person_that_refered  = $present_user->idOfReferer;
+            if ($person_that_refered) {
+                $referer = User::where('id', $person_that_refered)->first();
+                if ($referer) {
+                    // $referer->refererAmount = $referer->refererAmount + 200;
+
+                    //save my id  as level 1 on the table of the one that reffered me
+                    $referer->level1 = $this->guard()->user()->id;
+                    $referer->save();
+
+                    $referer->referals()->create(['user_id' => $this->guard()->user()->id]);
+                }
+
+                //if your referer is an efmarketer staff, redirect user to dashboard
+                    if ($referer->is_ef_marketer) {
+                        return response()->json([
+                            'token' => $token,
+                            'token_validity' => $token_validity,
+                            'token_type' => 'bearer',
+                            'user_role' => $this->guard()->user()->role,
+                        ]);
+            }
 
             /* level 1 start */
             $agent_that_refered = $present_user->idOfAgent;
