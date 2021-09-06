@@ -262,4 +262,12 @@ public function scopeSearchCategory($query, $category)
         return $this->hasOne(CustomerService::class);
     }
 
+    public function featured(){
+        return $this->hasMany('\App\FeaturedService'); //Featured Model Name
+    }
+
+    public function is_featured(){
+       $test = Service::where('paid_featured', 1 )->all(); //Featured Model Name
+       return $test;
+    }
 }
