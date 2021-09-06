@@ -449,10 +449,13 @@ Route::middleware(['seller'])->group(function () { //Seller Middleware protectio
 
         Route::get('/dashboard', 'DashboardController@seller')->name('seller.dashboard');
 
-        Route::get('/dashboard/sub/all', 'SubscriptionController@allSub')->name('seller.sub.all');
-        Route::get('/sub/add', 'SubscriptionController@createSub')->name('seller.sub.create');
-        Route::post('/service/create_sub', 'SubscriptionController@createSubpay')->name('createSubpay');
+        // subcription routes
 
+        // Route::get('/dashboard/sub/all', 'SubscriptionController@allSub')->name('seller.sub.all');
+        // Route::get('/sub/add', 'SubscriptionController@createSub')->name('seller.sub.create');
+        // Route::post('/service/create_sub', 'SubscriptionController@createSubpay')->name('createSubpay');
+
+        // End subcription routes
 
         Route::get('/service/add', 'SellerController@createService')->name('seller.service.create');
         Route::get('/service/badges', 'BadgeController@badges')->name('seller.service.badges');
