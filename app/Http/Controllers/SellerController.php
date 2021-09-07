@@ -576,7 +576,7 @@ class SellerController extends Controller
     public function myreferrals()
     {
         $myreferrals = Auth::user()->referals;
-        // dd($myreferrals->user->services->first()->is_featured);
+        // dd($myreferrals->user->services->featured);
         // $myreferrals = Auth::user()->referals->first();
         // dd($myreferrals->hasBadge->first() ? 'yes' : 'no');
 
