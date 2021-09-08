@@ -88,6 +88,9 @@ Route::get('/add_seller_referals', 'AdminController@add_seller_referals')->name(
 Route::get('/set_sub_status', 'AdminController@set_sub_status')->name('set_sub_status');
 // End set sub_has_ended field to 1 on users table if subscription has ended
 
+Route::get('/promo', 'AdminController@new_promo')->name('promo');
+
+
 // route to add payments for users with no payments
 Route::get('/add_old_payments', 'AdminController@add_old_payments')->name('add_old_payments');
 // end route to add payments for users with no payments
