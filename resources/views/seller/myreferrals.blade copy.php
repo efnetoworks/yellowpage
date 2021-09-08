@@ -22,7 +22,7 @@
 
                     <div class="box">
                         <div class="box-header">
-                            {{-- <h3 class="box-title"> My Refferals </h3> --}}
+                            <h3 class="box-title"> My Refferals </h3>
                             <h6 class="box-subtitle"> Sorting is from the most recent. </h6>
                         </div>
 
@@ -49,28 +49,33 @@
                                     <tbody>
 
                                         @foreach ($myreferrals as $key => $myreferral)
+
+
                                             <tr role="row" class="odd">
                                                 <td><a href="javascript:void(0)"> {{ $key + 1 }} </a></td>
                                                 <td> {{ $myreferral->user->name }} </td>
                                                 <!-- <td> {{ $myreferral->user->refererLink }} </td> -->
                                                 <!-- <td> {{ $myreferral->user->refererAmount }} </td> -->
                                                 <td> {{ $myreferral->hasBadge->first() ? 'Yes' : 'No' }} </td>
+                                                <td> {{ $myreferral->created_at->diffForHumans() }} </td>
 
                                                 <td>
                                                     @if($myreferral->user->services->count())
-                                                        <p id="active_text">{{$myreferral->user->services->count()}} &nbsp; Services</p>
+                                                        <p id="active_text">{{$myreferral->user->services->count()}} &nbsp; features</p>
                                                         <button type="button" class="btn btn-primary"
-                                                        data-toggle="modal" data-target="#allServicess{{ $myreferral->id }}">
+                                                        data-toggle="modal" data-target="#allServicess{{ $myreferral->user->services->id }}">
                                                         See Featured Services
                                                         </button>
                                                     @elseif($myreferral->user->services->count() == 0)
-                                                        <span id="active_text2">No Service Yet!</span>
+                                                        <span id="active_text2">No Featured Yet!</span>
                                                     @endif
-                                                    <div class="modal fade" id="allServicess{{ $myreferral->id }}" tabindex="-1" role="dialog" aria-hidden="true">
+
+                                                     <!-- Modal -->
+                                                     <div class="modal fade" id="allServicess{{ $myreferral->user->services->id }}" tabindex="-1" role="dialog" aria-labelledby="allServicess{{ $myreferral->user->services->id }}" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="allUsers{{ $myreferral->id }}Label">All Featured Services</h5>
+                                                                    <h5 class="modal-title" id="allUsers{{ $myreferral->user->services->id }}Label">Modal title</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                     </button>
@@ -79,23 +84,25 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                {{-- <th scope="col">#</th> --}}
-                                                                                <th scope="col">Service Name</th>
-                                                                                <th scope="col">Date Created</th>
-                                                                                <th scope="col">Approved?</th>
+                                                                            <th scope="col">#</th>
+                                                                            <th scope="col">Service Name</th>
+                                                                            <th scope="col">Date Created</th>
+                                                                            <th scope="col">Approved?</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            @foreach($myreferral->user->services as $key => $service)
-                                                                                @foreach ($service->featured as $aservice)
+                                                                            @if($myreferral->user->services->count())
+                                                                                <p id="active_text">{{$myreferral->user->services->count()}} &nbsp; services</p>
+
+                                                                                @foreach($myreferral->user->services->featured as $key => $services)
                                                                                     <tr>
-                                                                                        {{-- <th>{{ $key + 1 }}</th> --}}
-                                                                                        <td><a href="{{ route('serviceDetail', $aservice->service->slug) }}">{{$aservice->service->name}}</a></td>
-                                                                                        <td>{{$aservice->service->created_at}}</td>
-                                                                                        <td>{{$aservice->service->is_approved ? 'Approved' : 'Not Yet Approved'}}</td>
+                                                                                        <th scope="row">{{ $key + 1 }}</th>
+                                                                                        <td><a href="{{ route('serviceDetail', $services->slug) }}">{{$services->name}}</a></td>
+                                                                                        <td>{{$services->created_at}}</td>
+                                                                                        <td>{{$services->is_approved ? 'Approved' : 'Not Yet Approved'}}</td>
                                                                                     </tr>
                                                                                 @endforeach
-                                                                            @endforeach
+                                                                            @endif
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -106,9 +113,13 @@
                                                         </div>
                                                     </div>
                                                 </td>
+                                                <!-- <td> {{ $myreferral->status == 1 ? 'read' : 'unread' }} </td> -->
 
-                                                <td> {{ $myreferral->created_at->diffForHumans() }} </td>
+                                                <!--  <td class="center">
+                                                <a onclick="getDetails({{ $myreferral->user->id }})" class="btn btn-warning "><i class="fa fa-eye"></i>View Downline</a>
+                                            </td> -->
                                             </tr>
+
                                         @endforeach
 
                                     </tbody>
@@ -118,16 +129,6 @@
 
 
 
-                        {{-- @foreach($myreferral->user->services as $key => $service)
-                            @if ($service->is_featured)
-                                <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
-                                    <td><a href="{{ route('serviceDetail', $service->slug) }}">{{$service->name}}</a></td>
-                                    <td>{{$service->created_at}}</td>
-                                    <td>{{$service->is_approved ? 'Approved' : 'Not Yet Approved'}}</td>
-                                </tr>
-                            @endif
-                        @endforeach --}}
 
 
 
