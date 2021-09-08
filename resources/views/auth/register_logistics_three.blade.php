@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-@section('title', 'Register | ')
+@section('title', 'Registration Step Three | ')
 
 @section('content')
 
@@ -29,6 +29,74 @@
     .registerSidebar h6{
         color: #af7615
     }
+
+    .containers {
+     height: 120px;
+     position: relative;
+     max-width: 320px;
+     margin: auto;
+}
+ .containers .imageWrapper {
+     border: 3px solid #cc8a19;
+     width: 70%;
+     padding-bottom: 70%;
+     border-radius: 50%;
+     overflow: hidden;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+}
+ .containers .imageWrapper img {
+     height: 105%;
+     width: initial;
+     max-height: 100%;
+     max-width: initial;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+}
+ .file-upload {
+     position: relative;
+     overflow: hidden;
+     margin: 10px;
+}
+ .file-upload {
+     position: relative;
+     overflow: hidden;
+     margin: 10px;
+     width: 100%;
+     max-width: 150px;
+     text-align: center;
+     color: #cc8a19;
+     font-size: 1.2em;
+     background: transparent;
+     border: 2px solid #cc8a19;
+     display: inline;
+     -ms-transition: all 0.2s ease;
+     -webkit-transition: all 0.2s ease;
+     transition: all 0.2s ease;
+}
+ .file-upload:hover {
+     background: #fff;
+     -webkit-box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.75);
+     -moz-box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.75);
+     box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.75);
+}
+ .file-upload input.file-inputs {
+     position: absolute;
+     top: 0;
+     right: 0;
+     margin: 0;
+     padding: 0;
+     font-size: 20px;
+     cursor: pointer;
+     opacity: 0;
+     filter: alpha(opacity=0);
+     height: 100%;
+}
+ 
 </style>
 
     <div class="contact-section">
@@ -36,21 +104,47 @@
             <div class="row login-box">
                 <div class="col-lg-12 align-self-center pad-0">
                     <div class="form-section clearfix">
-                        <h3>Create an account for your logistics company</h3>
+                        <h3>Step Three: Means of Identification</h3>
                        
 
                         <div class="clearfix"></div>
 
-                          <form action="{{ route('submit_application') }}" method="POST">
+                          <form action="{{ route('submit_application_step_3') }}" method="POST">
                             @csrf
                                 {{-- End form for paystack pay --}}
                                 {{-- {{ csrf_field() }} --}}
+                                {{-- <div class="row">
+                                  <div class="small-12 large-4 columns text-center">
+                                    
+                                    <div class="containers">
+                                      
+                                      <div class="imageWrapper">
+                                        <img class="reg_image" src="/images/user-icon.png">
+                                      </div>
+                                    </div>
+                                    
+                                    <button class="file-upload">            
+                                      <input type="file" name="profile_image" class="file-inputs @error('profile_image') is-invalid @enderror">Choose Image
+                                    </button>
+                                  </div>
+                                </div>
+                                @error('profile_image')
+                                <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror --}}
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group form-box">
-                                            <input type="text" id="name" class="input-text @error('first_name') is-invalid @enderror" name="first_name"  autofocus placeholder="First Name" value="{{ old('first_name') }}">
+                                            <label>Means of Identification <span style="color: red;">*</span></label>
+                                            <select class="form-control @error('identification_type') is-invalid @enderror" name="identification_type" autofocus value="{{ old('identification_type') }}">
+                                                <option value="National ID">National ID</option>
+                                                <option value="Voters Card">Voters Card</option>
+                                                <option value="Drivers License">Drivers License</option>
+                                                <option value="International Passport">International Passport</option>tion value="Nigeria">Nigeria</option>
+                                            </select>
 
-                                            @error('first_name')
+                                            @error('identification_type')
                                             <span class="helper-text text-danger" data-error="wrong" data-success="right">
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
@@ -58,11 +152,53 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group form-box">
-                                            <input type="text" id="name" class="input-text @error('last_name') is-invalid @enderror" name="last_name"  autofocus placeholder="Last Name" value="{{ old('last_name') }}">
+                                            <label>Identification Number <span style="color: red;">*</span></label>
+                                            <input type="text" id="bank_name" class="form-control @error('identification_number') is-invalid @enderror" name="identification_number" value="{{ old('identification_number') }}" placeholder="Enter the id number">
+                                            @error('identification_number')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
 
-                                            @error('last_name')
+                                    <div class="col-lg-4">
+                                        <div class="form-group form-box">
+                                            <label>Bank Verification Number <span style="color: red;">*</span></label>
+                                            <input type="number" class="form-control @error('bvn') is-invalid @enderror" name="bvn" value="{{ old('bvn') }}" placeholder="Enter your bvn">
+                                            @error('bvn')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group form-box">
+                                            <label>Do you have a CAC document? </label>
+                                            <select class="form-control" name="cac">
+                                                {{-- <option default>Do you have CAC documents?</option> --}}
+                                                <option value="1">Yes</option>
+                                                <option value="0">No</option>
+                                            </select>
+                                            @error('cac')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group form-box">
+                                            <label>Upload CAC Document </label>
+                                            <input type="file" id="bank_name" class="form-control" name="cac_document">
+                                            @error('cac_document')
                                             <span class="helper-text text-danger" data-error="wrong" data-success="right">
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
@@ -72,67 +208,48 @@
                                 </div>
                                 
 
-                                <div class="form-group form-box">
-                                    <input type="text" id="company_name" class="input-text" name="company_name"  autofocus placeholder="Company Name" value="{{ old('company_name') }}">
-
-                                    @error('company_name')
-                                    <span class="helper-text text-danger" data-error="wrong" data-success="right">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group form-box">
-                                            <input type="text" id="email" placeholder="Company Email Address" class="input-text"  name='email' value="{{ old('email') }}">
-                                            @if ($errors->has('email'))
-                                            <span class="helper-text" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                                            <label>What type of bike do you own? <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control @error('type_of_bike') is-invalid @enderror" name="type_of_bike" value="{{ old('type_of_bike') }}" placeholder=" kind of bike do you own?">
+                                            @error('type_of_bike')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
                                             </span>
-                                            @endif
+                                            @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+
+                                    <div class="col-lg-4">
                                         <div class="form-group form-box">
-                                            <input type="number" id="phone" placeholder="Phone Number, e.g 080XXXXXXXX" class="input-text" minlength="11" maxlength="11"  name='phone' value="{{ old('phone') }}">
-                                            @if ($errors->has('phone'))
-                                                <span class="helper-text" data-error="wrong" data-success="right">
-                                                    <strong class="text-danger">{{ $errors->first('phone') }}</strong>
-                                                </span>
-                                            @endif
+                                            <label>Plate Number <span style="color: red;">*</span></label>
+                                            <input type="text" id="bank_name" class="form-control @error('plate_number') is-invalid @enderror" name="plate_number" value="{{ old('plate_number') }}" placeholder="Enter the plate number of your bike">
+                                            @error('plate_number')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group form-box">
+                                            <label>Upload Passport Photograph <span style="color: red;">*</span></label>
+                                            <input type="file" id="bank_name" class="form-control" name="profile_image">
+                                            @error('profile_image')
+                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
+                                
 
-                                            <div class="input-group mb-3">
-                                                <input type="password" id="password" name="password" id="passwordField" class="form-control" placeholder="Password (min: 6 chars)" aria-label="Password" aria-describedby="Password" name='password'>
-                                                
-                                            </div>
-                                            @if ($errors->has('password'))
-                                            <span class="helper-text" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-
-                                            <div class="input-group mb-3">
-                                                <input type="password" id="password" name="password_confirmation" id="passwordField" class="form-control" placeholder="Confirm Password" aria-label="Password" aria-describedby="Password">
-                                                
-                                            </div>
-                                            @if ($errors->has('password_confirmation'))
-                                            <span class="helper-text" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
+                                
+                                
+                                
 
                                 
 
@@ -154,7 +271,7 @@
 
                                 </div>
                           
-                                {{-- <div style="padding-top: 15px;">
+                                <div style="padding-top: 15px;">
                                     <label>
                                         <input type="checkbox" name="terms" class="filled-in" wire:model='terms'/>
                                         <span>By registering you accept our <a href="{{route('terms-of-use')}}" target="_blank" style="color: blue">Terms of Use</a> and <a href="{{route('privacy-policy')}}" target="_blank" style="color: blue"> Privacy</a> and agree that we and our selected partners may contact you with relevant offers and services.</span>
@@ -164,7 +281,7 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                </div> --}}
+                                </div>
 
                                 <div>
                                     @if (session()->has('message'))
@@ -190,7 +307,8 @@
                                     {{-- btn for pay --}}
                                     <script src="https://js.paystack.co/v1/inline.js"></script>
 
-                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-right" style="background-color: #cc8a19; color: #fff">Next</button>
+                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-right" style="background-color: #cc8a19; color: #fff">Next Step</button>
+                                    <a href="{{ url()->previous() }}" id="paystack_btn_control1" type="submit" class="btn-md float-left" style="background-color: #fff; color: #cc8a19; border: 1px solid #cc8a19;">Previous</a>
 
                                     
 
@@ -324,5 +442,20 @@
   }
   </script>
 
+<script>
+    $('.file-inputs').change(function(){
+    var curElement = $('.reg_image');
+    console.log('element changed',curElement);
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        curElement.attr('src', e.target.result);
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+});
+</script>
 
 @endsection
