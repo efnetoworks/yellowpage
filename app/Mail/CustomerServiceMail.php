@@ -32,6 +32,6 @@ class CustomerServiceMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from('noreply@efcontact.com', 'EFContact')->markdown('emails.customerservice.sendmail')->subject($this->subject);
+        return $this->from('customerservice@efcontact.com', 'E.F. Contact Customer Service')->markdown('emails.customerservice.sendmail')->subject($this->subject);
     }
 }
