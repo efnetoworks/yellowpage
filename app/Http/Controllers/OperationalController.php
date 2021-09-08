@@ -1055,4 +1055,9 @@ class OperationalController extends Controller
         return view('mobile_agent_modal');
     }
 
+    public function shippingHelp()
+    {
+        return view('shipping_help');
+    }
+
 }

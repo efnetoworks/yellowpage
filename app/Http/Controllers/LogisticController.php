@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 use Closure;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LogisticController extends Controller
 {
@@ -69,7 +70,15 @@ class LogisticController extends Controller
     public function transit_success()
     {
         return   $success_notification = array(
-            'message' => 'Delivery status has been changed!',
+            'message' => 'Product now in transit!',
+            'alert-type' => 'success'
+        );
+    }
+
+     public function delivered_success()
+    {
+        return   $success_notification = array(
+            'message' => 'Product has been delivered!',
             'alert-type' => 'success'
         );
     }
@@ -83,19 +92,30 @@ class LogisticController extends Controller
         return view('auth.register_logistics');
     }
 
+
+
     public function createLogistics(Request $request)
     {
 
         $this->validate($request, [
             'first_name'            => ['required', 'string', 'max:255'],
             'last_name'             => ['required', 'string', 'max:255'],
-            'company_name'          => ['required', 'string', 'max:255'],
-            'email'                 => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone'                 => ['required', 'numeric'],
+            'company_name'          => ['required', 'string', 'max:255', 'unique:logistics'],
+            'email'                 => ['required', 'string', 'email', 'max:255', 'unique:logistics'],
+            'phone'                 => ['required', 'numeric', 'unique:logistics'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'terms'                 => ['accepted'],
+            // 'terms'                 => ['accepted'],
 
         ]);
+
+        $find_company_name = Logistic::where('company_name', $request->company_name)->first();
+
+        // if($find_company_name)
+        // {
+        //     Alert::error('Error', 'This company name is already in use by another logistics company');
+        //     return redirect()->back();
+        // }
+
         $number = mt_rand(3, 5);
         $data = array(
             'first_name' => $request->first_name,
@@ -107,49 +127,245 @@ class LogisticController extends Controller
             'slug' => Str::slug($request->company_name, '-').$number
         );
 
-        Logistic::create($data);
-
-        try {
-            Mail::to($user->email)->send(new LogisticRegistered($name, $email, $origPassword));
-            Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-        } catch (\Exception $e) {
-            $failedtosendmail = 'Failed to Mail!';
+        if(empty($request->session()->get('dispatch')))
+        {
+            $logistic = new Logistic;
+            $logistic->fill($data);
+            $request->session()->put('dispatch', $logistic);
+        } else {
+            $logistic = new Logistic;
+            $logistic = $request->session()->get('dispatch');
+            $logistic->fill($data);
+            $request->session()->put('dispatch', $logistic);
         }
 
-        $guard = Auth::guard('logistic')->attempt(['email' => $request->email, 'password' => $request->password]);
-        // if ($user->save()) {
-        //     // Auth::login($user);
-        //     if (Auth::guard('agent')->attempt(['email' => $returned_data[1], 'password' => $returned_data[2]])) {
-        //         //Check login
-        //         if (Auth::guard('agent')->check()) {
-        //             $present_user = Auth::guard('agent')->user();
+        return redirect()->route('register_logistics_step_2');
+        // Logistic::create($data);
 
-        //             $link = new Refererlink();
-        //             $link->agent_id = $present_user->id;
-        //             $link->agent_code = $present_user->agent_code;
-        //             $link->save();
-        //             //Add 200 naira to agent total amount
-        //             // $present_user->refererAmount = $referer->refererAmount + 200;
-
-
-        //             //if login pass,redirect to agent dashboard page
-        //             return redirect()->intended('agent/dashboard');
-        //         } else {
-        //             session()->flash('fail', ' Credentials Incorect');
-        //             return view('auth.agent_login');
-        //         }
-        //     }
-        //     session()->flash('fail', ' Credentials Incorect');
-        //     return view('auth.agent_login');
+        // try {
+        //     Mail::to($user->email)->send(new LogisticRegistered($name, $email, $origPassword));
+        //     Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        // } catch (\Exception $e) {
+        //     $failedtosendmail = 'Failed to Mail!';
         // }
-        if($guard)
-            return redirect()->route('logistics_login')->with($this->registration_success());
-        else 
-            return redirect()->back()->with($this->registration_error());
+
+        // $guard = Auth::guard('logistic')->attempt(['email' => $request->email, 'password' => $request->password]);
+    
+        // if($guard)
+        //     return redirect()->route('logistics_login')->with($this->registration_success());
+        // else 
+        //     return redirect()->back()->with($this->registration_error());
+    }
+
+    public function registerLogisticsStepTwo(Request $request) 
+    {
+        $logistic = $request->session()->get('dispatch');
+
+        if(empty($logistic))
+        {
+            return redirect()->route('register_logistics');
+        } 
+
+        // dd($logistic);   
+        $states = State::all();
+
+        return view('auth.register_logistics_two', [
+            'states' => $states
+        ]);
+    }
+
+    public function createLogisticsStep2(Request $request)
+    {
+        $logistic = $request->session()->get('dispatch');
+        if(empty($logistic))
+        {
+            return redirect()->route('register_logistics');
+        }
+
+        $this->validate($request, [
+            'country' => 'required',
+            'state' => 'required',
+            'lga' => 'required',
+            'address' => 'required'
+        ]);
+
+        $data = array(
+            'country' => 'Nigeria',
+            'state' => $request->state,
+            'lga' => $request->lga,
+            'address' => $request->address
+        );
+
+        $logistic = $request->session()->get('dispatch');
+        $logistic->fill($data);
+        $request->session()->put('dispatch', $logistic);
+
+        return redirect()->route('register_logistics_step_3');
+
+    }
+
+    public function registerLogisticsStepThree(Request $request)
+    {
+        $logistic = $request->session()->get('dispatch');
+
+        
+        if(empty($logistic))
+        {
+            return redirect()->route('register_logistics');
+        }
+        return view('auth.register_logistics_three');
+    }
+
+    public function createLogisticsStep3(Request $request)
+    {
+        $logistic = $request->session()->get('dispatch');
+        // dd($logistic);
+        if(empty($logistic))
+        {
+            return redirect()->route('register_logistics');
+        }
+
+        $this->validate($request, [
+            'identification_type' => 'required',
+            'identification_number' => 'required',
+            'bvn' => 'required',
+            'cac' => 'nullable',
+            'cac_document' => 'nullable',
+            'type_of_bike' => 'required',
+            'plate_number' => 'required|unique:logistics',
+            'terms' => 'accepted',
+            'profile_image' => 'required'
+        ]);
+
+        if($request->hasFile('cac_document'))
+        {
+            $document = $request->cac_document->store('/public/documents');
+
+            $get_user->cac_document = $this->get_file_name_from_path($document);
+        }
+
+        if ( $request->hasFile('profile_image') ) {
+          $image_name = Str::of($get_user->first_name)->slug('-').'-'.time().'.'.$request->profile_image->extension();
+          $request->profile_image->move(public_path('uploads/users'),$image_name);
+          $request->profile_image = $image_name;
+        }
+
+        $data = array(
+            'identification_type' => $request->identification_type,
+            'identification_number' => $request->identification_number,
+            'bvn' => $request->bvn,
+            'cac' => $request->cac ?? '',
+            'cac_document' => $request->cac_document ?? '',
+            'type_of_bike' => $request->type_of_bike,
+            'plate_number' => $request->plate_number,
+            'profile_image' => $image_name ?? ''
+        );
+
+
+
+        $logistic = $request->session()->get('dispatch');
+        $logistic->fill($data);
+        $request->session()->put('dispatch', $logistic);
+
+        // $number = mt_rand(1, 9);
+        // $dispatch_company = new Logistic;
+        // $dispatch_company->create([
+        //     'first_name' => $logistic->first_name,
+        //     'last_name' => $logistic->last_name,
+        //     'company_name' => $logistic->company_name,
+        //     'address' => $logistic->address,
+        //     'cac' => $logistic->cac,
+        //     'cac_document' => $logistic->cac_document,
+        //     'email' => $logistic->email,
+        //     'profile_image' => $logistic->profile_image,
+        //     'password' => Hash::make($logistic->password),
+        //     'slug' => Str::slug($logistic->company_name, '-').$number,
+        //     'phone' => $logistic->phone,
+        //     'state_id' => $logistic->state,
+        //     'local_government_id' => $logistic->lga,
+        //     'bvn' => $logistic->bvn,
+        //     'identification_type' => $logistic->identification_type,
+        //     'identification_id' => $logistic->identification_id,
+        //     'type_of_bike' => $logistic->type_of_bike,
+        //     'plate_number' => $logistic->plate_number,
+        // ]);
+
+        // return view('auth.register_payment', [
+        //     'logistic' => $dispatch_company
+        // ]);
+        return redirect()->route('logistic.pay');
+        // return view('auth.register_payment', [
+        //     'logistic' => $logistic
+        // ]);
+
+    }
+
+    public function makePayment1(Request $request)
+    {
+        $logistic = $request->session()->get('dispatch');
+
+        // dd($dispatch_company);
+        if(empty($logistic))
+        {
+            return redirect()->route('register_logistics');
+        }
+
+        return view('auth.register_payment');
+        
+    }
+
+    public function confirmPayment(Request $request, $ref)
+    {
+        // $response = Http::withHeaders([
+        //     'content-type' => 'application/json',
+        // ])
+        $logistic = $request->session()->get('dispatch');
+
+        // dd($logistic);
+        if(empty($logistic))
+        {
+            return response()->json('no session');
+        }
+        
+        $number = mt_rand(1, 9);
+
+        $dispatch_company = new Logistic;
+        $dispatch_company->create([
+            'first_name' => $logistic->first_name,
+            'last_name' => $logistic->last_name,
+            'company_name' => $logistic->company_name,
+            'address' => $logistic->address,
+            'cac' => $logistic->cac,
+            'cac_document' => $logistic->cac_document,
+            'email' => $logistic->email,
+            'profile_image' => $logistic->profile_image,
+            'password' => Hash::make($logistic->password),
+            'slug' => Str::slug($logistic->company_name, '-').$number,
+            'phone' => $logistic->phone,
+            'state_id' => $logistic->state,
+            'local_government_id' => $logistic->lga,
+            'bvn' => $logistic->bvn,
+            'identification_type' => $logistic->identification_type,
+            'identification_id' => $logistic->identification_number,
+            'type_of_bike' => $logistic->type_of_bike,
+            'plate_number' => $logistic->plate_number,
+            'paid' => 1,
+            'paid_amount' => 2000,
+            'payment_id' => $ref
+        ]);
+
+        
+
+        // Logistic::create([$logistic, 'paid' => 1, 'paid_amount' => 2000]);
+        // $get_user = Auth::guard('logistic')->user();
+        // DB::table('logistics')->where('id', '=', $get_user->id)->update(['payment_id' => $ref, 'paid' => 1, 'paid_amount' => 2000]);
+
+        return response()->json('successful', 200);
     }
 
     public function loginView()
     {
+
         if(Auth::guard('logistic')->check()) {
             return redirect()->route('logistics_dashboard');
         }
@@ -223,11 +439,20 @@ class LogisticController extends Controller
 
             //if credentials are complete, get all of the company's requests
             $requests = Logistic::find($dispatch_company->id)->delivery_request;
+            $incoming_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 0)->get();
+            $active_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 1)->get();
+            $delivered_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('is_delivered', 1)->get();
+            
+
+
             $requests_count = DeliveryRequest::where('logistic_id', $dispatch_company->id)->count();
 
             return view('logistics.dashboard', [
                 'requests' => $requests,
-                'requests_count' => $requests_count
+                'requests_count' => $requests_count,
+                'incoming_requests' => $incoming_requests,
+                'active_requests' => $active_requests,
+                'delivered_requests' =>$delivered_requests
             ]);
 
         }
@@ -359,17 +584,21 @@ class LogisticController extends Controller
         
     }
 
-    public function confirmPayment(Request $request, $ref)
+    
+
+    public function registrationSuccess(Request $request)
     {
-        // $response = Http::withHeaders([
-        //     'content-type' => 'application/json',
-        // ])
+        $logistic = $request->session()->get('dispatch');
 
+        // dd($logistic);
+        if(empty($logistic))
+        {
+            return redirect()->route('register_logistics');
+        }
 
-        $get_user = Auth::guard('logistic')->user();
-        DB::table('logistics')->where('id', '=', $get_user->id)->update(['payment_id' => $ref, 'paid' => 1, 'paid_amount' => 2000]);
-
-        return response()->json('successful', 200);
+        return view('auth.success', [
+            'logistic' => $logistic
+        ]);
     }
 
     public function updateId(Request $request)
@@ -455,7 +684,9 @@ class LogisticController extends Controller
         }
 
         $incoming_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 0)->get();
+        // $provider_details = User::find($incoming_requests->user_id)->delivery_requests;
 
+        // dd($incoming_requests->user_id);
         return view('logistics.requests.incoming', [
             'requests' =>$incoming_requests
         ]);
@@ -518,7 +749,7 @@ class LogisticController extends Controller
         catch (\Exception $e) {
         }
 
-        return redirect()->back()->with($this->transit_success());
+        return redirect()->back()->with($this->delivered_success());
     }
 
     public function profileImage(Request $request)
@@ -558,6 +789,11 @@ class LogisticController extends Controller
 
 
         }
+    }
+
+    public function notVerified()
+    {
+        return view('auth.not_verified');
     }
 
 

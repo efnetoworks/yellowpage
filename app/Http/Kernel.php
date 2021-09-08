@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'cmo' => \App\Http\Middleware\CMOMiddleware::class,
         'data' => \App\Http\Middleware\DataEntryMiddleware::class,
         'customerservice' => \App\Http\Middleware\CustomerServiceMiddleware::class,
+        'logistic_verified' =>\App\Http\Middleware\LogisticVerifiedMiddleware::class
     ];
 }
