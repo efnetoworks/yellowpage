@@ -26,26 +26,26 @@ class DashboardController extends Controller
     public function seller()
     {
         //uncomment this if you want to reuse subscription
-        // if (!Auth::user()->subscriptions->first()) {
-        //     $current_subscription_end_date = null;
-        //     $no_sub_var = 0;
-        // } else {
-        //     $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        if (!Auth::user()->subscriptions->first()) {
+            $current_subscription_end_date = null;
+            $no_sub_var = 0;
+        } else {
+            $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
 
-        //     if ($user_sub_date) {
+            if ($user_sub_date) {
 
-        //         if (Carbon::now() > Carbon::parse($user_sub_date)) {
-        //             $current_subscription_end_date = "Your Subscription period has ended. Please renew your subcription to proceed to the page";
-        //             $no_sub_var = 0;
-        //         } else {
-        //             $current_subscription_end_date = null;
-        //             $no_sub_var = 1;
-        //         }
-        //     } else {
-        //         $current_subscription_end_date = null;
-        //         $no_sub_var = 1;
-        //     }
-        // }
+                if (Carbon::now() > Carbon::parse($user_sub_date)) {
+                    $current_subscription_end_date = "Your Subscription period has ended. Please renew your subcription to proceed to the page";
+                    $no_sub_var = 0;
+                } else {
+                    $current_subscription_end_date = null;
+                    $no_sub_var = 1;
+                }
+            } else {
+                $current_subscription_end_date = null;
+                $no_sub_var = 1;
+            }
+        }
         // dd($current_subscription_end_date);
 
         $user = Auth::user();
@@ -173,7 +173,7 @@ class DashboardController extends Controller
                 'subcategories',
                 'states',
                 'servicesLikeCounter',
-                // 'current_subscription_end_date'
+                'current_subscription_end_date'
             ));
         }
     }
