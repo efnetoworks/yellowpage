@@ -33,13 +33,13 @@
                                 <thead>
                                     <tr>
                                         <th> SL </th>
-                                        <th> Product/Service </th>
+                                        <th> Product </th>
                                         <th> Tracking Number </th>
                                         <th> Dispatch Company </th>
-                                        <th> Customer Name </th>
-                                        <th> Customer Email </th>
-                                        <th> Customer Phone </th>
-                                        <th>Customer Address</th>
+                                        <th> Reciever's Name </th>
+                                        <th> Reciever's Email </th>
+                                        <th> Reciever's Phone </th>
+                                        <th>Reciever's Address</th>
                                         {{-- <th>Badge Type</th> --}}
                                         <th>Status</th>
                                         {{-- <th> Action </th> --}}
@@ -50,10 +50,10 @@
                                     @foreach($deliveries as $key => $delivery)
                                         <tr>
                                             <td><a href="javascript:void(0)"> {{ $key + 1 }} </a></td>
-                                            <td> {{ $delivery->service->name }} </td>
+                                            <td> <a href="{{ route('serviceDetail', $delivery->service->slug) }}" style="color: #ca8309" target="_blank">{{ $delivery->service->name }}</a> </td>
                                             <td> {{ $delivery->tracking_id }}</td>
                                             <td>
-                                               {{ $delivery->logistic->name }}
+                                               {{ $delivery->logistic->company_name }}
                                             </td>
                                             <td> {{ $delivery->customer_name }} </td>
                                             <td> {{ $delivery->customer_email }} </td>

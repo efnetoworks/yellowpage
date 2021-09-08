@@ -10,4 +10,9 @@ class Local_government extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    public function logistics()
+    {
+        return $this->hasMany(Logistic::class);
+    }
 }

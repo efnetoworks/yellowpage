@@ -185,7 +185,7 @@
     @if(auth()->user()->isServiceOwner($serviceDetail))
         <a href="#" class="float-ship-btn" data-toggle="modal" data-target="#launchMobileAgentModal">
             <i class="fa fa-taxi"></i>
-            Ship product
+            Ship this product
             {{-- <i class="fa fa-plus my-float"></i> --}}
         </a>
     @endif
@@ -751,15 +751,21 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #cc8a19; color: #fff">
-                    <h5 class="modal-title text-white" style="text-transform: uppercase">Deliver {{ $serviceDetail->name }}</h5>
+                    <h5 class="modal-title text-white" style="text-transform: uppercase">Enter Billing Details</h5>
+                    <a href="{{ route('shipping.help') }}"><i class="fa fa-question-circle"></i> <small>View help</small></a>
                     <button type="button" class="close" data-dismiss="modal" style="color: #fff">&times;</button>
+                    <br>
+                    <br>
+                    
                 </div>
                 <div class="modal-body">
                     <div class="tabbing tabbing-box agent-registration-modal">
                         <div class="tab-content" id="carTabContent">
                             <div class="tab-pane fade active show" id="aboutAgent" role="tabpanel" aria-labelledby="one-tab">
+
                                 <div class="card">
                                     <div class="card-body">
+
                                         <div class="row">
                                             <div class="col-md-12">
                                                  <form id="" action="{{ route('ship_service', $serviceDetail->id) }}" method="POST">
@@ -769,7 +775,7 @@
                                                     <input type="hidden" name="provider_id" id="provider_id" value="{{ $serviceDetail->user->id }}">
 
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Deliver with</label>
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Deliver with <span style="color: red;">*</span></label>
                                                         <select class="form-control text-dark" id="logistic_id" name="logistic_id" value="{{ old('logistic_id') }}">
                                                             @foreach($logistic_companies as $logistic)
                                                                 <option value="{{ $logistic->id }}">{{ $logistic->company_name }}</option>
@@ -782,8 +788,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer name</label>
-                                                        <input type="text" id="customer_name" name="customer_name" class="text-dark form-control" placeholder="Enter the customer name" value="{{ old('customer_name') }}">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's name <span style="color: red;">*</span></label>
+                                                        <input type="text" id="customer_name" name="customer_name" class="text-dark form-control" placeholder="Enter the reciever's name" value="{{ old('customer_name') }}">
                                                         @if ($errors->has('customer_name'))
                                                             <span>
                                                                 <strong class="text-danger">{{ $errors->first('customer_name') }}</strong>
@@ -791,8 +797,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer phone number</label>
-                                                        <input type="text" id="customer_phone" name="customer_phone" class="text-dark form-control" placeholder="Customer phone number" value="{{ old('customer_phone') }}">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's phone number <span style="color: red;">*</span></label>
+                                                        <input type="text" id="customer_phone" name="customer_phone" class="text-dark form-control" placeholder="Enter the  reciever's phone number" value="{{ old('customer_phone') }}">
                                                         @if ($errors->has('customer_phone'))
                                                             <span>
                                                                 <strong class="text-danger">{{ $errors->first('customer_phone') }}</strong>
@@ -800,8 +806,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer email</label>
-                                                        <input type="text" id="customer_email" name="customer_email" class="text-dark form-control" placeholder="Customer email" value="{{ old('customer_email') }}">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's email <span style="color: red;">*</span></label>
+                                                        <input type="text" id="customer_email" name="customer_email" class="text-dark form-control" placeholder="Enter the reciever's email address" value="{{ old('customer_email') }}">
                                                         @if ($errors->has('customer_email'))
                                                             <span>
                                                                 <strong class="text-danger">{{ $errors->first('customer_email') }}</strong>
@@ -809,8 +815,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Customer address</label>
-                                                        <input type="text" id="customer_address" name="customer_address" class="text-dark form-control" placeholder="Customer address" value="{{ old('customer_address') }}">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's address <span style="color: red;">*</span></label>
+                                                        <input type="text" id="customer_address" name="customer_address" class="text-dark form-control" placeholder="Enter the reciever's delivery address" value="{{ old('customer_address') }}">
                                                         @if ($errors->has('customer_address'))
                                                             <span>
                                                                 <strong class="text-danger">{{ $errors->first('customer_address') }}</strong>
@@ -819,7 +825,7 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <button type="submit" class="btn btn-md btn-warning" style="border-radius:25px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Request</button>
+                                                        <button type="submit" class="btn btn-md btn-warning" style="border-radius:25px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);" id="submit_request_btn">Submit</button>
                                                                 <p class="text-success" style="font-size: 15px" id="successMessage">
                                                        <div class="send-btn">
                                                                 </p>
@@ -838,9 +844,9 @@
                     </div>
                 </div>
 
-                <div class="modal-footer">
+                {{-- <div class="modal-footer">
                     <button type="button" class="btn btn-md" data-dismiss="modal" style="background-color: #cc8a19; color: #fff">Close</button>
-                </div>
+                </div> --}}
         </div>
 
         </div>
@@ -1307,6 +1313,14 @@
                 });
             });
         }
+    });
+</script>
+
+<script>
+    var btn = document.getElementById('submit_request_btn');
+    btn.addEventListener('click', function(){
+        btn.classList.add('.disabled');
+        btn.innerHTML = 'Submitting...please wait!';
     });
 </script>
 

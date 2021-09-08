@@ -419,6 +419,15 @@ return $this->index();
         return response()->json($cities);
     }
 
+    public function getCityListById($id)
+    {
+        
+        $cities = DB::table("local_governments")
+        ->where("state_id",$id)->orderBy('name')
+        ->pluck("name","id");
+
+        return response()->json($cities);
+    }
 
 
     public function getCategoryList($id)

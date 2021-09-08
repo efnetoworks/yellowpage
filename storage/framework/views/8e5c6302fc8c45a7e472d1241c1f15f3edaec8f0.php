@@ -16,6 +16,7 @@
 
  <meta charset="utf-8">
  <meta name="theme-color" content="#CA8309" />
+ <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>" />
  <!-- Favicon icon -->
  <link rel="shortcut icon" href="<?php echo e(asset('logos/favicon.png')); ?>" type="image/x-icon" />
 

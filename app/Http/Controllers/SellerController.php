@@ -581,7 +581,7 @@ class SellerController extends Controller
     {
         $user = Auth::user();
         
-        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 0)->get();
+        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 0)->where('is_delivered', 0)->get();
 
         return view('seller.dispatch.pending', [
             'deliveries' => $deliveries
@@ -592,7 +592,7 @@ class SellerController extends Controller
     {
         $user = Auth::user();
         
-        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 1)->get();
+        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 1)->where('is_delivered', 0)->get();
 
         return view('seller.dispatch.transit', [
             'deliveries' => $deliveries
@@ -603,7 +603,7 @@ class SellerController extends Controller
     {
         $user = Auth::user();
         
-        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('is_delivered', 1)->get();
+        $deliveries = DeliveryRequest::where('user_id',$user->id)->where('is_delivered', 1)->where('in_transit', 0)->get();
 
         return view('seller.dispatch.delivered', [
             'deliveries' => $deliveries
