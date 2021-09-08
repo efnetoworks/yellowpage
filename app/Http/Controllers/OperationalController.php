@@ -391,12 +391,13 @@ class OperationalController extends Controller
 
     public function clientfeedbacks()
     {
-        $success_notification = array(
-            'message' => 'Please renew your subscription to view this page!',
-            'alert-type' => 'error'
-        );
+
         // uncomment this if you want to implement subscription to allow users access their messages
 
+        // $success_notification = array(
+        //     'message' => 'Please renew your subscription to view this page!',
+        //     'alert-type' => 'error'
+        // );
         // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
 
         // if (Carbon::now() > Carbon::parse($user_sub_date)) {
@@ -420,11 +421,12 @@ class OperationalController extends Controller
 
     public function myFavourites(Request $request)
     {
-        $success_notification = array(
-            'message' => 'Please renew your subscription to view this page!',
-            'alert-type' => 'error'
-        );
+
         //uncomment this if you want to reuse subscription
+        // $success_notification = array(
+        //     'message' => 'Please renew your subscription to view this page!',
+        //     'alert-type' => 'error'
+        // );
 
         // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
 
