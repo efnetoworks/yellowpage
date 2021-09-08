@@ -1031,7 +1031,7 @@ class OperationalController extends Controller
                 $username = explode(' ', trim($user->name))[0];
 
                 try {
-                    Mail::to($email)->send(new CustomerServiceMail($username, $request->message, $request->subject));
+                    Mail::to($email)->queue(new CustomerServiceMail($username, $request->message, $request->subject));
                 } catch (\Exception $e) {
                     $failedtosendmail = 'Failed to Mail!.';
                 }
