@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-Send Mail | 
+Send Mail |
 @endsection
 
 @section('extra-styles')
@@ -87,7 +87,7 @@ Send Mail |
         @media screen and (max-width: 768px){
             .form-area{
                 background-color: #fff;
-                width: 50%;
+                width: 100%;
                 padding: 18px;
 
             }
@@ -157,7 +157,7 @@ Send Mail |
 
 
 			<!-- /.content -->
-		</div>	
+		</div>
 
 
 
