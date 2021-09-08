@@ -32,6 +32,10 @@ use Illuminate\Support\Facades\Mail;
 
 Route::get('/hash', 'OperationalController@hashNewPassword')->name('hashNewPassword');
 
+Route::get('/mailable', function () {
+    return new App\Mail\BgTest();
+});
+
 // USER EMAIL UNSUBSCRIBED
 Route::get('/email/unsubscribe/{email}/{subcriptionid}', 'EmailSubscriptionsController@unsubscribe')->name('user.email.unsubscribe');
 Route::get('/email/subscribe/user/all', 'EmailSubscriptionsController@emailSubscribeAllUsersDef')->name('email.sub');
@@ -87,6 +91,9 @@ Route::get('/add_seller_referals', 'AdminController@add_seller_referals')->name(
 // set sub_has_ended field to 1 on users table if subscription has ended
 Route::get('/set_sub_status', 'AdminController@set_sub_status')->name('set_sub_status');
 // End set sub_has_ended field to 1 on users table if subscription has ended
+
+Route::get('/promo', 'AdminController@new_promo')->name('promo');
+
 
 // route to add payments for users with no payments
 Route::get('/add_old_payments', 'AdminController@add_old_payments')->name('add_old_payments');

@@ -42,6 +42,7 @@ use Illuminate\Validation\Rule;
 
 use App\Mail\SendMailable;
 use App\Mail\UserRegistered;
+use App\Payment;
 use App\Refererlink;
 
 
@@ -1561,6 +1562,77 @@ public function set_sub_status() {
           }
           dd($sellers);
 }
+
+public function new_promo() {
+    // $sellers = User::where('role', 'seller')->where(function($query) {
+    //   $query->has('sub')
+    // })
+
+    $sellers = User::where('role', 'seller')->get();
+    foreach($sellers as $seller) {
+        $sell_sub = $seller->subscriptions->first() ? $seller->subscriptions->first()->last_amount_paid : null;
+        // $sellers[$key]->total_refers_count = $sellers->subscriptions;
+        $check_old_badge = $seller->my_badge;
+
+        if(!$check_old_badge){
+            if ($sell_sub) {
+                if($sell_sub == '2400') {
+                    $badge = new Badge();
+                    $badge->user_id = $seller->id;
+
+                    $badge->amount = 7000;
+                    $badge->ref_no = 'free_payment-' .  Str::random(3);
+                    $badge->seller_name = $seller->name;
+                    $badge->badge_type = 'Super User';
+                    $badge->save();
+                    // dd($badge);
+
+                }
+                elseif($sell_sub == '1200' || $sell_sub == '600') {
+                    $badge = new Badge();
+                    $badge->user_id = $seller->id;
+
+                    $badge->amount = 5000;
+                    $badge->ref_no = 'free_payment-' .  Str::random(3);
+                    $badge->seller_name = $seller->name;
+                    $badge->badge_type = 'Moderate User';
+                    $badge->save();
+
+                }
+                elseif($sell_sub == '200') {
+                    $badge = new Badge();
+                    $badge->user_id = $seller->id;
+
+                    $badge->amount = 3000;
+                    $badge->ref_no = 'free_payment-' .  Str::random(3);
+                    $badge->seller_name = $seller->name;
+                    $badge->badge_type = 'Basic User';
+                    $badge->save();
+
+                }
+            }
+        }
+
+
+    }
+
+    dd('done');
+
+    // foreach ($agents as $key => $serv) {
+    //     $agents[$key]->total_refers_count = $serv->total_refers->count();
+    //   }
+    //   $approval_status = null;
+
+
+            $sellers = User::where('role', 'seller')->whereHas('subscriptions', function($query) {
+              $query->where('subscription_end_date', '<', now());
+            })->orderBy('created_at')
+            ->get();
+            foreach($sellers as $seller) {
+              $seller->sub_has_ended = 1;
+            }
+            dd($sellers);
+  }
 
 public function add_old_payments() {
   $sellers = User::where('role', 'seller')->with('mypayments')->doesnthave('mypayments')->orderBy('created_at')->get();

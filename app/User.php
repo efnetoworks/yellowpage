@@ -105,6 +105,11 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         return $this->hasMany('\App\Badge'); //Product Model Name
     }
 
+    public function my_badge()
+    {
+        return $this->hasOne('\App\Badge'); //Badge Model Name
+    }
+
     public function complain()
     {
         return $this->hasMany(Complaint::class);
