@@ -666,26 +666,6 @@
         </div>
     </div>
 
-
-    @if($current_subscription_end_date)
-        <div>
-            <div id="postServiceModal" class="modal fade postServiceModal" role="dialog">
-                <div class="modal-dialog modal-lg">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #cc8a19; color: #fff">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="display: inline-block; color: #fff">
-                                <i class="fa fa-close"></i>
-                            </button>
-                            <h5 class="text-center" id="sub_end"><strong>Your Subscription has ended. Please renew your subcription to proceed</strong><span></span>
-                            </h5>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    @else
         <div>
             <div id="postServiceModal" class="modal fade postServiceModal" role="dialog">
                 <div class="modal-dialog modal-lg">
@@ -1112,7 +1092,6 @@
                 </div>
             </div>
         </div>
-    @endif
 
 </div>
 
