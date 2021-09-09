@@ -22,6 +22,7 @@
         "livewire/livewire": "^2.5",
         "malhal/laravel-geographical": "^1.0",
         "mews/captcha": "^3.2",
+        "realrashid/sweet-alert": "^4.0",
         "spatie/geocoder": "^3.10",
         "tymon/jwt-auth": "^1.0"
     },
