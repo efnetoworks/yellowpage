@@ -1,5 +1,3 @@
-
-
 @extends('layouts.admin')
 
 @section('title')
@@ -61,7 +59,7 @@ All Dispatch Riders |
 									</td>
 									@endif
 
-									{{-- {{ $general_info->register_section_1_title ? $general_info->register_section_1_title : '' }} --}}
+									
 
 							</tr>
 
