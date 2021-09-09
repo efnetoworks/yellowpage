@@ -53,7 +53,7 @@ Update Profile |
 												<label for="inputName" class="control-label">First Name</label>
 
 												<div class="">
-													<input type="text" id="name" class="form-control" name="first_name" value=" {{ Auth::guard('logistic')->user()->first_name }} " disabled>
+													<input type="text" id="name" class="form-control" name="first_name" value=" {{ Auth::guard('logistic')->user()->first_name }} ">
 												</div>
 											</div>
 										</div>
@@ -62,7 +62,7 @@ Update Profile |
 												<label for="inputName" class="control-label">Last Name</label>
 
 												<div class="">
-													<input type="text" id="name" class="form-control" name="last_name" value=" {{ Auth::guard('logistic')->user()->last_name }} " disabled>
+													<input type="text" id="name" class="form-control" name="last_name" value=" {{ Auth::guard('logistic')->user()->last_name }} ">
 												</div>
 											</div>
 										</div>
@@ -70,8 +70,8 @@ Update Profile |
 											<div class="form-group">
 												<img class="profile-user-img img-responsive" src="{{ Auth::guard('logistic')->user()->profile_image = null ? '/images/user-icon.png' : asset('uploads/users/'.''.Auth::guard('logistic')->user()->profile_image) }}" alt="User profile picture">
 												<div class="custom-file text-center">
-												  <input type="file" class="custom-file-input" id="customFile" name="profile_image" style="padding-left: 150px; display: none;" disabled>
-												  {{-- <label class="custom-file-label" for="customFile">Click to choose profile image/logo</label> --}}
+												  <input type="file" class="custom-file-input" id="customFile" name="profile_image" style="padding-left: 150px; display: none;">
+												  <label class="custom-file-label" for="customFile">Click to choose profile image/logo</label>
 												</div>
 											</div>
 										</div>
@@ -83,7 +83,7 @@ Update Profile |
 												<label for="inputEmail" class="control-label">Company</label>
 
 												<div class="">
-													<input type="type" class="form-control" name="company_name" value=" {{ Auth::guard('logistic')->user()->company_name }}" disabled>
+													<input type="type" class="form-control" name="company_name" value=" {{ Auth::guard('logistic')->user()->company_name }}">
 												</div>
 											</div>
 										</div>
@@ -94,7 +94,7 @@ Update Profile |
 												<label for="inputName" class="control-label">Email Address</label>
 
 												<div class="">
-													<input type="text" id="name" class="form-control" name="email" value=" {{ Auth::guard('logistic')->user()->email }} " disabled>
+													<input type="text" id="name" class="form-control" name="email" value=" {{ Auth::guard('logistic')->user()->email }} ">
 												</div>
 											</div>
 										</div>
@@ -103,7 +103,7 @@ Update Profile |
 												<label for="inputName" class="control-label">Phone</label>
 
 												<div class="">
-													<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control"  minlength="11" maxlength="11" name="phone" value="{{ Auth::guard('logistic')->user()->phone }}" disabled>
+													<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control"  minlength="11" maxlength="11" name="phone" value="{{ Auth::guard('logistic')->user()->phone }}">
 												</div>
 											</div>
 										</div>
@@ -126,7 +126,7 @@ Update Profile |
 											<label for="address">Address</label>
 
 											<div class="">
-												<input type="text" id="address" class="form-control" name="address" value=" {{ Auth::guard('logistic')->user()->address }} " disabled>
+												<input type="text" id="address" class="form-control" name="address" value=" {{ Auth::guard('logistic')->user()->email }} ">
 											</div>
 										</div>
 									</div>
@@ -146,7 +146,7 @@ Update Profile |
 											<div class="form-group">
 												<label for="bank_name" class="control-label">Identification Type <span style="color: red;">*</span></label>
 												<div class="">
-													<select class="form-control" name="identification_type" disabled>
+													<select class="form-control" name="identification_type">
 														@if(Auth::guard('logistic')->user()->identification_type != '')
 														<option value="{{ Auth::guard('logistic')->user()->identification_type }}">{{ Auth::guard('logistic')->user()->identification_type }}</option>
 														@endif
@@ -162,7 +162,7 @@ Update Profile |
 											<div class="form-group">
 												<label for="bank_name" class="control-label">Identification Number <span style="color: red;">*</span></label>
 												<div class="">
-													<input type="text" id="bank_name" class="form-control" name="identification_number" value="{{ Auth::guard('logistic')->user()->identification_id ? Auth::guard('logistic')->user()->identification_id : '' }}" placeholder="Enter the id number" disabled>
+													<input type="text" id="bank_name" class="form-control" name="identification_number" value="{{ Auth::guard('logistic')->user()->identification_id ? Auth::guard('logistic')->user()->identification_id : '' }}" placeholder="Enter the id number">
 												</div>
 											</div>
 										</div>
@@ -171,7 +171,7 @@ Update Profile |
 											<div class="form-group">
 												<label for="bank_name" class="control-label">BVN <span style="color: red;">*</span></label>
 												<div class="">
-													<input type="number" class="form-control" name="bvn" value="{{Auth::guard('logistic')->user()->bvn ? Auth::guard('logistic')->user()->bvn : '' }}" placeholder="Enter your bvn" disabled>
+													<input type="number" class="form-control" name="bvn" value="{{Auth::guard('logistic')->user()->bvn ? Auth::guard('logistic')->user()->bvn : '' }}" placeholder="Enter your bvn">
 												</div>
 											</div>
 										</div>
@@ -182,7 +182,7 @@ Update Profile |
 											<div class="form-group">
 												<label for="bank_name" class="control-label">CAC? (optional)</label>
 												<div class="">
-													<select class="form-control" name="cac" disabled>
+													<select class="form-control" name="cac">
 														<option value="{{ Auth::guard('logistic')->user()->cac }}">{{ (Auth::guard('logistic')->user()->cac) ? 'Yes' : 'No' }}</option>
 														<option default>Do you have CAC documents?</option>
 														<option value="1">Yes</option>
@@ -201,7 +201,7 @@ Update Profile |
 												@else
 												<label for="bank_name" class="control-label">Upload CAC document</label>
 												<div class="">
-													<input type="file" id="bank_name" class="form-control" name="cac_document" disabled>
+													<input type="file" id="bank_name" class="form-control" name="cac_document">
 												</div>
 												@endif
 											</div>
@@ -214,7 +214,7 @@ Update Profile |
 											<div class="form-group">
 												<label for="bank_name" class="control-label">Type of Bike <span style="color: red;">*</span></label>
 												<div class="">
-													<input type="text" class="form-control" name="type_of_bike" value="{{ Auth::guard('logistic')->user()->type_of_bike }}" placeholder="Which kind of bike do you own?" disabled>
+													<input type="text" class="form-control" name="type_of_bike" value="{{ Auth::guard('logistic')->user()->type_of_bike }}" placeholder="Which kind of bike do you own?">
 												</div>
 											</div>
 										</div>
@@ -222,7 +222,7 @@ Update Profile |
 											<div class="form-group">
 												<label for="bank_name" class="control-label">Bike Plate <span style="color: red;">*</span></label>
 												<div class="">
-													<input type="text" id="bank_name" class="form-control" name="plate_number" value="{{ Auth::guard('logistic')->user()->plate_number }}" placeholder="Enter the plate number of your bike" disabled>
+													<input type="text" id="bank_name" class="form-control" name="plate_number" value="{{ Auth::guard('logistic')->user()->plate_number }}" placeholder="Enter the plate number of your bike">
 												</div>
 											</div>
 										</div>
@@ -233,13 +233,13 @@ Update Profile |
 										<div class="col-md-3">
 											<div class="form-group">
 												<div class="col-sm-10">
-													<button type="submit" class="btn btn-warning" disabled>Update <i class="fa fa-refresh"></i></button>
+													<button type="submit" class="btn btn-warning">Update <i class="fa fa-refresh"></i></button>
 												</div>
 											</div>
 										</div>
 									</div>
 
-									<a href=""><p style="font-size: 15px; text-transform:initial">Contact support to update your profile</p></a>
+
 									
 
 									

@@ -5,7 +5,7 @@
 @include('layouts.frontend_partials.head')
 
 <body>
-    @include('sweetalert::alert')
+
 	@include('layouts.frontend_partials.navbar')
     <!-- @include('layouts.frontend_partials.status') -->
 
@@ -13,7 +13,7 @@
 		@yield('content')
 
 	@include('layouts.frontend_partials.footer')
-    
+
 
     {{-- FEEDBACK MODULE  --}}
     <a href="#" data-toggle="modal" data-target="#launchFeedback" class="float-feedback  animate__animated animate__fadeInRight">

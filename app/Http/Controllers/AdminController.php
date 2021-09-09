@@ -23,8 +23,6 @@ use App\Referal;
 use App\Event;
 use App\Subscription;
 use App\UserFeedback;
-use App\Logistic;
-use App\DeliveryRequest;
 use App\ProviderSubscription;
 use App\Mail\SendEmail;
 use App\SendMail;
@@ -1720,64 +1718,6 @@ public function add_old_payments() {
         {
 
           return view('admin.create_user');
-        }
-
-        public function nonActivatedRiders()
-        {
-           $dispatch_companies = Logistic::where('is_verified', 0)->get();
-
-           return view('admin.logistics.non_activated', [
-            'riders' => $dispatch_companies
-           ]);
-        }
-
-        public function activateDispatchRider($id)
-        {
-          //return $id;
-          $success = true;
-          $message = "You have verified a rider";
-          $status_message = "Disabled";
-
-          $user = Logistic::where('id', $id)->first();
-          
-          $user->is_verified = 1;
-          $user->save();
-
-          return response()->json([
-            'success' => $success,
-            'message' => $message,
-            'status_message' => $status_message,
-          ]);
-              
-          
-          
-        }
-
-        public function activatedRiders()
-        {
-          $dispatch_companies = Logistic::where('is_verified', 1)->get();
-
-           return view('admin.logistics.activated', [
-            'riders' => $dispatch_companies
-           ]);
-        }
-
-        public function allRiders()
-        {
-          $dispatch_companies = Logistic::all();
-
-           return view('admin.logistics.all', [
-            'riders' => $dispatch_companies
-           ]);
-        }
-
-        public function allDispatchRequests()
-        {
-          $requests = DeliveryRequest::all();
-
-          return view('admin.requests.all', [
-            'requests' => $requests
-          ]);
         }
 
 

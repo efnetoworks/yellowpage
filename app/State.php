@@ -15,9 +15,4 @@ class State extends Model
         return $this->hasMany(Local_government::class, 'state_id');
     }
 
-    public function logistics()
-    {
-        return $this->hasMany(Logistic::class);
-    }
-
 }

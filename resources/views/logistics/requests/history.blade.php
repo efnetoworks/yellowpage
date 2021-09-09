@@ -33,7 +33,7 @@
                        <th> S/N </th>
                         <!-- <th> Referee Name </th> -->
                        
-                        <th> Service Provider </th>
+                        <th> Seller </th>
                         <th> Package </th>
                         <th> Tracking ID </th>
                         <th> In-transit </th>
@@ -51,7 +51,7 @@
                         <tr>
                             <td>{{ ++$key }}</td>
                             <td>{{ $request->user->name }}</td>
-                            <td><a href="{{ route('serviceDetail', $request->service->slug) }}" target="_blank" style="color: #ca8309">{{ $request->service->name }}</a></td>
+                            <td>{{ $request->service->name }}</td>
                             <td>{{ $request->tracking_id }}</td>
                             <td>{{ ($request->in_transit) ? 'Yes' : 'No' }}</td>
                             <td>{{ ($request->is_delivered)  ? 'Yes' : 'No' }}</td>

@@ -47,7 +47,7 @@
           </a>
         </li> --}}
 
-        <li class="treeview" style="{{ url()->current() == route('logistics_incoming_requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('logistics_requests_in_transit') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('delivered_requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('logistics_payment_history') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+        <li class="treeview" style="">
           <a href="#">
             <i class="fa fa-money"></i>
             <span> Requests </span>
@@ -65,7 +65,7 @@
           </ul>
         </li>
 
-        <li class="" style="{{ url()->current() == route('logistics_profile') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+        <li class="">
           <a href="{{ route('logistics_profile') }}">
             <i class="fa fa-user"></i> <span> Profile </span>
             <span class="pull-right-container">

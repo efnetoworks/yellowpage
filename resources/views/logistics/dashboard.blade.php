@@ -79,15 +79,15 @@
         <section class="content">
 
             <div class="row">
-                <div class="col-md-3 col-sm-3 col-xs-3 top-box-card">
+                <div class="col-md-6 col-sm-6 col-xs-6 top-box-card">
                     <div class="info-box">
                         <a href="{{ route('logistics_payment_history') }}">
                             <span class="info-box-icon push-bottom bg-warning">
                                 <i class="fa fa-users text-white" aria-hidden="true"></i>
                             </span>
                             <div class="info-box-content">
-                                <span class="info-box-text"> Incoming Requests </span>
-                                <span class="info-box-number"> {{ count($incoming_requests) }} </span>
+                                <span class="info-box-text"> My Requests </span>
+                                <span class="info-box-number"> {{ $requests_count }} </span>
                             </div>
                             <!-- /.info-box-content -->
                         </a>
@@ -96,36 +96,12 @@
                 </div>
                 <!-- /.col -->
 
-                <div class="col-md-3 col-sm-3 col-xs-3">
+                <div class="col-md-6 col-sm-6 col-xs-6">
                     <div class="info-box">
                         <span class="info-box-icon push-bottom bg-warning">  <i class="fa fa-money text-white" aria-hidden="true"></i> </span>
                         <div class="info-box-content">
-                            <span class="info-box-text"> Requests in Transit </span>
-                            <span class="info-box-number"> {{ count($active_requests) }} </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <div class="info-box">
-                        <span class="info-box-icon push-bottom bg-warning">  <i class="fa fa-money text-white" aria-hidden="true"></i> </span>
-                        <div class="info-box-content">
-                            <span class="info-box-text"> Delivered Requests </span>
-                            <span class="info-box-number"> {{ count($delivered_requests) }} </span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <div class="info-box">
-                        <span class="info-box-icon push-bottom bg-warning">  <i class="fa fa-money text-white" aria-hidden="true"></i> </span>
-                        <div class="info-box-content">
-                            <span class="info-box-text"> Total Requests </span>
-                            <span class="info-box-number"> {{ $requests_count }} </span>
+                            <span class="info-box-text"> Total  Earnings </span>
+                            <span class="info-box-number"> ₦ </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -165,21 +141,6 @@
                     <!-- /.info-box -->
                 </div> --}}
                 <!-- /.col -->
-            </div>
-            <div class="row">
-                <div class="col-md-6 connectedSortable">
-                  <!-- Category Table -->
-                  @include('logistics/section/pending_table')
-                </div>
-                <div class="col-md-6 connectedSortable">
-                  @include('logistics/section/active_table')
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    @include('logistics/section/completed_table')
-                </div>
             </div>
         </section>
 
