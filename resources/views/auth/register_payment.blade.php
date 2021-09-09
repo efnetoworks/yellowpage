@@ -126,10 +126,6 @@
           // this happens after the payment is completed successfully
           console.log(response)
           $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-
             method: "POST",
             url: base_url + '/logistics/payment-confirmation/' + response.reference,
 
