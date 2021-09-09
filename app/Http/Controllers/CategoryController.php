@@ -421,7 +421,6 @@ return $this->index();
 
     public function getCityListById($id)
     {
-        
         $cities = DB::table("local_governments")
         ->where("state_id",$id)->orderBy('name')
         ->pluck("name","id");
