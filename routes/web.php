@@ -43,6 +43,7 @@ Route::get('/cheatViewsCode', 'OperationalController@cheatViewsCode');
 Route::get('/cheatViewsCodeLower', 'OperationalController@cheatViewsCodeLower');
 Route::get('/cheatviewscodedaily', 'OperationalController@cheatViewsCodeDaily');
 Route::get('/become-an-efcontact-agent', 'OperationalController@becomeAnEfcontactAgent')->name('launch.mobile.agent.modal');
+Route::get('shipping_help', 'OperationalController@shippingHelp')->name('shipping.help');
 
 Route::get('/subscribe/user', function ()
 {
@@ -385,6 +386,7 @@ Route::get('/allCategories/', 'CategoryController@allCategories')->name('allCate
 Route::get('/admin/user_register/ajax/{state_id}', array('as' => 'user_register.ajax', 'uses' => 'CategoryController@stateForCountryAjax'));
 Route::get('/getlocal_governments/{id}', 'CategoryController@getlocal_governments');
 Route::get('api/get-city-list/{state_name}', 'CategoryController@getCityList');
+Route::get('get-city-list-by-id/{id}', 'CategoryController@getCityListById');
 Route::get('api/get-category-list/{state_name}', 'CategoryController@getCategoryList');
 
 Route::get('api/get-subcategory-list/{category_slug}', 'CategoryController@getSubCategoryList');
