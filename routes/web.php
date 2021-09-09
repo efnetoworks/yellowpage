@@ -456,7 +456,7 @@ Route::middleware(['seller'])->group(function () { //Seller Middleware protectio
 
         Route::get('/dashboard', 'DashboardController@seller')->name('seller.dashboard');
 
-        // subcription routes
+        // subcription routes having payments
 
         // Route::get('/dashboard/sub/all', 'SubscriptionController@allSub')->name('seller.sub.all');
         // Route::get('/sub/add', 'SubscriptionController@createSub')->name('seller.sub.create');
