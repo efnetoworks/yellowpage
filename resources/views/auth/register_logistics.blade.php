@@ -48,9 +48,9 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group form-box">
-                                            <input type="text" id="name" class="input-text @error('first_name') is-invalid @enderror" name="first_name"  autofocus placeholder="First Name" value="{{ old('first_name') }}">
+                                            <input type="text" id="name" class="input-text @error('name') is-invalid @enderror" name="first_name"  autofocus placeholder="First Name" value="{{ old('first_name') }}">
 
-                                            @error('first_name')
+                                            @error('name')
                                             <span class="helper-text text-danger" data-error="wrong" data-success="right">
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
@@ -60,9 +60,9 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group form-box">
-                                            <input type="text" id="name" class="input-text @error('last_name') is-invalid @enderror" name="last_name"  autofocus placeholder="Last Name" value="{{ old('last_name') }}">
+                                            <input type="text" id="name" class="input-text @error('name') is-invalid @enderror" name="last_name"  autofocus placeholder="Last Name" value="{{ old('last_name') }}">
 
-                                            @error('last_name')
+                                            @error('name')
                                             <span class="helper-text text-danger" data-error="wrong" data-success="right">
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
@@ -154,7 +154,7 @@
 
                                 </div>
                           
-                                {{-- <div style="padding-top: 15px;">
+                                <div style="padding-top: 15px;">
                                     <label>
                                         <input type="checkbox" name="terms" class="filled-in" wire:model='terms'/>
                                         <span>By registering you accept our <a href="{{route('terms-of-use')}}" target="_blank" style="color: blue">Terms of Use</a> and <a href="{{route('privacy-policy')}}" target="_blank" style="color: blue"> Privacy</a> and agree that we and our selected partners may contact you with relevant offers and services.</span>
@@ -164,7 +164,7 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                </div> --}}
+                                </div>
 
                                 <div>
                                     @if (session()->has('message'))
@@ -190,7 +190,7 @@
                                     {{-- btn for pay --}}
                                     <script src="https://js.paystack.co/v1/inline.js"></script>
 
-                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-right" style="background-color: #cc8a19; color: #fff">Next</button>
+                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-left" style="background-color: #cc8a19; color: #fff">Create Account</button>
 
                                     
 

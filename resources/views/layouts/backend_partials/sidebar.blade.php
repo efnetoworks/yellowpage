@@ -54,22 +54,6 @@
         </ul>
       </li>
 
-      <li class="treeview" style="{{ url()->current() == route('superadmin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
-        <a href="#">
-          <i class="fa fa-truck"></i>
-          <span> Dispatch Requests </span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          {{-- <li><a href=" {{ route('superadmin.all.pending.requests') }} "><i class="fa fa-circle-o"></i> Pending Requests </a></li>
-          <li><a href="{{ route('superadmin.all.active.requests') }}"><i class="fa fa-circle-o"></i> Active Requests</a></li>
-          <li><a href="{{ route('superadmin.all.completed.requests') }}"><i class="fa fa-circle-o"></i> Completed Requests</a></li> --}}
-          <li><a href="{{ route('superadmin.all.dispatch.requests') }}"><i class="fa fa-circle-o"></i> All Requests</a></li>
-        </ul>
-      </li>
-
       <li class="" style="{{ url()->current() == route('superadmin.all.earnings') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href=" {{route ('superadmin.all.earnings') }}">
           <i class="fa fa-comments-o"></i> <span> All Marketers Earnings </span>
@@ -144,21 +128,6 @@
         <ul class="treeview-menu">
           <li><a href=" {{ route('superadmin.all.data') }} "><i class="fa fa-circle-o"></i> All Data Entry Officers </a></li>
           <li><a href="{{ route('superadmin.add.data') }}"><i class="fa fa-circle-o"></i> Add Data Entry Officer</a></li>
-        </ul>
-      </li>
-
-      <li class="treeview" style=" {{ url()->current() == route('superadmin.activated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.all_dispatch_riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.nonactivated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
-        <a href="#">
-          <i class="fa fa-truck"></i>
-          <span> Dispatch Riders </span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href=" {{ route('superadmin.nonactivated.riders') }} "><i class="fa fa-circle-o"></i> Non-activated Riders </a></li>
-          <li><a href="{{ route('superadmin.activated.riders') }}"><i class="fa fa-circle-o"></i> Activated Riders</a></li>
-          <li><a href="{{ route('superadmin.all_dispatch_riders') }}"><i class="fa fa-circle-o"></i> All Riders</a></li>
         </ul>
       </li>
 
@@ -267,22 +236,6 @@
           <li><a href=" {{ route ('admin.category.show') }} "><i class="fa fa-circle-o"></i> Categories </a></li>
           {{-- <li><a href=" {{ route ('admin.subcategory.show') }} "><i class="fa fa-circle-o"></i> Sub-categories </a></li> --}}
 
-        </ul>
-      </li>
-
-      <li class="treeview" style="{{ url()->current() == route('admin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
-        <a href="#">
-          <i class="fa fa-truck"></i>
-          <span> Dispatch Requests </span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          {{-- <li><a href=" {{ route('superadmin.all.pending.requests') }} "><i class="fa fa-circle-o"></i> Pending Requests </a></li>
-          <li><a href="{{ route('superadmin.all.active.requests') }}"><i class="fa fa-circle-o"></i> Active Requests</a></li>
-          <li><a href="{{ route('superadmin.all.completed.requests') }}"><i class="fa fa-circle-o"></i> Completed Requests</a></li> --}}
-          <li><a href="{{ route('admin.all.dispatch.requests') }}"><i class="fa fa-circle-o"></i> All Requests</a></li>
         </ul>
       </li>
       <li class="" style="{{ url()->current() == route('admin.featured.services') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
@@ -521,21 +474,6 @@
         <ul class="treeview-menu">
           <li><a href=" {{ route('admin.all.data') }} "><i class="fa fa-circle-o"></i> All Data Entry Officers </a></li>
           <li><a href="{{ route('admin.add.data') }}"><i class="fa fa-circle-o"></i> Add Data Entry Officer</a></li>
-        </ul>
-      </li>
-
-      <li class="treeview" style=" {{ url()->current() == route('admin.activated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('admin.all_dispatch_riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('admin.nonactivated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
-        <a href="#">
-          <i class="fa fa-truck"></i>
-          <span> Dispatch Riders </span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href=" {{ route('admin.nonactivated.riders') }} "><i class="fa fa-circle-o"></i> Non-activated Riders </a></li>
-          <li><a href="{{ route('admin.activated.riders') }}"><i class="fa fa-circle-o"></i> Activated Riders</a></li>
-          <li><a href="{{ route('admin.all_dispatch_riders') }}"><i class="fa fa-circle-o"></i> All Riders</a></li>
         </ul>
       </li>
 

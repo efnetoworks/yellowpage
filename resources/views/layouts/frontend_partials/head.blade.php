@@ -16,7 +16,6 @@
 
  <meta charset="utf-8">
  <meta name="theme-color" content="#CA8309" />
- <meta name="csrf-token" content="{{ csrf_token() }}" />
  <!-- Favicon icon -->
  <link rel="shortcut icon" href="{{ asset('logos/favicon.png') }}" type="image/x-icon" />
 
