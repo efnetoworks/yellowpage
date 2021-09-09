@@ -278,12 +278,23 @@ Route::get('upload', 'ImageController@upload');
 Route::post('upload/store', 'ImageController@store');
 Route::post('delete', 'ImageController@delete');
 
+
 Route::get('logistics', 'LogisticController@registerLogistics')->name('register_logistics');
+Route::get('logistics/register/step-2', 'LogisticController@registerLogisticsStepTwo')->name('register_logistics_step_2');
+Route::get('logistics/register/step-3', 'LogisticController@registerLogisticsStepThree')->name('register_logistics_step_3');
+Route::post('/logistics/create-step-2', 'LogisticController@createLogisticsStep2')->name('submit_application_step_2');
+Route::post('/logistics/create-step-3', 'LogisticController@createLogisticsStep3')->name('submit_application_step_3');
+// Route::get('/logistics/registration-pay','LogisticController@')
+Route::get('/logistics/payment', 'LogisticController@makePayment1')->name('logistic.pay');
 Route::post('logistics/create', 'LogisticController@createLogistics')->name('submit_application');
 Route::get('logistics/login', 'LogisticController@loginView')->name('logistics_login');
 Route::post('logistics/login', 'LogisticController@login')->name('login_dashboard');
+Route::post('logistics/payment-confirmation/{ref}', 'LogisticController@confirmPayment')->name('logistic.confirm.payment');
 
-Route::middleware(['auth:logistic'])->prefix('logistics')->group(function () {
+Route::get('logistics/registration-success', 'LogisticController@registrationSuccess');
+Route::get('logistics/account-not-verified', 'LogisticController@notVerified')->name('logistic.not.verified');
+
+Route::middleware(['auth:logistic', 'logistic_verified'])->prefix('logistics')->group(function () {
 
     Route::get('dashboard', 'LogisticController@dashboard')->name('logistics_dashboard');
     Route::get('my-profile', 'LogisticController@logisticProfile')->name('logistics_profile');
@@ -294,15 +305,16 @@ Route::middleware(['auth:logistic'])->prefix('logistics')->group(function () {
     Route::put('update-profile', 'LogisticController@updateProfile')->name('logistic.profile.updates');
     Route::put('update-password', 'LogisticController@updatePassword')->name('logistic.update.password');
     Route::put('update-identification', 'LogisticController@updateId')->name('logistic.update.id');
-    Route::get('payment', 'LogisticController@makePayment')->name('logistic.pay');
+
     Route::get('details/{id}', 'LogisticController@details')->name('logistic.request.detail');
     Route::put('/set-transit-mode/{id}', 'LogisticController@transitMode')->name('logistic.transit.mode');
     Route::put('/product-delivered/{id}', 'LogisticController@deliveredMode')->name('logistic.delivered.mode');
     Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
-    Route::post('payment-confirmation/{ref}', 'LogisticController@confirmPayment')->name('logistic.confirm.payment');
+
     Route::get('/download_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.doc');
 
 });
+
 
 
 
@@ -732,6 +744,17 @@ Route::middleware(['admin'])->group(function () { //Admin Middleware protection 
     Route::get('/admin/add-accountant', 'AccountantController@add_accountant')->name('add-accountant');
     Route::post('/admin/submit-accountant', 'AccountantController@submit_accountant')->name('submit_accountant');
 
+     //Dispatch riders
+     Route::get('admin/all-dispatch-riders', 'AdminController@allRiders')->name('admin.all_dispatch_riders');
+     Route::get('admin/non-activated-dispatch-riders', 'AdminController@nonActivatedRiders')->name('admin.nonactivated.riders');
+     Route::get('admin/active-dispatch-rider/{id}', 'AdminController@activateDispatchRider');
+     Route::get('admin/activated-riders', 'AdminController@activatedRiders')->name('admin.activated.riders');
+     Route::post('admin/activate-rider', 'AdminController@activateRider')->name('admin.activate.rider');
+
+
+     //Dispatch requests
+     Route::get('admin/all-dispatch-requests', 'AdminController@allDispatchRequests')->name('admin.all.dispatch.requests');
+
     // Advertisement
     // Route::get('/admin/sliders', 'AdminController@sliders')->name('admin.sliders');
     Route::get('/admin/sponsored/slider/{id}', 'OperationalController@get_advert_slider')->name('admin.advert.slider');
@@ -859,6 +882,21 @@ Route::prefix('superadmin')->middleware(['superadmin'])->group(function () { //S
     Route::post('save_faq/', 'AdminController@save_faq')->name('superadmin.save_faq');
     Route::get('save_faq/', 'AdminController@show_faq')->name('superadmin.show_faq');
     Route::get('delete/faqs/{id}', 'AdminController@delete_faqs')->name('superadmin.delete_faqs');
+
+
+    //Dispatch riders
+    Route::get('all-dispatch-riders', 'AdminController@allRiders')->name('superadmin.all_dispatch_riders');
+    Route::get('non-activated-dispatch-riders', 'AdminController@nonActivatedRiders')->name('superadmin.nonactivated.riders');
+    Route::get('active-dispatch-rider/{id}', 'AdminController@activateDispatchRider');
+    Route::get('activated-riders', 'AdminController@activatedRiders')->name('superadmin.activated.riders');
+    Route::post('activate-rider', 'AdminController@activateRider')->name('superadmin.activate.rider');
+
+
+    //Dispatch requests
+    Route::get('all-dispatch-requests', 'AdminController@allDispatchRequests')->name('superadmin.all.dispatch.requests');
+    Route::get('all-pending-requests', 'AdminController@allPendingDispatchRequests')->name('superadmin.all.pending.requests');
+    Route::get('all-active-requests', 'AdminController@allActiveDispatchRequests')->name('superadmin.all.active.requests');
+    Route::get('all-completed-requests', 'AdminController@allCompletedDispatchRequests')->name('superadmin.all.completed.requests');
 
     // Banner Sliders
     Route::get('sliders', 'AdminController@sliders')->name('superadmin.sliders');
@@ -997,6 +1035,8 @@ Route::prefix('cmo')->middleware(['cmo'])->group(function () { //CMO Middleware 
     Route::post('save_faq/', 'AdminController@save_faq')->name('cmo.save_faq');
     Route::get('save_faq/', 'AdminController@show_faq')->name('cmo.show_faq');
     Route::get('delete/faqs/{id}', 'AdminController@delete_faqs')->name('cmo.delete_faqs');
+
+
 
     // Banner Sliders
     Route::get('sliders', 'AdminController@sliders')->name('cmo.sliders');

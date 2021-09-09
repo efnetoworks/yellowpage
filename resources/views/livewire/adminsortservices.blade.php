@@ -1,5 +1,5 @@
 <div>
-   
+
     <!-- /.box-header -->
     <div class="box-body">
         <div class="table-responsive">
@@ -44,7 +44,7 @@
                                                 @endif --}}
                                             </td>
 
-                                            <td> {{ $all_services->featured == 1 ? 'Yes' : 'No' }} </td>
+                                            <td> {{ $all_services->featured == '1' ? 'Yes' : 'No' }} </td>
                                             <td> {{ $all_services->created_at->format('d/m/Y') }} </td>
 
 

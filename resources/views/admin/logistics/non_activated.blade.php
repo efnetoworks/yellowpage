@@ -1,7 +1,9 @@
+
+
 @extends('layouts.admin')
 
 @section('title')
-All Dispatch Riders |
+Unverified Dispatch Riders |
 @endsection
 
 @section('content')
@@ -23,7 +25,7 @@ All Dispatch Riders |
 
 				<div class="box" >
 					<div class="box-header">
-						<h3 class="box-title"> All Dispatch Riders Table</h3>
+						<h3 class="box-title"> Unverified Dispatch Riders Table</h3>
 					</div>
 
 					<!-- /.box-header -->
@@ -35,8 +37,8 @@ All Dispatch Riders |
 									<th> Name </th>
 									<th> Email </th>
 									<th> Date </th>
-									<th> Status</th>
-									<th> Action</th>
+									{{-- <th> Status</th> --}}
+									<th> Activate/Deactivate</th>
 								</tr>
 </thead>
 								<tbody>
@@ -46,20 +48,15 @@ All Dispatch Riders |
 									<td> {{ $rider->first_name .' '. $rider->last_name }} </td>
 									<td><span class="text-muted"> </i> {{ $rider->email }} </span> </td>
 									<td> {{ $rider->created_at->format('d/m/Y') }} </span></td>
-									<td>@if($rider->is_verified == 1)<span id="active_text" class="text text-success">Verified</span>@elseif($rider->is_verified == 0)<span id="active_text" class="text text-danger">Not verified</span>@endif </td>
+									{{-- <td>@if($rider->is_verified == 1)<span id="active_text" class="">Verified</span>@elseif($rider->is_verified == 0)<span id="active_text" class="">Not verified</span>@endif </td> --}}
 
-									@if($rider->is_verified == 0)
 									<td>
-										<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#launchMobileAgentModal-{{$rider->id}}">Verify This Rider</span></button>
+										<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#launchMobileAgentModal-{{$rider->id}}">
+											<span id="activate">Verify This Rider</span></button>
 									</td>
-									@else
-									<td>
-										<button type="button" class="btn btn-success">
-											<span id="activate">This rider has been verified</span></button>
-									</td>
-									@endif
 
-									
+
+									{{-- {{ $general_info->register_section_1_title ? $general_info->register_section_1_title : '' }} --}}
 
 							</tr>
 
@@ -118,12 +115,14 @@ All Dispatch Riders |
                             		@else
                             		<p><span class="text text-danger">Not paid</span></p>
                             		@endif
+
+                            		@if(Auth::user()->role == 'superadmin')
                                   <div class="form-group">
                                       <button type="submit" onclick="activateUser({{$rider->id}})" class="btn btn-md btn-success" style="border-radius:5px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Verify</button>
                                               <p class="text-success" style="font-size: 15px" id="successMessage">
                                      <div class="send-btn">
                                               </p>
-                                          </div>
+                                      </div>
                                   </div>
 
                                  
@@ -224,6 +223,7 @@ reverseButtons: !0
 if (e.value === true) {
 
 $.ajax({
+
   url: '/superadmin/active-dispatch-rider/' + id,
   method: 'get',
   success: function(results){
