@@ -23,6 +23,8 @@ use App\Referal;
 use App\Event;
 use App\Subscription;
 use App\UserFeedback;
+use App\Logistic;
+use App\DeliveryRequest;
 use App\ProviderSubscription;
 use App\Mail\SendEmail;
 use App\SendMail;
@@ -1591,6 +1593,11 @@ public function new_promo() {
                     $seller->save();
                     // dd($badge);
 
+                    foreach($seller->services as $service){
+                        $service->badge_type = 1;
+                        $service->save();
+                    }
+
                 }
                 elseif($sell_sub == '1200' || $sell_sub == '600') {
                     $badge = new Badge();
@@ -1603,6 +1610,11 @@ public function new_promo() {
                     $badge->save();
                     $seller->badgetype = 2;
                     $seller->save();
+
+                    foreach($seller->services as $service){
+                        $service->badge_type = 2;
+                        $service->save();
+                    }
 
                 }
                 elseif($sell_sub == '200') {
@@ -1617,12 +1629,17 @@ public function new_promo() {
                     $seller->badgetype = 3;
                     $seller->save();
 
+                    foreach($seller->services as $service){
+                        $service->badge_type = 3;
+                        $service->save();
+                    }
+
                 }
             }
         }
     }
 
-    dd('done');
+    dd('femi done');
 
     // foreach ($agents as $key => $serv) {
     //     $agents[$key]->total_refers_count = $serv->total_refers->count();

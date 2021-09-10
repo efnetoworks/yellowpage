@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailable;
-
+use Alert;
 use Illuminate\Http\File;
 use App\Category;
 use App\Local_government;
@@ -1653,12 +1653,16 @@ public function show($id)
         } 
         catch (\Exception $e) {
         }
-        $success_notification = array(
-            'message' => 'Request sent successfully!',
-            'alert-type' => 'success'
-        );
 
-        return redirect()->back()->with($success_notification);
+        Alert::success('Success', 'Request sent to logistics company successfully. They will contact your shortly!');
+
+
+        // $success_notification = array(
+        //     'message' => 'Request sent successfully!',
+        //     'alert-type' => 'success'
+        // );
+
+        return redirect()->back();
         
         
         

@@ -179,7 +179,8 @@ return [
 
         Mews\Captcha\CaptchaServiceProvider::class,
         ImageServiceProvider::class,
-        Spatie\Geocoder\GeocoderServiceProvider::class        
+        Spatie\Geocoder\GeocoderServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,        
 
     ],
 
@@ -236,6 +237,7 @@ return [
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Image' => 'Intervention\Image\Facades\Image',
         'Geocoder' => Spatie\Geocoder\Facades\Geocoder::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ],
 
 ];
