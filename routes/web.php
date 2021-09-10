@@ -96,6 +96,8 @@ Route::get('/set_sub_status', 'AdminController@set_sub_status')->name('set_sub_s
 Route::get('/add_old_payments', 'AdminController@add_old_payments')->name('add_old_payments');
 // end route to add payments for users with no payments
 
+Route::get('/promo', 'AdminController@new_promo')->name('new_promo');
+
 
 //End Special URLS
 

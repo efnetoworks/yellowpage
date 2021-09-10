@@ -1576,7 +1576,6 @@ public function new_promo() {
         $sell_sub = $seller->subscriptions->first() ? $seller->subscriptions->first()->last_amount_paid : null;
         // $sellers[$key]->total_refers_count = $sellers->subscriptions;
         $check_old_badge = $seller->my_badge;
-        dd($check_old_badge);
 
         if(!$check_old_badge){
             if ($sell_sub) {
