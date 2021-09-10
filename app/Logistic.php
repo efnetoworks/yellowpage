@@ -21,4 +21,19 @@ class Logistic extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(DeliveryRequest::class);
     }
+
+    public function local_government()
+    {
+        return $this->belongsTo(Local_government::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function profile_update_request()
+    {
+        return $this->hasOne(ProfileUpdateRequest::class);
+    }
 }

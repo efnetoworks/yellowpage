@@ -14,12 +14,14 @@ use App\Logistic;
 use App\State;
 use App\Local_government;
 use App\DeliveryRequest;
+use App\ProfileUpdateRequest;
 use App\Helpers\SmsHelper;
 use Illuminate\Support\Facades\Mail;
 use Closure;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\Rule;
 
 class LogisticController extends Controller
 {
@@ -462,8 +464,14 @@ class LogisticController extends Controller
     public function logisticProfile()
     {
         $states = State::all();
+
+        $dispatch_company = Auth::guard('logistic')->user();
+        $get_logistic_company_update_requested_profile = Logistic::find($dispatch_company->id)->profile_update_request;
+
+        // dd($get_logistic_company_update_request);
         return view('logistics.profile.update_profile', [
-            'states' => $states
+            'states' => $states,
+            'updated_profile' => $get_logistic_company_update_requested_profile
         ]);
     }
 
@@ -481,24 +489,29 @@ class LogisticController extends Controller
     {
         if(Auth::guard('logistic')->check())
         {
-            $this->validate($request, [
-            'identification_type' => 'required',
-            'identification_number' => 'required',
-            'bvn' => 'required',
-            'phone' => 'required',
-            'cac' => 'nullable',
-            'cac_document' => 'nullable',
-            'address' => 'required',
-            'profile_image' => 'nullable',
-            'type_of_bike' =>'nullable',
-            'plate_number' => 'nullable',
 
+            $get_user = Auth::guard('logistic')->user();
+
+
+            $this->validate($request, [
+                'identification_type' => 'nullable',
+                'identification_number' => 'nullable',
+                'bvn' => 'nullable',
+                'phone' => 'nullable',
+                'cac' => 'nullable',
+                'cac_document' => 'nullable',
+                'address' => 'nullable',
+                'profile_image' => 'nullable',
+                'type_of_bike' =>'nullable',
+                'plate_number' => 'nullable',
+                'company_name' => ['nullable', Rule::unique('logistics')->ignore($get_user->id)],
+                'email' => ['nullable', Rule::unique('logistics')->ignore($get_user->id)]
             ]);
 
             // dd($request->profile_image);
 
 
-            $get_user = Auth::guard('logistic')->user();
+            
             // $image = $request->profile_image->store('uploads/logistics', 'public') ?? $get_user->profile_image;
             //check if there's an existing image
 
@@ -524,7 +537,7 @@ class LogisticController extends Controller
                 $get_user->cac_document = $this->get_file_name_from_path($document);
             }
 
-           
+           $number = mt_rand(3, 5);
 
             $data = array(
                 'first_name' => $request->first_name,
@@ -540,19 +553,31 @@ class LogisticController extends Controller
                 'identification_type' => $request->identification_type,
                 'identification_id' => $request->identification_number,
                 'type_of_bike' => $request->type_of_bike,
-                'plate_number' => $request->plate_number
+                'plate_number' => $request->plate_number,
+                'has_requested_to_update_profile' => 1,
+                'logistic_id' => $get_user->id,
+                'slug' => Str::slug($request->company_name, '-').$number
             );
 
             
 
 
-            $get_user = Auth::guard('logistic')->user();
+            $get_profile_update_request = Logistic::find($get_user->id)->profile_update_request;
 
-            DB::table('logistics')->where('id', '=', $get_user->id)->update($data);
+            if($get_profile_update_request)
+            {
+              DB::table('profile_update_requests')->where('logistic_id', '=', $get_user->id)->update($data);  
+            }
+            else {
+                ProfileUpdateRequest::create($data);
+                // DB::table('profile_update_requests')->create($data);
+            }
 
-            return redirect()->route('logistic.pay')->with($this->success_notice_profile());
+            // DB::table('logistics')->where('id', '=', $get_user->id)->update($data);
+            Alert::success('Success', 'Your profile update request was recieved successfully. We will update your profile as soon as possible');
+            // return redirect()->route('logistic.pay')->with($this->success_notice_profile());
 
-
+            return redirect()->back();
         }
         
     }

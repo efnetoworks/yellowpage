@@ -26,6 +26,7 @@ use App\UserFeedback;
 use App\ProviderSubscription;
 use App\Mail\SendEmail;
 use App\SendMail;
+use App\ProfileUpdateRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Helpers\SmsHelper;
 use App\Mail\SeasonGreetings;
@@ -1573,6 +1574,7 @@ public function new_promo() {
         $sell_sub = $seller->subscriptions->first() ? $seller->subscriptions->first()->last_amount_paid : null;
         // $sellers[$key]->total_refers_count = $sellers->subscriptions;
         $check_old_badge = $seller->my_badge;
+        dd($check_old_badge);
 
         if(!$check_old_badge){
             if ($sell_sub) {
@@ -1585,9 +1587,9 @@ public function new_promo() {
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Super User';
                     $badge->save();
-                    // dd($badge);                    
                     $seller->badgetype = 1;
                     $seller->save();
+                    // dd($badge);
 
                 }
                 elseif($sell_sub == '1200' || $sell_sub == '600') {
@@ -1598,7 +1600,7 @@ public function new_promo() {
                     $badge->ref_no = 'free_payment-' .  Str::random(3);
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Moderate User';
-                    $badge->save();                    
+                    $badge->save();
                     $seller->badgetype = 2;
                     $seller->save();
 
@@ -1611,15 +1613,13 @@ public function new_promo() {
                     $badge->ref_no = 'free_payment-' .  Str::random(3);
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Basic User';
-                    $badge->save();                    
+                    $badge->save();
                     $seller->badgetype = 3;
                     $seller->save();
 
                 }
             }
         }
-
-
     }
 
     dd('done');
@@ -1724,6 +1724,101 @@ public function add_old_payments() {
         {
 
           return view('admin.create_user');
+        }
+
+        public function nonActivatedRiders()
+        {
+           $dispatch_companies = Logistic::where('is_verified', 0)->get();
+
+           return view('admin.logistics.non_activated', [
+            'riders' => $dispatch_companies
+           ]);
+        }
+
+        public function activateDispatchRider($id)
+        {
+          //return $id;
+          $success = true;
+          $message = "You have verified a rider";
+          $status_message = "Disabled";
+
+          $user = Logistic::where('id', $id)->first();
+
+          $user->is_verified = 1;
+          $user->save();
+
+          return response()->json([
+            'success' => $success,
+            'message' => $message,
+            'status_message' => $status_message,
+          ]);
+
+
+
+        }
+
+        public function activatedRiders()
+        {
+          $dispatch_companies = Logistic::where('is_verified', 1)->get();
+
+           return view('admin.logistics.activated', [
+            'riders' => $dispatch_companies
+           ]);
+        }
+
+        public function allRiders()
+        {
+          $dispatch_companies = Logistic::all();
+
+           return view('admin.logistics.all', [
+            'riders' => $dispatch_companies
+           ]);
+        }
+
+        public function allDispatchRequests()
+        {
+          $requests = DeliveryRequest::all();
+
+          return view('admin.requests.all', [
+            'requests' => $requests
+          ]);
+        }
+
+        public function allProfileUpdateRequests()
+        {
+          $all_profile_update_requests = ProfileUpdateRequest::all();
+
+          return view('admin.requests.profile_update_requests', [
+              'update_requests' => $all_profile_update_requests
+          ]);
+        }
+
+        public function approveProfileUpdate(Request $request, $id)
+        {
+          $get_profile_update_request = ProfileUpdateRequest::findOrFail($id)->update(['approval_status' => 1]);
+
+          // $get_profile_update_request->approval_status = 1;
+
+          $success_notification = array(
+            'message' => 'Done!',
+            'alert-type' => 'success'
+          );
+          return redirect()->back()->with($success_notification);
+
+
+        }
+
+        public function rejectProfileUpdateRequest(Request $request, $id)
+        {
+          $get_profile_update_request = ProfileUpdateRequest::findOrFail($id)->update(['reason' => $request->reason, 'approval_status' => 0]);
+
+          // $get_profile_update_request->approval_status = 1;
+
+          $success_notification = array(
+            'message' => 'Done!',
+            'alert-type' => 'success'
+          );
+          return redirect()->back()->with($success_notification);
         }
 
 
