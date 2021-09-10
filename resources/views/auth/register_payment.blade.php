@@ -124,10 +124,9 @@
         },
         callback: function(response) {
           // this happens after the payment is completed successfully
-          console.log(response)
-          $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        $.ajax({
+            data: {
+                '_token': "{{ csrf_token() }}"
             },
 
             method: "POST",
