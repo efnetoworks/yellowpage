@@ -1587,7 +1587,9 @@ public function new_promo() {
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Super User';
                     $badge->save();
-                    // dd($badge);
+                    // dd($badge);                    
+                    $seller->badgetype = 1;
+                    $seller->save();
 
                 }
                 elseif($sell_sub == '1200' || $sell_sub == '600') {
@@ -1598,7 +1600,9 @@ public function new_promo() {
                     $badge->ref_no = 'free_payment-' .  Str::random(3);
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Moderate User';
-                    $badge->save();
+                    $badge->save();                    
+                    $seller->badgetype = 2;
+                    $seller->save();
 
                 }
                 elseif($sell_sub == '200') {
@@ -1609,7 +1613,9 @@ public function new_promo() {
                     $badge->ref_no = 'free_payment-' .  Str::random(3);
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Basic User';
-                    $badge->save();
+                    $badge->save();                    
+                    $seller->badgetype = 3;
+                    $seller->save();
 
                 }
             }

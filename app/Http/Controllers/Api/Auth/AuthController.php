@@ -461,7 +461,7 @@ class AuthController extends Controller
         'referParam'     => ['nullable', 'string', 'max:255'],
         'name'           => ['required', 'string', 'max:255'],
         'email'          => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'phone'          => ['required', 'numeric'],
+        'phone'          => ['required', 'numeric', 'unique:users'],
         'password'       => ['required', 'string', 'min:6'],
         // 'role'           => ['required', Rule::in(['seller', 'buyer'])],
         // 'agent_code'     => ['nullable', 'exists:agents,agent_code'],
@@ -584,6 +584,9 @@ class AuthController extends Controller
 
             /* end level 1 payment */
 
+
+            //level 2 referer id
+
             $person_that_refered = $present_user->idOfReferer;
             if ($person_that_refered) {
                 $referer = User::where('id', $person_that_refered)->first();
@@ -604,7 +607,7 @@ class AuthController extends Controller
             /* end level 2 payment */
 
 
-            //level 1 referer id
+            //level 3 referer id
             $person_that_refered = $present_user->idOfReferer;
             if ($person_that_refered) {
                 //level 1 referer
@@ -687,7 +690,7 @@ class AuthController extends Controller
             ]);
         }
     }
-
+    }
 
     public function checkEmailIfExist(Request $request)
     {

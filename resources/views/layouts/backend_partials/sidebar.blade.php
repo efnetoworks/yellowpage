@@ -54,7 +54,7 @@
         </ul>
       </li>
 
-      <li class="treeview" style="{{ url()->current() == route('superadmin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+        <li class="treeview" style="{{ url()->current() == route('superadmin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href="#">
           <i class="fa fa-truck"></i>
           <span> Dispatch Requests </span>
@@ -147,7 +147,7 @@
         </ul>
       </li>
 
-      <li class="treeview" style=" {{ url()->current() == route('superadmin.activated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.all_dispatch_riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.nonactivated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+    <li class="treeview" style=" {{ url()->current() == route('superadmin.activated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.all_dispatch_riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.nonactivated.riders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href="#">
           <i class="fa fa-truck"></i>
           <span> Dispatch Riders </span>
@@ -161,7 +161,6 @@
           <li><a href="{{ route('superadmin.all_dispatch_riders') }}"><i class="fa fa-circle-o"></i> All Riders</a></li>
         </ul>
       </li>
-
 
       <li class="treeview" style="{{ url()->current() == route('superadmin.sliders') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.show_faq') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.privacy.policy') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.termsOfUse') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.pagescontents') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href="#">
@@ -270,7 +269,7 @@
         </ul>
       </li>
 
-      <li class="treeview" style="{{ url()->current() == route('admin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+        <li class="treeview" style="{{ url()->current() == route('admin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href="#">
           <i class="fa fa-truck"></i>
           <span> Dispatch Requests </span>
@@ -285,6 +284,7 @@
           <li><a href="{{ route('admin.all.dispatch.requests') }}"><i class="fa fa-circle-o"></i> All Requests</a></li>
         </ul>
       </li>
+
       <li class="" style="{{ url()->current() == route('admin.featured.services') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href=" {{ route ('admin.featured.services') }}">
           <i class="fa fa-credit-card"></i> <span> Featured Services </span>
