@@ -1587,9 +1587,14 @@ public function new_promo() {
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Super User';
                     $badge->save();
-                    // dd($badge);                    
+
                     $seller->badgetype = 1;
                     $seller->save();
+
+                    foreach($seller->services as $service){
+                        $service->badge_type = 1;
+                        $service->save();
+                    }
 
                 }
                 elseif($sell_sub == '1200' || $sell_sub == '600') {
@@ -1600,9 +1605,15 @@ public function new_promo() {
                     $badge->ref_no = 'free_payment-' .  Str::random(3);
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Moderate User';
-                    $badge->save();                    
+                    $badge->save();
+
                     $seller->badgetype = 2;
                     $seller->save();
+
+                    foreach($seller->services as $service){
+                        $service->badge_type = 2;
+                        $service->save();
+                    }
 
                 }
                 elseif($sell_sub == '200') {
@@ -1613,9 +1624,15 @@ public function new_promo() {
                     $badge->ref_no = 'free_payment-' .  Str::random(3);
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Basic User';
-                    $badge->save();                    
+                    $badge->save();
+
                     $seller->badgetype = 3;
                     $seller->save();
+
+                    foreach($seller->services as $service){
+                        $service->badge_type = 3;
+                        $service->save();
+                    }
 
                 }
             }
@@ -1624,7 +1641,7 @@ public function new_promo() {
 
     }
 
-    dd('done');
+    dd('femi done');
 
     // foreach ($agents as $key => $serv) {
     //     $agents[$key]->total_refers_count = $serv->total_refers->count();
@@ -1745,7 +1762,7 @@ public function add_old_payments() {
           $status_message = "Disabled";
 
           $user = Logistic::where('id', $id)->first();
-          
+
           $user->is_verified = 1;
           $user->save();
 
@@ -1754,9 +1771,9 @@ public function add_old_payments() {
             'message' => $message,
             'status_message' => $status_message,
           ]);
-              
-          
-          
+
+
+
         }
 
         public function activatedRiders()
