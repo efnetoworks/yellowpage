@@ -8,7 +8,7 @@
 @include('layouts.logistics_partials.header')
 
 <body class="skin-blue sidebar-mini wysihtml5-supported" style="height: auto; min-height: 100%;">
-
+	@include('sweetalert::alert')
 	@include('layouts.logistics_partials.nav')
 	@include('layouts.logistics_partials.sidebar')
 

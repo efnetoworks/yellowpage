@@ -306,6 +306,7 @@ Route::middleware(['auth:logistic', 'logistic_verified'])->prefix('logistics')->
     Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
     
     Route::get('/download_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.doc');
+    // Route::post('/request-to-update-profile', 'LogisticController@requestToUpdateProfile')->name('logistic.request.update.profile');
 
 });
 
@@ -743,7 +744,9 @@ Route::middleware(['admin'])->group(function () { //Admin Middleware protection 
 
     //Dispatch requests
     Route::get('admin/all-dispatch-requests', 'AdminController@allDispatchRequests')->name('admin.all.dispatch.requests');
-
+    Route::get('admin/all-profile-update-requests', 'AdminController@allProfileUpdateRequests')->name('admin.all.profile.update.requests');
+    Route::put('admin/approve-profile-update/{id}', 'AdminController@approveProfileUpdate')->name('admin.approve.profile.update');
+    Route::put('admin/reject-profile-update-request/{id}', 'AdminController@rejectProfileUpdateRequest')->name('admin.reject.profile.update.request');
     // Advertisement
     // Route::get('/admin/sliders', 'AdminController@sliders')->name('admin.sliders');
     Route::get('/admin/sponsored/slider/{id}', 'OperationalController@get_advert_slider')->name('admin.advert.slider');
@@ -882,6 +885,9 @@ Route::prefix('superadmin')->middleware(['superadmin'])->group(function () { //S
 
     //Dispatch requests
     Route::get('all-dispatch-requests', 'AdminController@allDispatchRequests')->name('superadmin.all.dispatch.requests');
+    Route::get('all-profile-update-requests', 'AdminController@allProfileUpdateRequests')->name('superadmin.all.profile.update.requests');
+    Route::put('approve-profile-update/{id}', 'AdminController@approveProfileUpdate')->name('superadmin.approve.profile.update');
+    Route::put('reject-profile-update-request/{id}', 'AdminController@rejectProfileUpdateRequest')->name('superadmin.reject.profile.update.request');
     Route::get('all-pending-requests', 'AdminController@allPendingDispatchRequests')->name('superadmin.all.pending.requests');
     Route::get('all-active-requests', 'AdminController@allActiveDispatchRequests')->name('superadmin.all.active.requests');
     Route::get('all-completed-requests', 'AdminController@allCompletedDispatchRequests')->name('superadmin.all.completed.requests');
