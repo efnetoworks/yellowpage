@@ -42,6 +42,8 @@ Route::get('/become-an-efcontact-agent', 'OperationalController@becomeAnEfcontac
 
 Route::get('shipping_help', 'OperationalController@shippingHelp')->name('shipping.help');
 
+Route::get('shipping_help', 'OperationalController@shippingHelp')->name('shipping.help');
+
 Route::get('/subscribe/user', function ()
 {
     $user = User::find(32);
@@ -299,12 +301,10 @@ Route::middleware(['auth:logistic', 'logistic_verified'])->prefix('logistics')->
     Route::put('update-profile', 'LogisticController@updateProfile')->name('logistic.profile.updates');
     Route::put('update-password', 'LogisticController@updatePassword')->name('logistic.update.password');
     Route::put('update-identification', 'LogisticController@updateId')->name('logistic.update.id');
-
     Route::get('details/{id}', 'LogisticController@details')->name('logistic.request.detail');
     Route::put('/set-transit-mode/{id}', 'LogisticController@transitMode')->name('logistic.transit.mode');
     Route::put('/product-delivered/{id}', 'LogisticController@deliveredMode')->name('logistic.delivered.mode');
     Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
-
     Route::get('/download_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.doc');
     // Route::post('/request-to-update-profile', 'LogisticController@requestToUpdateProfile')->name('logistic.request.update.profile');
 
