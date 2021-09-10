@@ -54,6 +54,23 @@
         </ul>
       </li>
 
+      <li class="treeview" style="{{ url()->current() == route('superadmin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('superadmin.all.profile.update.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+        <a href="#">
+          <i class="fa fa-truck"></i>
+          <span> Dispatch Requests </span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          {{-- <li><a href=" {{ route('superadmin.all.pending.requests') }} "><i class="fa fa-circle-o"></i> Pending Requests </a></li>
+          <li><a href="{{ route('superadmin.all.active.requests') }}"><i class="fa fa-circle-o"></i> Active Requests</a></li>
+          <li><a href="{{ route('superadmin.all.completed.requests') }}"><i class="fa fa-circle-o"></i> Completed Requests</a></li> --}}
+          <li><a href="{{ route('superadmin.all.dispatch.requests') }}"><i class="fa fa-circle-o"></i> All Requests</a></li>
+          <li><a href="{{ route('superadmin.all.profile.update.requests') }}"><i class="fa fa-circle-o"></i> All Profile Update Requests</a></li>
+        </ul>
+      </li>
+
       <li class="" style="{{ url()->current() == route('superadmin.all.earnings') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href=" {{route ('superadmin.all.earnings') }}">
           <i class="fa fa-comments-o"></i> <span> All Marketers Earnings </span>
@@ -236,6 +253,23 @@
           <li><a href=" {{ route ('admin.category.show') }} "><i class="fa fa-circle-o"></i> Categories </a></li>
           {{-- <li><a href=" {{ route ('admin.subcategory.show') }} "><i class="fa fa-circle-o"></i> Sub-categories </a></li> --}}
 
+        </ul>
+      </li>
+
+      <li class="treeview" style="{{ url()->current() == route('admin.all.dispatch.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }} {{ url()->current() == route('admin.all.profile.update.requests') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+        <a href="#">
+          <i class="fa fa-truck"></i>
+          <span> Dispatch Requests </span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          {{-- <li><a href=" {{ route('superadmin.all.pending.requests') }} "><i class="fa fa-circle-o"></i> Pending Requests </a></li>
+          <li><a href="{{ route('superadmin.all.active.requests') }}"><i class="fa fa-circle-o"></i> Active Requests</a></li>
+          <li><a href="{{ route('superadmin.all.completed.requests') }}"><i class="fa fa-circle-o"></i> Completed Requests</a></li> --}}
+          <li><a href="{{ route('admin.all.dispatch.requests') }}"><i class="fa fa-circle-o"></i> All Requests</a></li>
+          <li><a href="{{ route('admin.all.profile.update.requests') }}"><i class="fa fa-circle-o"></i> Profile Update Requests</a></li>
         </ul>
       </li>
       <li class="" style="{{ url()->current() == route('admin.featured.services') ? 'background-color: #cc8a19; color: #ffffff !important;' : '' }}">

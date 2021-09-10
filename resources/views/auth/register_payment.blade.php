@@ -103,7 +103,6 @@
     var email1 = "veeqanto@gmail.com"
     var slug = "{{ Session::get('dispatch')->slug }}"
     var base_url = "{{ url('/') }}";
-    console.log('what is going on here?',email, slug)
 
     function payWithPaystack() {
         // e.preventDefault();

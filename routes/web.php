@@ -32,10 +32,6 @@ use Illuminate\Support\Facades\Mail;
 
 Route::get('/hash', 'OperationalController@hashNewPassword')->name('hashNewPassword');
 
-Route::get('/mailable', function () {
-    return new App\Mail\BgTest();
-});
-
 // USER EMAIL UNSUBSCRIBED
 Route::get('/email/unsubscribe/{email}/{subcriptionid}', 'EmailSubscriptionsController@unsubscribe')->name('user.email.unsubscribe');
 Route::get('/email/subscribe/user/all', 'EmailSubscriptionsController@emailSubscribeAllUsersDef')->name('email.sub');
@@ -43,6 +39,7 @@ Route::get('/cheatViewsCode', 'OperationalController@cheatViewsCode');
 Route::get('/cheatViewsCodeLower', 'OperationalController@cheatViewsCodeLower');
 Route::get('/cheatviewscodedaily', 'OperationalController@cheatViewsCodeDaily');
 Route::get('/become-an-efcontact-agent', 'OperationalController@becomeAnEfcontactAgent')->name('launch.mobile.agent.modal');
+
 Route::get('shipping_help', 'OperationalController@shippingHelp')->name('shipping.help');
 
 Route::get('/subscribe/user', function ()
@@ -92,9 +89,6 @@ Route::get('/add_seller_referals', 'AdminController@add_seller_referals')->name(
 // set sub_has_ended field to 1 on users table if subscription has ended
 Route::get('/set_sub_status', 'AdminController@set_sub_status')->name('set_sub_status');
 // End set sub_has_ended field to 1 on users table if subscription has ended
-
-Route::get('/promo', 'AdminController@new_promo')->name('promo');
-
 
 // route to add payments for users with no payments
 Route::get('/add_old_payments', 'AdminController@add_old_payments')->name('add_old_payments');
@@ -279,7 +273,6 @@ Route::get('upload', 'ImageController@upload');
 Route::post('upload/store', 'ImageController@store');
 Route::post('delete', 'ImageController@delete');
 
-
 Route::get('logistics', 'LogisticController@registerLogistics')->name('register_logistics');
 Route::get('logistics/register/step-2', 'LogisticController@registerLogisticsStepTwo')->name('register_logistics_step_2');
 Route::get('logistics/register/step-3', 'LogisticController@registerLogisticsStepThree')->name('register_logistics_step_3');
@@ -313,9 +306,9 @@ Route::middleware(['auth:logistic', 'logistic_verified'])->prefix('logistics')->
     Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
 
     Route::get('/download_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.doc');
+    // Route::post('/request-to-update-profile', 'LogisticController@requestToUpdateProfile')->name('logistic.request.update.profile');
 
 });
-
 
 
 
@@ -416,10 +409,8 @@ Route::get('/register', 'AuthController@showRegister')->name('register');
 Route::get('/groupreg', 'AuthController@showGroupRegister')->name('register');
 Route::post('/register2', 'AuthController@createUser')->name('register2');
 //original payment and registration with gtpay
-// Route::post('/register', 'AuthController@pay_with_gtpay')->name('register');
+Route::post('/register', 'AuthController@pay_with_gtpay')->name('register');
 //end original payment and registration with gtpay
-Route::post('/register', 'AuthController@save_buyer')->name('register');
-
 
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
@@ -437,7 +428,7 @@ Route::post('/agent_Login', 'AuthController@agent_login')->name('save_agent_Logi
 
 
 
-
+Route::post('/sign-out', 'Auth\LoginController@logisticLogout')->name('logistic.logout');
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -470,13 +461,10 @@ Route::middleware(['seller'])->group(function () { //Seller Middleware protectio
 
         Route::get('/dashboard', 'DashboardController@seller')->name('seller.dashboard');
 
-        // subcription routes having payments
+        Route::get('/dashboard/sub/all', 'SubscriptionController@allSub')->name('seller.sub.all');
+        Route::get('/sub/add', 'SubscriptionController@createSub')->name('seller.sub.create');
+        Route::post('/service/create_sub', 'SubscriptionController@createSubpay')->name('createSubpay');
 
-        // Route::get('/dashboard/sub/all', 'SubscriptionController@allSub')->name('seller.sub.all');
-        // Route::get('/sub/add', 'SubscriptionController@createSub')->name('seller.sub.create');
-        // Route::post('/service/create_sub', 'SubscriptionController@createSubpay')->name('createSubpay');
-
-        // End subcription routes
 
         Route::get('/service/add', 'SellerController@createService')->name('seller.service.create');
         Route::get('/service/badges', 'BadgeController@badges')->name('seller.service.badges');
@@ -746,17 +734,19 @@ Route::middleware(['admin'])->group(function () { //Admin Middleware protection 
     Route::get('/admin/add-accountant', 'AccountantController@add_accountant')->name('add-accountant');
     Route::post('/admin/submit-accountant', 'AccountantController@submit_accountant')->name('submit_accountant');
 
-     //Dispatch riders
-     Route::get('admin/all-dispatch-riders', 'AdminController@allRiders')->name('admin.all_dispatch_riders');
-     Route::get('admin/non-activated-dispatch-riders', 'AdminController@nonActivatedRiders')->name('admin.nonactivated.riders');
-     Route::get('admin/active-dispatch-rider/{id}', 'AdminController@activateDispatchRider');
-     Route::get('admin/activated-riders', 'AdminController@activatedRiders')->name('admin.activated.riders');
-     Route::post('admin/activate-rider', 'AdminController@activateRider')->name('admin.activate.rider');
+    //Dispatch riders
+    Route::get('admin/all-dispatch-riders', 'AdminController@allRiders')->name('admin.all_dispatch_riders');
+    Route::get('admin/non-activated-dispatch-riders', 'AdminController@nonActivatedRiders')->name('admin.nonactivated.riders');
+    Route::get('admin/active-dispatch-rider/{id}', 'AdminController@activateDispatchRider');
+    Route::get('admin/activated-riders', 'AdminController@activatedRiders')->name('admin.activated.riders');
+    Route::post('admin/activate-rider', 'AdminController@activateRider')->name('admin.activate.rider');
 
 
-     //Dispatch requests
-     Route::get('admin/all-dispatch-requests', 'AdminController@allDispatchRequests')->name('admin.all.dispatch.requests');
-
+    //Dispatch requests
+    Route::get('admin/all-dispatch-requests', 'AdminController@allDispatchRequests')->name('admin.all.dispatch.requests');
+    Route::get('admin/all-profile-update-requests', 'AdminController@allProfileUpdateRequests')->name('admin.all.profile.update.requests');
+    Route::put('admin/approve-profile-update/{id}', 'AdminController@approveProfileUpdate')->name('admin.approve.profile.update');
+    Route::put('admin/reject-profile-update-request/{id}', 'AdminController@rejectProfileUpdateRequest')->name('admin.reject.profile.update.request');
     // Advertisement
     // Route::get('/admin/sliders', 'AdminController@sliders')->name('admin.sliders');
     Route::get('/admin/sponsored/slider/{id}', 'OperationalController@get_advert_slider')->name('admin.advert.slider');
@@ -885,7 +875,6 @@ Route::prefix('superadmin')->middleware(['superadmin'])->group(function () { //S
     Route::get('save_faq/', 'AdminController@show_faq')->name('superadmin.show_faq');
     Route::get('delete/faqs/{id}', 'AdminController@delete_faqs')->name('superadmin.delete_faqs');
 
-
     //Dispatch riders
     Route::get('all-dispatch-riders', 'AdminController@allRiders')->name('superadmin.all_dispatch_riders');
     Route::get('non-activated-dispatch-riders', 'AdminController@nonActivatedRiders')->name('superadmin.nonactivated.riders');
@@ -896,6 +885,9 @@ Route::prefix('superadmin')->middleware(['superadmin'])->group(function () { //S
 
     //Dispatch requests
     Route::get('all-dispatch-requests', 'AdminController@allDispatchRequests')->name('superadmin.all.dispatch.requests');
+    Route::get('all-profile-update-requests', 'AdminController@allProfileUpdateRequests')->name('superadmin.all.profile.update.requests');
+    Route::put('approve-profile-update/{id}', 'AdminController@approveProfileUpdate')->name('superadmin.approve.profile.update');
+    Route::put('reject-profile-update-request/{id}', 'AdminController@rejectProfileUpdateRequest')->name('superadmin.reject.profile.update.request');
     Route::get('all-pending-requests', 'AdminController@allPendingDispatchRequests')->name('superadmin.all.pending.requests');
     Route::get('all-active-requests', 'AdminController@allActiveDispatchRequests')->name('superadmin.all.active.requests');
     Route::get('all-completed-requests', 'AdminController@allCompletedDispatchRequests')->name('superadmin.all.completed.requests');
@@ -1037,8 +1029,6 @@ Route::prefix('cmo')->middleware(['cmo'])->group(function () { //CMO Middleware 
     Route::post('save_faq/', 'AdminController@save_faq')->name('cmo.save_faq');
     Route::get('save_faq/', 'AdminController@show_faq')->name('cmo.show_faq');
     Route::get('delete/faqs/{id}', 'AdminController@delete_faqs')->name('cmo.delete_faqs');
-
-
 
     // Banner Sliders
     Route::get('sliders', 'AdminController@sliders')->name('cmo.sliders');
