@@ -1573,6 +1573,7 @@ public function new_promo() {
         $sell_sub = $seller->subscriptions->first() ? $seller->subscriptions->first()->last_amount_paid : null;
         // $sellers[$key]->total_refers_count = $sellers->subscriptions;
         $check_old_badge = $seller->my_badge;
+        dd($check_old_badge);
 
         if(!$check_old_badge){
             if ($sell_sub) {
@@ -1585,6 +1586,8 @@ public function new_promo() {
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Super User';
                     $badge->save();
+                    $seller->badgetype = 1;
+                    $seller->save();
                     // dd($badge);
 
                 }
@@ -1597,6 +1600,8 @@ public function new_promo() {
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Moderate User';
                     $badge->save();
+                    $seller->badgetype = 2;
+                    $seller->save();
 
                 }
                 elseif($sell_sub == '200') {
@@ -1608,12 +1613,12 @@ public function new_promo() {
                     $badge->seller_name = $seller->name;
                     $badge->badge_type = 'Basic User';
                     $badge->save();
+                    $seller->badgetype = 3;
+                    $seller->save();
 
                 }
             }
         }
-
-
     }
 
     dd('done');
