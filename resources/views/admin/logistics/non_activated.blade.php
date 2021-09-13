@@ -119,7 +119,7 @@ Unverified Dispatch Riders |
                             		<p><span class="text text-danger">Not paid</span></p>
                             		@endif
 
-                            		@if(Auth::user()->role == 'superadmin')
+                            		
                                   <div class="form-group">
                                       <button type="submit" onclick="activateUser({{$rider->id}})" class="btn btn-md btn-success" style="border-radius:5px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Verify</button>
                                               <p class="text-success" style="font-size: 15px" id="successMessage">
@@ -127,7 +127,7 @@ Unverified Dispatch Riders |
                                               </p>
                                       </div>
                                   </div>
-                                  @endif
+                                  
                                  
                           </div>
 
@@ -227,7 +227,7 @@ if (e.value === true) {
 
 $.ajax({
 
-  url: '/superadmin/active-dispatch-rider/' + id,
+  url: '/active-dispatch-rider/' + id,
   method: 'get',
   success: function(results){
   	// alert(results);

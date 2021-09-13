@@ -802,7 +802,7 @@ Route::middleware(['admin'])->group(function () { //Admin Middleware protection 
     //accountant routes
     Route::get('/admin/all-accountants', 'AdminController@allAccountants')->name('all_accountants');
 }); //Admin Middleware protection end here
-
+Route::get('active-dispatch-rider/{id}', 'AdminController@activateDispatchRider');
 Route::prefix('superadmin')->middleware(['superadmin'])->group(function () { //SuperAdmin Middleware protection start here
     Route::get('dashboard/approve_withdrawal_request/{id}', 'DashboardController@approve_withdrawal_request')->name('admin.approve_withdrawal_request');
     Route::get('/all-marketers-earnings', 'AdminController@all_marketer-earnings')->name('superadmin.all.earnings');
