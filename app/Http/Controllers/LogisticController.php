@@ -125,7 +125,7 @@ class LogisticController extends Controller
             'company_name' => $request->company_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
             'slug' => Str::slug($request->company_name, '-').$number
         );
 
@@ -305,7 +305,7 @@ class LogisticController extends Controller
     public function makePayment1(Request $request)
     {
         $logistic = $request->session()->get('dispatch');
-
+        // dd($logistic);
         // dd($dispatch_company);
         if(empty($logistic))
         {
@@ -381,33 +381,33 @@ class LogisticController extends Controller
             'password' => ['required', 'string', 'min:6']
 
         ]);
-        Auth::guard('logistic')->attempt(['email' => $request->email, 'password' => $request->password]);
 
-        if (Auth::guard('logistic')->check()) {
-            //Check login
+        $remember_me  = ( !empty( $request->remember ) )? TRUE : FALSE;
 
-            //check if profile is complete
-            if(Auth::guard('logistic')->user()->phone = '')
-            {
-                return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
-            }
+        $credentials = $request->only('email', 'password');
+
+        // return Hash::make($request->password);
+
+        // return Logistic::where('password', Hash::make($request->password))->first();
+
+        // dd(Auth::attempt($credentials));
+        // if(Auth::attempt($credentials, $remember_me)) {
+
+        //     return redirect()->route('logistics_dashboard')->with($this->login_success());
+        // }
+
+        if (Auth::guard('logistic')->attempt($credentials, $remember_me)) {
+            $request->session()->regenerate();
 
             return redirect()->route('logistics_dashboard')->with($this->login_success());
-        } else {
-        // $success_notification = array(
-        //     'message' => 'Incorrect credentials! Try again.',
-        //     'alert-type' => 'error'
-        // );
-        session()->flash('fail', 'Incorrect username or password');
+        }
+        
+        session()->flash('fail', 'Incorrect email or password');
 
         return redirect()->route('logistics_login');
 
-            //   $success_notification = array(
-            //     'fail' => 'You are successfully logged in!',
-            //     'alert-type' => 'success'
-            // );
-            // return Redirect::to(Session::get('url.intended'))->with($success_notification);
-        }
+           
+    
 
     }
 
@@ -467,7 +467,7 @@ class LogisticController extends Controller
 
         $dispatch_company = Auth::guard('logistic')->user();
         $get_logistic_company_update_requested_profile = Logistic::find($dispatch_company->id)->profile_update_request;
-
+        
         // dd($get_logistic_company_update_request);
         return view('logistics.profile.update_profile', [
             'states' => $states,
