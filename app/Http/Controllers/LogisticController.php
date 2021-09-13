@@ -441,8 +441,8 @@ class LogisticController extends Controller
 
             //if credentials are complete, get all of the company's requests
             $requests = Logistic::find($dispatch_company->id)->delivery_request;
-            $incoming_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 0)->get();
-            $active_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 1)->get();
+            $incoming_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 0)->where('is_delivered', 0)->get();
+            $active_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 1)->where('is_delivered', 0)->get();
             $delivered_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('is_delivered', 1)->get();
             
 
