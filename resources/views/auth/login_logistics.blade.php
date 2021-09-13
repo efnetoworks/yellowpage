@@ -64,7 +64,7 @@
                             <strong class="text-danger">{{ session('fail') }}</strong>
                         </span>
                         @endif
-                        <form action="{{route('logistics_login')}}" method="POST">
+                        <form action="{{route('login_dashboard')}}" method="POST">
                             @csrf
                             <div class="form-group form-box">
                                 <input type="email" name="email" value="{{ old('email') }}" class="input-text" placeholder="Email Address">
