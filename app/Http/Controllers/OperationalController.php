@@ -1031,11 +1031,11 @@ class OperationalController extends Controller
 
             if($user){
                 $username = explode(' ', trim($user->name))[0];
-                try {
-                    Mail::to($email)->queue(new CustomerServiceMail($username, $request->message, $request->subject));
-                } catch (\Exception $e) {
-                    $failedtosendmail = 'Failed to Mail!.';
-                }
+                // try {
+                    Mail::to($email)->send(new CustomerServiceMail($username, $request->message, $request->subject));
+                // } catch (\Exception $e) {
+                //     $failedtosendmail = 'Failed to Mail!.';
+                // }
             }
         }
         return redirect()->back()->with([
