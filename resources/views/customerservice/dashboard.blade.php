@@ -109,7 +109,7 @@
                                                    <th scope="row">{{ $key + 1 }}</th>
                                                     <td><a href="{{ route('serviceDetail', $services->slug) }}">{{$services->name}}</a></td>
                                                     <td>{{$services->created_at}}</td>
-                                                    <td>{{$services->is_approved ? 'Approved' : 'Not Yet Approved'}}</td>
+                                                    <td>{{$services->status ? 'Approved' : 'Not Yet Approved'}}</td>
                                                     </tr>
                                                     @endforeach
                                                     @endif
