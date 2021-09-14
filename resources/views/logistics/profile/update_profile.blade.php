@@ -52,10 +52,12 @@ Update Profile |
 
 							<div class="active tab-pane" id="timeline">
 
-								@if($updated_profile != null || $updated_profile->approval_status == 1)
-									@include('logistics.section.updated_profile')
-								@else
+								@if($updated_profile == null)
 									@include('logistics.section.initial_profile')
+								@elseif($updated_profile->approval_status == 0)
+									@include('logistics.section.initial_profile') 
+								@else
+								 	@include('logistics.section.updated_profile')
 								@endif
 							
 							

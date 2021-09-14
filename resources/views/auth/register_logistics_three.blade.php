@@ -109,7 +109,7 @@
 
                         <div class="clearfix"></div>
 
-                          <form action="{{ route('submit_application_step_3') }}" method="POST">
+                          <form action="{{ route('submit_application_step_3') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                                 {{-- End form for paystack pay --}}
                                 {{-- {{ csrf_field() }} --}}

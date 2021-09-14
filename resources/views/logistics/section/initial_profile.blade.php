@@ -22,7 +22,7 @@
 		</div>
 		<div class="col-md-4">
 			<div class="form-group">
-				<img class="profile-user-img img-responsive" src="{{ Auth::guard('logistic')->user()->profile_image = null ? '/images/user-icon.png' : asset('uploads/users/'.''.Auth::guard('logistic')->user()->profile_image) }}" alt="User profile picture">
+				<img class="profile-user-img img-responsive" src="{{ Auth::guard('logistic')->user()->profile_image = null ? '/images/user-icon.png' : asset('uploads/users/'.Auth::guard('logistic')->user()->profile_image) }}" alt="User profile picture">
 				<div class="custom-file text-center">
 				  <input type="file" class="custom-file-input" id="customFile" name="profile_image" style="padding-left: 150px; display: none;">
 				  <label class="custom-file-label" for="customFile">Click to choose profile image/logo</label>
