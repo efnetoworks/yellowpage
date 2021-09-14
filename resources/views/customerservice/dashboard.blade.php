@@ -82,10 +82,10 @@
                                          <!-- Modal -->
                                          <div class="modal fade" id="allServicess{{ $all_subscription->id }}" tabindex="-1" role="dialog"
                                         aria-labelledby="allServicess{{ $all_subscription->id }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="allUsers{{ $all_subscription->id }}Label">Modal title</h5>
+                                                <h5 class="modal-title" id="allUsers{{ $all_subscription->id }}Label">All <strong>{{ $all_subscription->name }}</strong> Services (<strong>Total: {{ $all_subscription->services->count() }}</strong>)</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -102,14 +102,13 @@
                                                 </thead>
                                                 <tbody>
                                                 @if($all_subscription->services->count())
-                                                <p id="active_text">{{$all_subscription->services->count()}} &nbsp; services</p>
 
                                                 @foreach($all_subscription->services as $key => $services)
                                                  <tr>
                                                    <th scope="row">{{ $key + 1 }}</th>
-                                                    <td><a href="{{ route('serviceDetail', $services->slug) }}">{{$services->name}}</a></td>
-                                                    <td>{{$services->created_at}}</td>
-                                                    <td>{{$services->is_approved ? 'Approved' : 'Not Yet Approved'}}</td>
+                                                    <td><a href="{{ route('serviceDetail', $services->slug) }}" target="_blank">{{$services->name}}</a></td>
+                                                    <td>{{$services->created_at->format('d/m/Y')}}</td>
+                                                    <td>{!! $services->status ? '<span class="text-success">Approved</span>' : '<span class="text-danger">Not Approved</span>' !!}</td>
                                                     </tr>
                                                     @endforeach
                                                     @endif
