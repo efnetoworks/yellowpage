@@ -243,16 +243,12 @@ class LogisticController extends Controller
         {
             $document = $request->cac_document->store('/public/documents');
 
-            $get_user->cac_document = $this->get_file_name_from_path($document);
+            $request->cac_document = $this->get_file_name_from_path($document);
         }
 
-        if ( $request->hasFile('profile_image') ) {
-          $image_name = Str::of($get_user->first_name)->slug('-').'-'.time().'.'.$request->profile_image->extension();
-          $request->profile_image->move(public_path('uploads/users'),$image_name);
-          $request->profile_image = $image_name;
-        }
-
-        $data = array(
+        // $image = $request->profile_image;
+        // dd($image);
+         $data = array(
             'identification_type' => $request->identification_type,
             'identification_number' => $request->identification_number,
             'bvn' => $request->bvn,
@@ -260,11 +256,23 @@ class LogisticController extends Controller
             'cac_document' => $request->cac_document ?? '',
             'type_of_bike' => $request->type_of_bike,
             'plate_number' => $request->plate_number,
-            'profile_image' => $image_name ?? ''
+            'profile_image' => $request->profile_image
         );
 
 
+        if ($request->hasFile('profile_image') ) {
+            // dd('dfsdf');
+            // $path = Storage::disk('public')->putFile('service', $request->file('file'));
+          $image = Str::of($logistic->first_name)->slug('-').'-'.time().'.'.$request->profile_image->extension();
+          $request->profile_image->move(public_path('uploads/users/'),$image);
+          // $request->profile_image = $image;
+          $data['profile_image'] = $image;
 
+        }
+        
+       
+
+        // dd($image);
         $logistic = $request->session()->get('dispatch');
         $logistic->fill($data);
         $request->session()->put('dispatch', $logistic);
