@@ -66,7 +66,7 @@ class SellerController extends Controller
             'description' => 'required',
             'phone' => 'required',
             'category_id' => 'required',
-            'min_price' => 'required|numeric',
+            'min_price' => 'nullable|numeric',
             'address' => 'nullable',
             'description' => 'required',
             'city' => 'required',

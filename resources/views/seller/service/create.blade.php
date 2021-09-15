@@ -180,7 +180,7 @@
                                             <div class="form-group">
                                                 <div class="form-check">
                                                     <input id="featured" class="form-check-input" type="checkbox" value="1" name="is_featured" onclick="featuredCheckbox()">
-                                                    <label class="form-check-label" for="featured"> Do you want this service featured?  
+                                                    <label class="form-check-label" for="featured"> Do you want this service featured?
                                                         <small class="infoLinkNote">(<a data-toggle="modal" data-target="#featuredInfoModal">How it works?</a>)</small></label>
                                                 </div>
                                                 <p id="featuredText" class="text-info">This will attract a fee of &#8358;1000 which will be paid before the service is displayed.</p>
@@ -500,7 +500,7 @@
                             Providers who use the featured service will have their service displayed first on all important EFContact pages.
                             A featured service will be given search priority on EFContact. This means that featured services will get displayed first on a search result page.
                         </p>
-                        <p><strong>Note:</strong> This will attract a fee of &#8358;2000 which will be paid before the service is display on our website and last for a period of one month.</p>
+                        <p><strong>Note:</strong> This will attract a fee of &#8358;1000 which will be paid before the service is display on our website and last for a period of one month.</p>
                         <p><strong>Take advantage of this to get the attention of your potential customers/clients 😃.</strong></p>
                     </div>
                     <div class="modal-footer">

@@ -803,7 +803,7 @@
                                                                 <input id="featured" class="form-check-input" type="checkbox" value="1" name="is_featured" onclick="featuredCheckbbox()">
                                                                 <label class="form-check-label" for="featured"> Do you want this service featured?  <small class="infoLinkNote">(<a data-toggle="modal" data-target="#featuredInfoModal">How it works?</a>)</small></label>
                                                             </div>
-                                                            <p id="featuredText" class="text-info">This will attract a fee of &#8358;2000 which will be paid before the service is displayed.</p>
+                                                            <p id="featuredText" class="text-info">This will attract a fee of &#8358;1000 which will be paid before the service is displayed.</p>
                                                         </div>
                                                     </div>
                                                 </div>
