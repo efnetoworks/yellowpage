@@ -25,4 +25,9 @@ class DeliveryRequest extends Model
     {
         return $this->belongsTo(Service::class);
     }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
 }

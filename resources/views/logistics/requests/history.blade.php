@@ -39,7 +39,7 @@
                         <th> In-transit </th>
                         <th> Delivered </th>
                         <th> Request date </th>
-                        {{-- <th> Action </th> --}}
+                        <th> Action </th>
 
                                         <!-- <th> Status </th>
                                             <th> Action </th> -->
@@ -57,16 +57,16 @@
                             <td>{{ ($request->is_delivered)  ? 'Yes' : 'No' }}</td>
                             <td>{{ $request->updated_at->diffForHumans() }}</td>
 
-                            {{-- <td>
-                                <a href="#" class="float-ship-btn" data-toggle="modal" data-target="#launchMobileAgentModal">
+                            <td>
+                                <button href="#" class="btn btn-warning" data-toggle="modal" data-target="#launchMobileAgentModal-{{$request->id}}">
                                 <i class="fa fa-taxi"></i>
-                                Delivered
+                                Billing Details
                                 
-                                </a>
-                            </td> --}}
+                                </button>
+                            </td>
                         </tr>
 
-                        <div id="launchMobileAgentModal" class="modal fade" role="dialog">
+                        <div id="launchMobileAgentModal-{{$request->id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog modal-lg">
                                 <!-- Modal content-->
                                 <div class="modal-content">
@@ -76,11 +76,24 @@
                                     </div>
                                     <div class="modal-body">
                                         
-                                         {{-- <h3>Details.</h3> --}}
-                                         <p><b>Name of customer:</b> {{ $request->customer_name }}</p>
-                                         <p><b>Phone number of customer:</b> {{ $request->customer_phone }}</p>
-                                         <p><b>Email address of customer:</b> {{ $request->customer_email }}</p>
-                                         <p><b>Delivery address:</b> {{ $request->customer_address }}</p>
+                                         <h3>Service provider details.</h3>
+                                        <hr>
+                                         <p><b>Name:</b> {{ $request->user->name }}</p>
+                                         <p><b>Phone:</b> {{ $request->user->phone }}</p>
+                                         <p><b>Email:</b> {{ $request->user->email }}</p>
+                                         {{-- <p><b>Delivery address:</b> {{ $request->customer_address }}</p> --}}
+
+                                         <div class="align-self-center">
+                                             <i class="fa fa-angle-double-down" style="font-size: 50px; padding-left: 50px;"></i>
+                                         </div>
+                                         <h3>Reciever's Detail.</h3>
+                                         <hr>
+                                         <p><b>Name:</b> {{ $request->customer_name }}</p>
+                                         <p><b>Phone number:</b> {{ $request->customer_phone }}</p>
+                                         <p><b>Email address:</b> {{ $request->customer_email }}</p>
+                                         <p><b>State:</b> {{ $request->state->name }}</p>
+                                         <p><b>City:</b> {{ $request->city }}</p>
+                                         <p><b>Address:</b> {{ $request->customer_address }}</p>
                                          @if($request->is_delivered == 0 && $request->in_transit == 1)
                                          <form id="" action="{{ route('logistic.delivered.mode', $request->id) }}" method="POST">
                                             @csrf

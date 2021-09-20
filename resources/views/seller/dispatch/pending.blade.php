@@ -47,7 +47,7 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach($deliveries as $key => $delivery)
+                                    @forelse($deliveries as $key => $delivery)
                                         <tr>
                                             <td><a href="javascript:void(0)"> {{ $key + 1 }} </a></td>
                                             <td> <a href="{{ route('serviceDetail', $delivery->service->slug) }}" style="color: #ca8309" target="_blank">{{ $delivery->service->name }}</a> </td>
@@ -69,7 +69,8 @@
                                                 <a onclick="deleteService({{ $all_service->id }})" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                             </td> --}}
                                         </tr>
-                                    @endforeach
+                                        @empty
+                                    @endforelse
 
 
                                 </tbody>
