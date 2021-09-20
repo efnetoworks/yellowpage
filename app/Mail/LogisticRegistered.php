@@ -11,19 +11,17 @@ class UserRegistered extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $name, $email, $password, $accountType;
+    public $name, $email;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, $email, $password, $accountType)
+    public function __construct($name, $email)
     {
         $this->name = $name;
         $this->email = $email;
-        $this->password = $password;
-        $this->accountType = $accountType;
     }
 
     /**

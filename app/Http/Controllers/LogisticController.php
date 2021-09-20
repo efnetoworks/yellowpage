@@ -17,6 +17,7 @@ use App\DeliveryRequest;
 use App\ProfileUpdateRequest;
 use App\Helpers\SmsHelper;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\UserRegistered;
 use Closure;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
@@ -230,7 +231,7 @@ class LogisticController extends Controller
         $this->validate($request, [
             'identification_type' => 'required',
             'identification_number' => 'required',
-            'bvn' => 'required',
+            'document' => 'required',
             'cac' => 'nullable',
             'cac_document' => 'nullable',
             'type_of_bike' => 'required',
@@ -246,12 +247,19 @@ class LogisticController extends Controller
             $request->cac_document = $this->get_file_name_from_path($document);
         }
 
+        if($request->hasFile('document'))
+        {
+            $document = $request->document->store('/public/documents');
+
+            $request->document = $this->get_file_name_from_path($document);
+        }
+
         // $image = $request->profile_image;
         // dd($image);
          $data = array(
             'identification_type' => $request->identification_type,
             'identification_number' => $request->identification_number,
-            'bvn' => $request->bvn,
+            'document' => $request->document,
             'cac' => $request->cac ?? '',
             'cac_document' => $request->cac_document ?? '',
             'type_of_bike' => $request->type_of_bike,
@@ -354,7 +362,7 @@ class LogisticController extends Controller
             'phone' => $logistic->phone,
             'state_id' => $logistic->state,
             'local_government_id' => $logistic->lga,
-            'bvn' => $logistic->bvn,
+            'document' => $logistic->document,
             'identification_type' => $logistic->identification_type,
             'identification_id' => $logistic->identification_number,
             'type_of_bike' => $logistic->type_of_bike,
@@ -365,6 +373,13 @@ class LogisticController extends Controller
         ]);
 
         
+        $name = $dispatch_company->first_name ." ". $dispatch_company->last_name;
+        $email = $dispatch_company->email;
+        try {
+        Mail::to($user->email)->send(new LogisticRegistered($name, $email));
+        } catch (\Exception $e) {
+            $failedtosendmail = 'Failed to Mail!';
+        }
 
         // Logistic::create([$logistic, 'paid' => 1, 'paid_amount' => 2000]);
         // $get_user = Auth::guard('logistic')->user();
@@ -436,22 +451,22 @@ class LogisticController extends Controller
             //     //if either has been provided redirect dispatch company to profile page with error message
             //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
             // }
-            $incomplete = $this->check_if_profile_is_complete();
-            if($incomplete)
-            {
-                return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
-            }
+            // $incomplete = $this->check_if_profile_is_complete();
+            // if($incomplete)
+            // {
+            //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+            // }
 
 
-            if($dispatch_company->paid == NULL) {
-                return redirect()->route('logistic.pay')->with($this->incomplete_profile_notification());
-            }
+            // if($dispatch_company->paid == NULL) {
+            //     return redirect()->route('logistic.pay')->with($this->incomplete_profile_notification());
+            // }
 
             //if credentials are complete, get all of the company's requests
             $requests = Logistic::find($dispatch_company->id)->delivery_request;
-            $incoming_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 0)->where('is_delivered', 0)->get();
-            $active_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 1)->where('is_delivered', 0)->get();
-            $delivered_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('is_delivered', 1)->get();
+            $incoming_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 0)->where('is_delivered', 0)->orderBy('created_at', 'asc')->get();
+            $active_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 1)->where('is_delivered', 0)->orderBy('created_at', 'asc')->get();
+            $delivered_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('is_delivered', 1)->orderBy('created_at', 'asc')->get();
             
 
 
@@ -504,7 +519,7 @@ class LogisticController extends Controller
             $this->validate($request, [
                 'identification_type' => 'nullable',
                 'identification_number' => 'nullable',
-                'bvn' => 'nullable',
+                'document' => 'nullable',
                 'phone' => 'nullable',
                 'cac' => 'nullable',
                 'cac_document' => 'nullable',
@@ -545,6 +560,13 @@ class LogisticController extends Controller
                 $get_user->cac_document = $this->get_file_name_from_path($document);
             }
 
+            if($request->hasFile('document'))
+            {
+                $document = $request->document->store('/public/documents');
+
+                $request->document = $this->get_file_name_from_path($document);
+            }
+
            $number = mt_rand(3, 5);
 
             $data = array(
@@ -557,7 +579,7 @@ class LogisticController extends Controller
                 'cac' => $request->cac,
                 'cac_document' => $get_user->cac_document,
                 'profile_image' => $image_name ?? $get_user->profile_image,
-                'bvn' => $request->bvn,
+                'document' => $request->document,
                 'identification_type' => $request->identification_type,
                 'identification_id' => $request->identification_number,
                 'type_of_bike' => $request->type_of_bike,
@@ -676,14 +698,14 @@ class LogisticController extends Controller
 
     public function delivered()
     {
-        $delivered_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 1)->where('in_transit', 0)->get();
+        $delivered_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 1)->where('in_transit', 0)->orderBy('created_at', 'asc')->get();
         
-        $incomplete = $this->check_if_profile_is_complete();
+        // $incomplete = $this->check_if_profile_is_complete();
 
-        if($incomplete)
-        {
-            return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
-        }
+        // if($incomplete)
+        // {
+        //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+        // }
         
         
         return view('logistics.requests.delivered', [
@@ -693,12 +715,12 @@ class LogisticController extends Controller
 
     public function history()
     {
-        $incomplete = $this->check_if_profile_is_complete();
+        // $incomplete = $this->check_if_profile_is_complete();
 
-        if($incomplete)
-        {
-            return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
-        }
+        // if($incomplete)
+        // {
+        //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+        // }
 
         $all_requests = Logistic::find(Auth::guard('logistic')->user()->id)->delivery_requests;
 
@@ -709,14 +731,14 @@ class LogisticController extends Controller
 
     public function incomingRequests()
     {
-        $incomplete = $this->check_if_profile_is_complete();
+        // $incomplete = $this->check_if_profile_is_complete();
 
-        if($incomplete)
-        {
-            return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
-        }
+        // if($incomplete)
+        // {
+        //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+        // }
 
-        $incoming_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 0)->get();
+        $incoming_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 0)->orderBy('created_at', 'asc')->get();
         // $provider_details = User::find($incoming_requests->user_id)->delivery_requests;
 
         // dd($incoming_requests->user_id);
@@ -727,14 +749,14 @@ class LogisticController extends Controller
 
     public function requestsInTransit()
     {
-        $incomplete = $this->check_if_profile_is_complete();
+        // $incomplete = $this->check_if_profile_is_complete();
 
-        if($incomplete)
-        {
-            return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
-        }
+        // if($incomplete)
+        // {
+        //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
+        // }
 
-        $in_transit_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 1)->get();
+        $in_transit_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 1)->orderBy('created_at', 'asc')->get();
 
         return view('logistics.requests.transit', [
             'requests' => $in_transit_requests
@@ -744,20 +766,29 @@ class LogisticController extends Controller
     public function transitMode(Request $request, $id)
     {
         $delivery_request = DeliveryRequest::findOrFail($id);
-
+        $logistics_company = Logistic::where('id', $delivery_request->logistic_id)->first();
         $delivery_request->in_transit = 1;
 
         $delivery_request->save();
 
         $provider = $delivery_request->user->name;
-        $message = 'Your package with Transaction ID ' .$delivery_request->transaction_id.  ' from ' . $provider . ' has been processed. You will recieve your package soon!';
+        $provider_phone = $delivery_request->user->phone;
+
+        $message_for_receiver = 'Your package with Tracking ID ' .$delivery_request->transaction_id.  ' from ' . $provider . ' has been processed. You will recieve your package soon!';
+
+
+        $message_for_provider = 'The package with Tracking ID ' .$delivery_request->transaction_id. ' is being delivered by ' .$logistics_company->company_name. '. You will receive a message when it has been delivered';
+
+
         $sender = 'EFContact';
 
         try {
-          SmsHelper::send_sms($message, $delivery_request->customer_phone, $sender);
+          SmsHelper::send_sms($message_for_receiver, $delivery_request->customer_phone, $sender);
         } 
         catch (\Exception $e) {
         }
+
+        SmsHelper::send_sms($message_for_provider, $provider_phone, $sender);
 
         return redirect()->back()->with($this->transit_success());
     }
@@ -766,14 +797,23 @@ class LogisticController extends Controller
     {
         $delivery_request = DeliveryRequest::findOrFail($id);
 
+
+        $logistics_company = Logistic::where('id', $delivery_request->logistic_id)->first();
+
+
         $delivery_request->in_transit = 0;
         $delivery_request->is_delivered = 1;
 
         $delivery_request->save();
         
         $provider = $delivery_request->user->name;
+        $provider_phone = $delivery_request->user->phone;
 
-        $message = 'Your package from ' . $provider . ' has been successfully delivered!';
+        $message = 'Your package from ' . $provider . ' with Tracking ID ' .$delivery_request->transaction_id. ' has been successfully delivered!';
+
+         $message_for_provider = 'The package with Tracking ID ' .$delivery_request->transaction_id. ' has been delivered by ' .$logistics_company->company_name;
+
+
         $sender = 'EFContact';
 
         try {
@@ -781,6 +821,8 @@ class LogisticController extends Controller
         } 
         catch (\Exception $e) {
         }
+
+        SmsHelper::send_sms($message_for_provider, $provider_phone, $sender);
 
         return redirect()->back()->with($this->delivered_success());
     }

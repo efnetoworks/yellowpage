@@ -59,10 +59,14 @@
                                     
                                     
                                     <input type="hidden" name="" id="paid_amount" value="2000">
-                                    <a href="{{ url()->previous() }}" id="" class="btn-md" style="background-color: #fff; color: #cc8a19; border: 1px solid #cc8a19;">Previous</a>
+                                    <a href="{{ url()->previous() }}" id="" class="btn-md" style="background-color: #fff; color: #cc8a19; border: 1px solid #cc8a19;"> <i class="fa fa-arrow-left"></i> Previous</a>
                                     <button type="button" onclick="payWithPaystack()" id="paymentBtn" class="btn-md" style="background-color: #cc8a19; color: #fff">Pay ₦2,000</button>
 
-                                    
+                                    <p><b>We accept:</b></p>
+                                    <img src="{{ asset('img/paystack-logo.png') }}" alt="Master Card" width="50">
+                                    <img src="{{ asset('img/master-card.jpg') }}" alt="Master Card" width="50">
+                                    <img src="{{ asset('img/visa.png') }}" alt="Visa" width="50">
+                                    <img src="{{ asset('img/verve-logo.png') }}" alt="Verve" width="50">
 
                                     <small id="error_msg_paystack1" class="text-danger"></small>
                                 </div>

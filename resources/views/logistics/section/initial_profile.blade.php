@@ -123,10 +123,28 @@
 
 		<div class="col-md-4">
 			<div class="form-group">
-				<label for="bank_name" class="control-label">BVN <span style="color: red;">*</span></label>
+				@if(Auth::guard('logistic')->user()->document != '')
+				<label>Download</label>
+				<br>
+				<a href="{{ route('logistic.download.doc', Auth::guard('logistic')->user()->slug) }}" class="text text-danger">Click here to download</a>
+					{{-- <button type="button" class="btn btn-default">Download CAC Document</button> --}}
+					<br>
+					or
+					<br>
+					<label>Upload</label>
+					<div class="">
+						<input type="file" id="bank_name" class="form-control" name="document">
+					</div>
+				@else
+				<label for="bank_name" class="control-label">Upload Means of ID</label>
+				<div class="">
+					<input type="file" id="bank_name" class="form-control" name="document">
+				</div>
+				@endif
+				{{-- <label for="bank_name" class="control-label">BVN <span style="color: red;">*</span></label>
 				<div class="">
 					<input type="number" class="form-control" name="bvn" value="{{Auth::guard('logistic')->user()->bvn ? Auth::guard('logistic')->user()->bvn : '' }}" placeholder="Enter your bvn">
-				</div>
+				</div> --}}
 			</div>
 		</div>
 	</div>

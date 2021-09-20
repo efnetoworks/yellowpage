@@ -20,4 +20,9 @@ class State extends Model
         return $this->hasMany(Logistic::class);
     }
 
+    public function delivery_requests()
+    {
+        return $this->hasMany(DeliveryRequest::class);
+    }
+
 }
