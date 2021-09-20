@@ -37,7 +37,7 @@
                 <div class="col-lg-12 align-self-center pad-0">
                     <div class="form-section clearfix">
                         <h3>Step Two: Address</h3>
-                       
+                        <span>All fields with <span style="color: red;">*</span> are compulsory</span>
 
                         <div class="clearfix"></div>
 
@@ -154,8 +154,8 @@
                                     {{-- btn for pay --}}
                                     <script src="https://js.paystack.co/v1/inline.js"></script>
 
-                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-right" style="background-color: #cc8a19; color: #fff">Next Step</button>
-                                    <a href="{{ url()->previous() }}" id="paystack_btn_control1" type="button" class="btn-md float-left" style="background-color: #fff; color: #cc8a19; border: 1px solid #cc8a19;">Previous</a>
+                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-right" style="background-color: #cc8a19; color: #fff">Next <i class="fa fa-arrow-right"></i></button>
+                                    <a href="{{ url()->previous() }}" id="paystack_btn_control1" type="button" class="btn-md float-left" style="background-color: #fff; color: #cc8a19; border: 1px solid #cc8a19;"><i class="fa fa-arrow-left"></i> Previous</a>
 
                                     
 

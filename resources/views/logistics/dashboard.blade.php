@@ -83,7 +83,7 @@
                     <div class="info-box">
                         <a href="{{ route('logistics_payment_history') }}">
                             <span class="info-box-icon push-bottom bg-warning">
-                                <i class="fa fa-users text-white" aria-hidden="true"></i>
+                                <i class="fa fa-motorcycle text-white" aria-hidden="true"></i>
                             </span>
                             <div class="info-box-content">
                                 <span class="info-box-text"> Incoming Requests </span>
@@ -98,7 +98,7 @@
 
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <div class="info-box">
-                        <span class="info-box-icon push-bottom bg-warning">  <i class="fa fa-money text-white" aria-hidden="true"></i> </span>
+                        <span class="info-box-icon push-bottom bg-warning">  <i class="fa fa-car text-white" aria-hidden="true"></i> </span>
                         <div class="info-box-content">
                             <span class="info-box-text"> Requests in Transit </span>
                             <span class="info-box-number"> {{ count($active_requests) }} </span>
@@ -110,7 +110,7 @@
 
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <div class="info-box">
-                        <span class="info-box-icon push-bottom bg-warning">  <i class="fa fa-money text-white" aria-hidden="true"></i> </span>
+                        <span class="info-box-icon push-bottom bg-warning">  <i class="fa fa-truck text-white" aria-hidden="true"></i> </span>
                         <div class="info-box-content">
                             <span class="info-box-text"> Delivered Requests </span>
                             <span class="info-box-number"> {{ count($delivered_requests) }} </span>

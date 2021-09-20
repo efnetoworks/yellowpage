@@ -59,10 +59,14 @@
                                     
                                     
                                     <input type="hidden" name="" id="paid_amount" value="2000">
-                                    <a href="{{ url()->previous() }}" id="" class="btn-md" style="background-color: #fff; color: #cc8a19; border: 1px solid #cc8a19;">Previous</a>
+                                    <a href="{{ url()->previous() }}" id="" class="btn-md" style="background-color: #fff; color: #cc8a19; border: 1px solid #cc8a19;"> <i class="fa fa-arrow-left"></i> Previous</a>
                                     <button type="button" onclick="payWithPaystack()" id="paymentBtn" class="btn-md" style="background-color: #cc8a19; color: #fff">Pay ₦2,000</button>
 
-                                    
+                                    <p><b>We accept:</b></p>
+                                    <img src="{{ asset('img/paystack-logo.png') }}" alt="Master Card" width="50">
+                                    <img src="{{ asset('img/master-card.jpg') }}" alt="Master Card" width="50">
+                                    <img src="{{ asset('img/visa.png') }}" alt="Visa" width="50">
+                                    <img src="{{ asset('img/verve-logo.png') }}" alt="Verve" width="50">
 
                                     <small id="error_msg_paystack1" class="text-danger"></small>
                                 </div>
@@ -103,13 +107,16 @@
     var email1 = "veeqanto@gmail.com"
     var slug = "{{ Session::get('dispatch')->slug }}"
     var base_url = "{{ url('/') }}";
+    var paystack_pk = "{{env('paystack_pk')}}";
+
+
 
     function payWithPaystack() {
         // e.preventDefault();
     // document.getElementById('paymentBtn').addClassList('.disabled')
     $('#paymentBtn').addClass('disabled');
       var handler = PaystackPop.setup({
-        key: 'pk_test_cb0fc910bb9fd127519794aa4128be0fd2c354d4', // Replace with your public key
+        key: paystack_pk, // Replace with your public key
         email: email,
         amount:200000, // the amount value is multiplied by 100 to convert to the lowest currency unit
         currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars

@@ -254,10 +254,10 @@ class ServiceController extends Controller
         $serviceDetail = Service::where('slug', $slug)->firstOrFail();
         // dd($serviceDetail);
 
-        $featuredServices = Service::where('is_featured', 1)->with('user')->inRandomOrder()->limit(4)->get();
-        $approvedServices = Service::where('status', 1)->with('user')->get();
-        $advertServices = Service::where('is_approved', 1)->with('user')->get();
-        $recentServices = Service::where('is_approved', 1)->orderBy('id', 'desc')->paginate(10);
+        $featuredServices = Service::where('is_featured', 1)->where('subscription_end_date', '>', now())->with('user')->inRandomOrder()->limit(4)->get();
+        $approvedServices = Service::where('status', 1)->where('subscription_end_date', '>', now())->with('user')->get();
+        $advertServices = Service::where('is_approved', 1)->where('subscription_end_date', '>', now())->with('user')->get();
+        $recentServices = Service::where('is_approved', 1)->where('subscription_end_date', '>', now())->orderBy('id', 'desc')->paginate(10);
         $categories = Category::paginate(8);
         $all_states = State::all();
         // $images_4_service = $serviceDetail->image;
@@ -307,8 +307,8 @@ class ServiceController extends Controller
             $user111 = null;
         }
 
-        $logistic_companies = Logistic::all();
-
+        $logistic_companies = Logistic::where('is_verified', '=', 1)->get();
+        // $states = Local_government::all();
         return view('serviceDetail', compact(['serviceDetail', 'ww2', 'serviceDetail_id', 'approvedServices', 'user111', 'similarProducts', 'service_likes', 'all_states', 'userser3', 'featuredServices', 'featuredServices2', 'userMessages', 'images_4_service', 'the_provider_f_name', 'likecheck', 'allServiceComments', 'logistic_companies']));
     }
 
@@ -1619,16 +1619,18 @@ public function show($id)
     public function ship_service(Request $request, $id)
     {
         $find_service = Service::findOrFail($id);
-
+        $tracking_id = 'TRCK' . $this->gen_tracking_id();
         $data = array(
             'service_id' => $id,
             'user_id' => Auth::user()->id,
             'logistic_id' => $request->logistic_id,
-            'tracking_id' => 'TRCK' . $this->gen_tracking_id(),
+            'tracking_id' => $tracking_id,
             'customer_name' => $request->customer_name,
-            'customer_email' => $request->customer_email, 
+            'customer_email' => $request->customer_email,
             'customer_phone' => $request->customer_phone,
-            'customer_address' => $request->customer_address
+            'customer_address' => $request->customer_address,
+            'city' => $request->customer_city,
+            'state_id' => $request->customer_state
         );
 
         $this->validate($request, [
@@ -1636,6 +1638,8 @@ public function show($id)
             'customer_email' => 'required',
             'customer_address' => 'required',
             'customer_phone' => 'required',
+            'customer_city' => 'required',
+            'customer_state' => 'required',
             'logistic_id' => 'required',
         ]);
 
@@ -1645,12 +1649,12 @@ public function show($id)
             // dd($phone);
 
         $get_logistic = Logistic::where('id', $request->logistic_id)->first();
-        $message = 'You have recieved a delivery request from ' . Auth::user()->name . ' for ' . $request->customer_name;
+        $message = 'You have recieved a delivery request with Tracking ID ' .$tracking_id. ' from ' . Auth::user()->name . ' for ' . $request->customer_name;
         $sender = 'EFContact';
 
         try {
           SmsHelper::send_sms($message, $phone, $sender);
-        } 
+        }
         catch (\Exception $e) {
         }
 
@@ -1663,9 +1667,9 @@ public function show($id)
         // );
 
         return redirect()->back();
-        
-        
-        
+
+
+
     }
 
     public function gen_tracking_id()

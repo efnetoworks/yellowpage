@@ -120,11 +120,9 @@ Unverified Dispatch Riders |
                             		@endif
 
                             		
-                                  <div class="form-group">
-                                      <button type="submit" onclick="activateUser({{$rider->id}})" class="btn btn-md btn-success" style="border-radius:5px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Verify</button>
-                                              <p class="text-success" style="font-size: 15px" id="successMessage">
-                                     <div class="send-btn">
-                                              </p>
+                                  <div class="text-center">
+                                      <a type="submit" onclick="activateUser({{$rider->id}})" class="btn btn-md btn-success" style="border-radius:5px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Click here to verify this rider</a>
+                                             
                                       </div>
                                   </div>
                                   

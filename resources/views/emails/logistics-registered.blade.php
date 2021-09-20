@@ -1,18 +1,18 @@
 @component('mail::message')
-# Your registration was successful!
+# Your registration was successful, {{$name}}!
 ## <strong>These are your details for backup</strong>
 
-<p><strong>Full Name: </strong> {{ $name ? $name : 'Name not provided!' }}</p>
+{{-- <p><strong>Full Name: </strong> {{ $name ? $name : 'Name not provided!' }}</p>
 <p><strong>Email: </strong> {{ $email ? $email : 'Name not provided!' }}</p>
 <p><strong>Password: </strong> {{ $password ? $password : 'Name not provided!' }}</p>
-<p><strong>Account Type: </strong> {{ $accountType == 'seller' ? 'Service Provider' : 'Service Seeker' }}</p>
+<p><strong>Account Type: </strong> {{ $accountType == 'seller' ? 'Service Provider' : 'Service Seeker' }}</p> --}}
 
 @component('mail::button', ['url' => route('login')])
 Login Now
 @endcomponent
 
 @component('mail::panel')
-Thank you for registering to our platform. Start promoting your products and services!
+Thank you for registering to start your delivery journey on EFContact, your account will be verified within 24hrs!
 @endcomponent
 
 Thanks,<br>
