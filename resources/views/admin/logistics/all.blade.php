@@ -82,7 +82,7 @@ All Dispatch Riders |
 	                               <p><b>Phone number:</b> {{ $rider->phone }}</p>
 	                               <p><b>Email address:</b> {{ $rider->email }} </p>
 	                               <p><b>Country:</b> Nigeria </p>
-	                               <p><b>State:</b> {{ $rider->state->name }} </p>
+	                               {{-- <p><b>State:</b> {{ $rider->state->name }} </p> --}}
 	                               <p><b>City:</b>{{ $rider->local_government->name }} </p>
 	                               <p><b>Address:</b>{{ $rider->address ?? 'Not provided' }} </p>
 	                               {{-- <p><b>State:</b>{{ $rider->state->name }} </p> --}}

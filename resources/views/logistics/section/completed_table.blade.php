@@ -81,7 +81,7 @@
                                          <p><b>Name:</b> {{ $request->customer_name }}</p>
                                          <p><b>Phone number:</b> {{ $request->customer_phone }}</p>
                                          <p><b>Email address:</b> {{ $request->customer_email }}</p>
-                                         <p><b>State:</b> {{ $request->state->name }}</p>
+                                         {{-- <p><b>State:</b> {{ $request->state->name }}</p> --}}
                                          <p><b>City:</b> {{ $request->city }}</p>
                                          <p><b>Address:</b> {{ $request->customer_address }}</p>
                                         {{--  <form id="" action="{{ route('logistic.delivered.mode', $request->id) }}" method="POST">
