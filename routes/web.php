@@ -287,7 +287,7 @@ Route::post('logistics/payment-confirmation/{ref}', 'LogisticController@confirmP
 
 Route::get('logistics/registration-success', 'LogisticController@registrationSuccess');
 Route::get('logistics/account-not-verified', 'LogisticController@notVerified')->name('logistic.not.verified');
-
+Route::get('/download_logistic_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.logistic.doc');
 Route::middleware(['auth:logistic', 'logistic_verified'])->prefix('logistics')->group(function () {
 
     Route::get('dashboard', 'LogisticController@dashboard')->name('logistics_dashboard');

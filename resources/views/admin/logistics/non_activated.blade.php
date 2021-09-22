@@ -93,9 +93,9 @@ Unverified Dispatch Riders |
 
 		                               <p><b>Means of Identification:</b> {{ $rider->identification_type }} </p>
 		                               <p><b>ID Number:</b> {{ $rider->identification_id }} </p>
-		                               <p><b>BVN:</b> {{ $rider->bvn }} </p>
+		                               {{-- <p><b>BVN:</b> {{ $rider->bvn }} </p> --}}
 		                               @if($rider->cac = 1)
-		                               <p><b>CAC Document:</b><a href=" {{ route('logistic.download.doc', $rider->slug) }} " class="btn btn-warning">Download </a></p>
+		                               <p><b>CAC Document:</b><a href=" {{ route('logistic.download.logistic.doc', $rider->slug) }} " class="btn btn-warning">Download </a></p>
 		                               @else
 		                               <p><b>CAC Document:</b> Non provided</p>
 		                            	@endif
