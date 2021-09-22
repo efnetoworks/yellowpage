@@ -32,7 +32,7 @@
 
 
                     <div>
-   
+
    <!-- /.box-header -->
    <div class="box-body">
        <div class="table-responsive">
@@ -45,7 +45,7 @@
                        <th> Phone </th>
                        <th> State </th>
                        <th> User name </th>
-                       <th> Sub End Date </th>
+                       {{-- <th> Sub End Date </th> --}}
                        <!-- <th> Featured </th> -->
                        <th> Date Created </th>
                        <th> Call Status </th>
@@ -54,7 +54,7 @@
                        <th> Client's Comment </th>
                        <th> Customer Service Comments </th>
                        <th> Customer Service Personel Name</th>
-                       <th> Add Report </th>                       
+                       <th> Add Report </th>
                        <th> View Service </th>
                    </tr>
                </thead>
@@ -73,10 +73,10 @@
                                        <td> {{ $all_services->state }} </td>
                                        <td> {{ $all_services->user->name }} </td>
 
-                                       <td> {{ Carbon\Carbon::parse($all_services->user->subscriptions
+                                       {{-- <td> {{ Carbon\Carbon::parse($all_services->user->subscriptions
                                        ->first()->subscription_end_date)->format('d/m/y') }} </td>
                                            <!-- <td> {{ $all_services->featured == 1 ? 'Yes' : 'No' }} </td> -->
-                                           <td> {{ $all_services->created_at->format('d/m/Y') }} </td>
+                                           <td> {{ $all_services->created_at->format('d/m/Y') }} </td> --}}
 
 
 
@@ -85,15 +85,15 @@
                                         <td><span class="text-muted"> </i> {{$all_services->customerservice->call_status ?? ''}} </span> </td>
                                         <td> {{$all_services->customerservice->client_comment ?? ''}} </td>
                                         <td>{{$all_services->customerservice->customer_service_comment ?? ''}} </td>
-                                        <td>{{$all_services->customerservice->customer_service_personel_name ?? ''}} </td>                                        
+                                        <td>{{$all_services->customerservice->customer_service_personel_name ?? ''}} </td>
 
                                         <td>
-                                        <button type="button" class="btn btn-primary" 
+                                        <button type="button" class="btn btn-primary"
                                         data-toggle="modal" data-target="#allUsers{{ $all_services->id }}">
                                         Write Report
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="allUsers{{ $all_services->id }}" tabindex="-1" role="dialog" 
+                                        <div class="modal fade" id="allUsers{{ $all_services->id }}" tabindex="-1" role="dialog"
                                         aria-labelledby="allUsers{{ $all_services->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -106,39 +106,39 @@
                                             <div class="modal-body">
                                             <form action="{{ route('save_user_Report') }}" method="POST" class="message-form">
                                                 @csrf
-                                            <input type="hidden" class="form-control" id="user_id" name="service_id" 
+                                            <input type="hidden" class="form-control" id="user_id" name="service_id"
                                             value="{{$all_services->id}}">
                                         <div class="form-group">
                                             <label for="call_status">Call Status</label>
-                                            <input type="text" class="form-control" id="call_status" 
+                                            <input type="text" class="form-control" id="call_status"
                                             name="call_status" value="{{$all_services->customerservice->call_status ?? ''}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="call_duration">Call Duration</label>
-                                            <input type="text" class="form-control" id="call_duration" name="call_duration" 
+                                            <input type="text" class="form-control" id="call_duration" name="call_duration"
                                             value="{{$all_services->customerservice->call_duration ?? ''}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="alternative">Alternative Communication</label>
-                                            <input type="text" class="form-control" 
-                                            id="alternative" name="alternative" 
+                                            <input type="text" class="form-control"
+                                            id="alternative" name="alternative"
                                             value="{{$all_services->customerservice->alternative ?? ''}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="customer_comment">Client's Comment</label>
-                                            <textarea class="form-control" id="client_comment" name="client_comment" 
+                                            <textarea class="form-control" id="client_comment" name="client_comment"
                                             rows="3">{{$all_services->customerservice->client_comment ?? ''}}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="customer_service_comment">Customer Service Comments</label>
-                                            <textarea class="form-control" id="customer_service_comment" name="customer_service_comment" rows="3" 
+                                            <textarea class="form-control" id="customer_service_comment" name="customer_service_comment" rows="3"
                                             >{{$all_services->customerservice->customer_service_comment ?? ''}}</textarea>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label for="alternative">Handled By</label>
-                                            <input type="text" class="form-control" id="customer_service_personel_name" 
-                                            name="customer_service_personel_name" 
+                                            <input type="text" class="form-control" id="customer_service_personel_name"
+                                            name="customer_service_personel_name"
                                              value="{{$all_services->customerservice->
                                              customer_service_personel_name ?? ''}}">
                                         </div>
@@ -148,7 +148,7 @@
                                             </div>
                                         </form>
                                             </div>
-                                           
+
                                             </div>
                                         </div>
                                         </div>
@@ -189,12 +189,12 @@
 
         <div>
         <!-- <div class="form-stretch">
-           
+
            <div class="row">
                <div class="col-md-3">
                    <h3 class="box-title"> Sort By Date </h3>
                </div>
-               <form class="form-horizontal form-element" 
+               <form class="form-horizontal form-element"
                action="{{ route('admin.sort_ef_marketers_sales') }}" method="POST">
                @csrf
                    <div class="col-md-4">

@@ -119,7 +119,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Sub Category <small class="text-info">(You can select multiple sub category)</small></label>
+                            <label>Sub Category <small class="text-info">(You can select multiple sub-categories)</small></label>
                             <select name="sub_category[]" class="form-control show-tick" id="sub_categories" multiple>
                                 {{-- @foreach($subcategory as $subcategories)
                                     <option value="{{ $subcategories->id }}" {{ $service->category_id == $subcategories->category_id  ? 'selected' : '' }}> {{ $subcategories->name }} </option>
@@ -133,16 +133,39 @@
                             </select>
                         </div>
 
-
+{{--
                         <div class="form-group">
                             <div class="form-check">
                                 <input id="featured" class="form-check-input" type="checkbox" value="1" name="is_featured" onclick="featuredCheckbbox()" {{ $service->is_featured == 1 ? 'checked' : '' }}>
-                                <label class="form-check-label" for="featured"> Do you want this service featured?  <small class="infoLinkNote">(<a data-toggle="modal" data-target="#featuredInfoModal">How it works?</a>)</small></label>
+                                <label class="form-check-label" for="featured">
+                                    Do you want this service featured?  <small class="infoLinkNote">
+                                        (<a data-toggle="modal" data-target="#featuredInfoModal">How it works?</a>)</small></label>
                             </div>
-                            <p id="featuredText" class="text-info">This will attract a fee of &#8358;2000 which will be paid before the service is displayed.</p>
-                        </div>
+                            <p id="featuredText" class="text-info">This will attract a fee of &#8358;1000 which will be paid before the service is displayed.</p>
+                        </div> --}}
 
-                        <div class="form-group" id="youtubeLink">
+                        @if ($service->is_featured == 0 && $service->paid_featured == 0)
+                        <li class="list-group-item pt-3 pb-3 my-5 mb-5">
+                            <span class="left">Do you want this service featured?</span><small class="infoLinkNote">
+                                (<a data-toggle="modal" data-target="#featuredInfoModal">How it works?</a>)</small>
+                            <p class="text-info"><strong>Note &nbsp;: &nbsp;</strong>Make a payment of &#8358;1000 to have this service featured
+                            </p>
+                            <form>
+                                @csrf
+                                <input id="user_email" type="hidden" name="" value="{{Auth::user()->email}}">
+                                <input id="featured_amount" type="hidden" name="amount" value="1000">
+                                <input id="service_id" type="hidden" name="service_id" value="{{$service->id}}">
+                                <script src="https://js.paystack.co/v1/inline.js"></script>
+
+                                <button id="featuredPay" type="button" class="btn btn-lg" style="cursor: pointer;
+                                display: block; margin-top: 5px; background-color: #cc8a19; color: #fff" onclick="payWithPaystack1(1000)">Make Payment</button>
+                            </form>
+
+                        </li>
+                    @endif
+                    <br />
+
+                        <div class="form-group mt-5" id="youtubeLink">
                             <label for="" id="youtubeLink">Video (Youtube) <small>(Optional)</small></label>
                             <input type="text" class="form-control" name="video_link" value="{{ $service->video_link }}">
                             <div class="help-info">Youtube video Link</div>
@@ -257,6 +280,31 @@
 
                 </div>
 
+
+                <div>
+                    <div id="featuredInfoModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #cc8a19; color: #fff">
+                                    <h4 class="modal-title">How Featured Service Works</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>You can take advantage of EFContacts Featured Service to get the attention of your potential customers/clients 😃. <br>
+                                        Providers who use the featured service will have their service displayed first on all important EFContact pages.
+                                        A featured service will be given search priority on EFContact. This means that featured services will get displayed first on a search result page.
+                                    </p>
+                                    <p><strong>Note:</strong> This will attract a fee of &#8358;2000 which will be paid before the service is display on our website and last for a period of one month.</p>
+                                    <p><strong>Take advantage of this to get the attention of your potential customers/clients 😃.</strong></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" style="background-color: #cc8a19; color: #fff" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
       </section>
 
 
@@ -266,6 +314,80 @@
         do
       }
     </script> --}}
+
+    <script>
+
+        base_Url = "{{ url('/') }}"
+
+        var _token = $("input[name='_token']").val();
+        var paystack_pk = "{{env('paystack_pk')}}";
+
+        // var email1 = $("#email-address3").val();
+        var amount = $("#featured_amount").val();
+        var email = $("#user_email").val();
+        var service_id = document.getElementById("service_id").value;
+        function payWithPaystack1() {
+
+            // return console.log('sasas');
+             const featuredButton = document.getElementById("featuredPay");
+                // $("#featuredPay").attr("disabled", true);
+                featuredButton.disabled  = true;
+
+            var handler = PaystackPop.setup({
+                key: paystack_pk,
+                email: document.getElementById("user_email").value,
+                amount: 100000,
+                ref: ''+'FEATURED-'+Math.floor((Math.random() * 1000000000) + 1),
+                metadata: {
+                    custom_fields: [{
+                        display_name: "Mobile Number",
+                        variable_name: "mobile_number",
+                        value: "+2348012345678"
+                    }]
+                },
+                callback: function(response) {
+                    // return console.log('sasas');
+                    const featuredButton = document.getElementById("featuredPay");
+                    featuredButton.disabled  = true;
+                    var email = document.getElementById("user_email").value;
+                    var service_id = document.getElementById("service_id").value;
+                    var amount = $("#featured_amount").val();
+                    var ref_no1 =  response.reference;
+
+                    $.ajax({
+                      method: "POST",
+                      url: base_Url + '/provider/service/create_pay_featured',
+                      dataType: "json",
+                      data: {
+                        _token: _token,
+                        email: email,
+                        amount: amount,
+                        service_id: service_id,
+                        ref_no: ref_no1,
+                      },
+                      success: function (data) {
+                          console.log(data)
+                          toastr.success("Your Service has been successfully featured");
+
+                      },
+                      error: function(error) {
+                          console.log(error)
+                      }
+                    })
+                },
+                onClose: function() {
+                    alert('window closed');
+                }
+            });
+            handler.openIframe();
+        }
+
+
+
+    </script>
+
+
+
 
     <script>
       function deleteImage(image) {

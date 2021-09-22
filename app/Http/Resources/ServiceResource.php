@@ -48,15 +48,15 @@ class ServiceResource extends JsonResource
 
     }
 
-    public function with($request)
-    {
-        return [
-            'api' => [
-                'version' => '1.0',
-                'date' => date('d M Y'),
-                'developer' => 'EF Network',
-                'attribution' => url('https://efcontact.com')
-            ],
-        ];
-    }
+    // public function with($request)
+    // {
+    //     return [
+    //         'api' => [
+    //             'version' => '1.0',
+    //             'date' => date('d M Y'),
+    //             'developer' => 'EF Network',
+    //             'attribution' => url('https://efcontact.com')
+    //         ],
+    //     ];
+    // }
 }

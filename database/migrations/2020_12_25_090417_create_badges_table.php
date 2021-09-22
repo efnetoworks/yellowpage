@@ -24,7 +24,10 @@ class CreateBadgesTable extends Migration
             $table->string('seller_name')->nullable();
             $table->string('phone')->nullable();
             $table->string('service_id')->nullable();
-            
+            $table->integer('referree_id')->nullable();
+            $table->integer('referal_id')->nullable();
+
+
         });
     }
 

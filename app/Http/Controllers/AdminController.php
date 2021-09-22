@@ -45,6 +45,7 @@ use Illuminate\Validation\Rule;
 
 use App\Mail\SendMailable;
 use App\Mail\UserRegistered;
+use App\Payment;
 use App\Refererlink;
 
 
@@ -1169,7 +1170,7 @@ class AdminController extends Controller
           // if( $efmarketers[$key]->ref == 0) {
           //   dd(0);
           // }
-        
+
 
         }
 
@@ -1217,24 +1218,24 @@ class AdminController extends Controller
         // foreach($efmarketers as $key => $efmarketer) {
         //   $ref = $efmarketer->referals()->get();
         // $efmarketers[$key]->ref = $efmarketer->ref;
-      
-        // } 
-        
-        
+
+        // }
+
+
         // ->with('referals')->get();
         // foreach($efmarketers as $key => $efmarketer) {
         //   $ref = $efmarketer->referals()->get();
         // $efmarketers[$key]->ref = $efmarketer->ref;
-      
+
         // }
 
-        // $userList = User::query()              
+        // $userList = User::query()
         //      ->with(['userAttendance' => function($q) use($attDate,$type) {
         //          $q->where('present_date', $attDate);
         //          $q->wherePresentType($type);
         //      }])
         //      ->get();
-        
+
 
         // $sellers = User::where('is_ef_marketer', '1')->with('referals')
         //   ->whereHas('referals', function($query) {
@@ -1256,9 +1257,9 @@ class AdminController extends Controller
                 //  return back()->with('success', 'Task was successful!');
 
 
-        
+
                   // $services = Service::
-          // whereBetween('created_at', 
+          // whereBetween('created_at',
           // [$request->start_date, $request->end_date])->get();
 
         }
@@ -1365,7 +1366,7 @@ class AdminController extends Controller
         public function users_last_month()
         {
           $users = User::all();
-          $users = Referal::where('referalable_type', 'App\Agent')->get();
+          $users = Referal::where('referalable_type', 'App\User')->get();
 
           foreach ($users as $key => $user) {
             // $agents[$key]->total_refers = $serv->total_refers;
@@ -1565,6 +1566,96 @@ public function set_sub_status() {
           dd($sellers);
 }
 
+public function new_promo() {
+    // $sellers = User::where('role', 'seller')->where(function($query) {
+    //   $query->has('sub')
+    // })
+
+    $sellers = User::where('role', 'seller')->get();
+    foreach($sellers as $seller) {
+        $sell_sub = $seller->subscriptions->first() ? $seller->subscriptions->first()->last_amount_paid : null;
+        // $sellers[$key]->total_refers_count = $sellers->subscriptions;
+        $check_old_badge = $seller->my_badge;
+
+        if(!$check_old_badge){
+            if ($sell_sub) {
+                if($sell_sub == '2400') {
+                    $badge = new Badge();
+                    $badge->user_id = $seller->id;
+
+                    $badge->amount = 7000;
+                    $badge->ref_no = 'free_payment-' .  Str::random(3);
+                    $badge->seller_name = $seller->name;
+                    $badge->badge_type = 'Super User';
+                    $badge->save();
+                    $seller->badgetype = 1;
+                    $seller->save();
+                    // dd($badge);
+
+                    foreach($seller->services as $service){
+                        $service->badge_type = 1;
+                        $service->save();
+                    }
+
+                }
+                elseif($sell_sub == '1200' || $sell_sub == '600') {
+                    $badge = new Badge();
+                    $badge->user_id = $seller->id;
+
+                    $badge->amount = 5000;
+                    $badge->ref_no = 'free_payment-' .  Str::random(3);
+                    $badge->seller_name = $seller->name;
+                    $badge->badge_type = 'Moderate User';
+                    $badge->save();
+                    $seller->badgetype = 2;
+                    $seller->save();
+
+                    foreach($seller->services as $service){
+                        $service->badge_type = 2;
+                        $service->save();
+                    }
+
+                }
+                elseif($sell_sub == '200') {
+                    $badge = new Badge();
+                    $badge->user_id = $seller->id;
+
+                    $badge->amount = 3000;
+                    $badge->ref_no = 'free_payment-' .  Str::random(3);
+                    $badge->seller_name = $seller->name;
+                    $badge->badge_type = 'Basic User';
+                    $badge->save();
+                    $seller->badgetype = 3;
+                    $seller->save();
+
+                    foreach($seller->services as $service){
+                        $service->badge_type = 3;
+                        $service->save();
+                    }
+
+                }
+            }
+        }
+    }
+
+    dd('femi done');
+
+    // foreach ($agents as $key => $serv) {
+    //     $agents[$key]->total_refers_count = $serv->total_refers->count();
+    //   }
+    //   $approval_status = null;
+
+
+            $sellers = User::where('role', 'seller')->whereHas('subscriptions', function($query) {
+              $query->where('subscription_end_date', '<', now());
+            })->orderBy('created_at')
+            ->get();
+            foreach($sellers as $seller) {
+              $seller->sub_has_ended = 1;
+            }
+            dd($sellers);
+  }
+
 public function add_old_payments() {
   $sellers = User::where('role', 'seller')->with('mypayments')->doesnthave('mypayments')->orderBy('created_at')->get();
   dd($sellers);
@@ -1668,7 +1759,7 @@ public function add_old_payments() {
           $status_message = "Disabled";
 
           $user = Logistic::where('id', $id)->first();
-          
+
           $user->is_verified = 1;
           $user->save();
 
@@ -1677,9 +1768,9 @@ public function add_old_payments() {
             'message' => $message,
             'status_message' => $status_message,
           ]);
-              
-          
-          
+
+
+
         }
 
         public function activatedRiders()

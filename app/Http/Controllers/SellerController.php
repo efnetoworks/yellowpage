@@ -42,12 +42,15 @@ class SellerController extends Controller
             'message' => 'Please renew your subscription to view this page!',
             'alert-type' => 'error'
         );
-        $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        //This was used to redirect when subscription was still in place
+        //use this to implement subscriptions
 
-        if (Carbon::now() > Carbon::parse($user_sub_date)) {
-            // return redirect()->route('seller.sub.create')->with($success_notification);
-            return redirect()->route('seller.sub.create');
-        }
+        // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+
+        // if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //     // return redirect()->route('seller.sub.create')->with($success_notification);
+        //     return redirect()->route('seller.sub.create');
+        // }
         $category = Category::orderBy('name', 'asc')->get();
         $subcategory = SubCategory::orderBy('name', 'asc')->get();
         $states = State::all();
@@ -63,14 +66,14 @@ class SellerController extends Controller
             'description' => 'required',
             'phone' => 'required',
             'category_id' => 'required',
-            'min_price' => 'required|numeric',
+            'min_price' => 'nullable|numeric',
             'address' => 'nullable',
             'description' => 'required',
             'city' => 'required',
             'name' => 'required',
             'state' => 'required',
             'video_link' => 'nullable',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif', 
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif',
             //|max:2048
         ]);
         $image = $request->file('image');
@@ -132,7 +135,7 @@ class SellerController extends Controller
         $service->max_price = $data['category_id'];
         $service->video_link = $data['video_link'];
         // $service->subscription_end_date = Auth::user()->subscription_end_date;
-        $service->subscription_end_date =  Auth::user()->subscriptions->first()->subscription_end_date;
+        // $service->subscription_end_date =  Auth::user()->subscriptions->first()->subscription_end_date;
 
 
 
@@ -309,9 +312,11 @@ class SellerController extends Controller
         }
     }
 
-    public function create_pay_featured(Request $request)
+      public function create_pay_featured(Request $request)
     {
+
         $data = $request->all();
+        // return ($data['amount']);
         $this->validate($request, [
             'service_id' => 'required',
             'email' => 'required',
@@ -358,23 +363,25 @@ class SellerController extends Controller
         // $all_message = Message::where('buyer_id', Auth::id())->orwhere('service_user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         // return view ('seller.message.all', compact('all_message') );
 
-        $success_notification = array(
-            'message' => 'Please renew your subscription to view this page!',
-            'alert-type' => 'error'
-        );
-        if (!Auth::user()->subscriptions->first()) {
-            $current_subscription_end_date = null;
-            $no_sub_var = 1;
-        } else {
-            $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
-            if ($user_sub_date) {
+                //uncomment this if you want to reuse subscription
 
-                if (Carbon::now() > Carbon::parse($user_sub_date)) {
-                    // return redirect()->route('seller.sub.create')->with($success_notification);
-                    return redirect()->route('seller.sub.create');
-                }
-            }
-        }
+        // $success_notification = array(
+        //     'message' => 'Please renew your subscription to view this page!',
+        //     'alert-type' => 'error'
+        // );
+        // if (!Auth::user()->subscriptions->first()) {
+        //     $current_subscription_end_date = null;
+        //     $no_sub_var = 1;
+        // } else {
+        //     $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        //     if ($user_sub_date) {
+
+        //         if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //             // return redirect()->route('seller.sub.create')->with($success_notification);
+        //             return redirect()->route('seller.sub.create');
+        //         }
+        //     }
+        // }
         $all_received_messages = Message::where('receiver_id', Auth::id())->orderBy('created_at', 'desc')->get();
         $all_sent_messages = Message::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         return view('seller.message.all', compact('all_received_messages', 'all_sent_messages'));
@@ -405,24 +412,26 @@ class SellerController extends Controller
 
     public function allNotification()
     {
-        $success_notification = array(
-            'message' => 'Please renew your subscription to view this page!',
-            'alert-type' => 'error'
-        );
+        // uncomment this if you want to implement subscription to allow users access their messages
 
-        if (!Auth::user()->subscriptions->first()) {
-            $current_subscription_end_date = null;
-            $no_sub_var = 1;
-        } else {
-            $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
-            if ($user_sub_date) {
+        // $success_notification = array(
+        //     'message' => 'Please renew your subscription to view this page!',
+        //     'alert-type' => 'error'
+        // );
 
-                if (Carbon::now() > Carbon::parse($user_sub_date)) {
-                    // return redirect()->route('seller.sub.create')->with($success_notification);
-                    return redirect()->route('seller.sub.create');
-                }
-            }
-        }
+        // if (!Auth::user()->subscriptions->first()) {
+        //     $current_subscription_end_date = null;
+        //     $no_sub_var = 1;
+        // } else {
+        //     $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        //     if ($user_sub_date) {
+
+        //         if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //             // return redirect()->route('seller.sub.create')->with($success_notification);
+        //             return redirect()->route('seller.sub.create');
+        //         }
+        //     }
+        // }
 
         $all_notification = Notification::paginate(8);
         return view('seller.notification.all_notification', compact('all_notification'));
@@ -444,23 +453,25 @@ class SellerController extends Controller
 
     public function allService()
     {
-        $success_notification = array(
-            'message' => 'Please renew your subscription to view this page!',
-            'alert-type' => 'error'
-        );
-        if (!Auth::user()->subscriptions->first()) {
-            $current_subscription_end_date = null;
-            $no_sub_var = 1;
-        } else {
-            $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
-            if ($user_sub_date) {
 
-                if (Carbon::now() > Carbon::parse($user_sub_date)) {
-                    // return redirect()->route('seller.sub.create')->with($success_notification);
-                    return redirect()->route('seller.sub.create');
-                }
-            }
-        }
+    //This was used to redirect when subscription was still in place
+        // $success_notification = array(
+        //     'message' => 'Please renew your subscription to view this page!',
+        //     'alert-type' => 'error'
+        // );
+        // if (!Auth::user()->subscriptions->first()) {
+        //     $current_subscription_end_date = null;
+        //     $no_sub_var = 1;
+        // } else {
+        //     $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+        //     if ($user_sub_date) {
+
+        //         if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //             // return redirect()->route('seller.sub.create')->with($success_notification);
+        //             return redirect()->route('seller.sub.create');
+        //         }
+        //     }
+        // }
 
         $all_services = Service::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         return view('seller.service.all_service', compact('all_services'));
@@ -572,6 +583,9 @@ class SellerController extends Controller
     public function myreferrals()
     {
         $myreferrals = Auth::user()->referals;
+        // dd($myreferrals->user->services->featured);
+        // $myreferrals = Auth::user()->referals->first();
+        // dd($myreferrals->hasBadge->first() ? 'yes' : 'no');
 
         // $myreferrals = Agent::find(50)->referals;
         return view('seller.myreferrals', compact('myreferrals'));
@@ -580,7 +594,7 @@ class SellerController extends Controller
     public function pendingDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 0)->where('is_delivered', 0)->get();
 
         return view('seller.dispatch.pending', [
@@ -591,7 +605,7 @@ class SellerController extends Controller
     public function transitDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = DeliveryRequest::where('user_id',$user->id)->where('in_transit', 1)->where('is_delivered', 0)->get();
 
         return view('seller.dispatch.transit', [
@@ -602,7 +616,7 @@ class SellerController extends Controller
     public function deliveredDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = DeliveryRequest::where('user_id',$user->id)->where('is_delivered', 1)->where('in_transit', 0)->get();
 
         return view('seller.dispatch.delivered', [
@@ -613,7 +627,7 @@ class SellerController extends Controller
     public function historyDispatchRequests()
     {
         $user = Auth::user();
-        
+
         $deliveries = User::find($user->id)->delivery_requests;
 
         return view('seller.dispatch.history', [

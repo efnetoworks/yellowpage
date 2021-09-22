@@ -85,9 +85,11 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background-color: #f5b951;
-    background-image: url('/emailBg.jpg');
+    background-color: #f5b9515e;
     /* background-color: #edf2f7; */
+    background-image: url(https://efcontact.com/efemailbg.jpg) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
     margin: 0;
     padding: 0;
     width: 100%;

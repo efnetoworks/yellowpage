@@ -59,7 +59,7 @@ All Dispatch Riders |
 									</td>
 									@endif
 
-									
+
 
 							</tr>
 
@@ -88,9 +88,9 @@ All Dispatch Riders |
 	                               {{-- <p><b>State:</b>{{ $rider->state->name }} </p> --}}
                                {{-- <p><b>City:</b>{{ $rider->local_government->name }} </p> --}}
                                	</div>
-                               	
+
                                	<div class="col-md-6">
-                               			
+
 
 		                               <h4 class="text text-warning">Identification </h4>
 
@@ -108,13 +108,13 @@ All Dispatch Riders |
 
 
                                </div>
-                               
 
-                               
-                               
+
+
+
 
                             		<h4 class="text text-warning">Payment Details</h4>
-                            		@if($rider->paid = 1) 
+                            		@if($rider->paid = 1)
                             		<p><span class="text text-success">Paid</span></p>
                             		<p><b>Amount: </b>{{ $rider->paid_amount }}</p>
                             		<p><b>Transaction ID: </b>{{ $rider->payment_id }}</p>
@@ -129,7 +129,7 @@ All Dispatch Riders |
                                           </div>
                                   </div>
 
-                                 
+
                           </div>
 
                           {{-- <div class="modal-footer">

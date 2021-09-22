@@ -21,6 +21,11 @@ class Referal extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function hasBadge()
+    {
+        return $this->hasMany('App\Badge');
+    }
+
     // public function()
     // {
     //     return $this->belongsTo('App\Agent');

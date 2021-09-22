@@ -42,6 +42,8 @@ Route::get('/become-an-efcontact-agent', 'OperationalController@becomeAnEfcontac
 
 Route::get('shipping_help', 'OperationalController@shippingHelp')->name('shipping.help');
 
+Route::get('shipping_help', 'OperationalController@shippingHelp')->name('shipping.help');
+
 Route::get('/subscribe/user', function ()
 {
     $user = User::find(32);
@@ -93,6 +95,8 @@ Route::get('/set_sub_status', 'AdminController@set_sub_status')->name('set_sub_s
 // route to add payments for users with no payments
 Route::get('/add_old_payments', 'AdminController@add_old_payments')->name('add_old_payments');
 // end route to add payments for users with no payments
+
+Route::get('/promo', 'AdminController@new_promo')->name('new_promo');
 
 
 //End Special URLS
@@ -299,12 +303,10 @@ Route::middleware(['auth:logistic', 'logistic_verified'])->prefix('logistics')->
     Route::put('update-profile', 'LogisticController@updateProfile')->name('logistic.profile.updates');
     Route::put('update-password', 'LogisticController@updatePassword')->name('logistic.update.password');
     Route::put('update-identification', 'LogisticController@updateId')->name('logistic.update.id');
-    
     Route::get('details/{id}', 'LogisticController@details')->name('logistic.request.detail');
     Route::put('/set-transit-mode/{id}', 'LogisticController@transitMode')->name('logistic.transit.mode');
     Route::put('/product-delivered/{id}', 'LogisticController@deliveredMode')->name('logistic.delivered.mode');
     Route::put('/upload-profile-image', 'LogisticController@profileImage')->name('logistic.upload.image');
-    
     Route::get('/download_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.doc');
     // Route::post('/request-to-update-profile', 'LogisticController@requestToUpdateProfile')->name('logistic.request.update.profile');
 
@@ -407,9 +409,9 @@ Route::get('/csrf_token', function () {
 
 Route::get('/register', 'AuthController@showRegister')->name('register');
 Route::get('/groupreg', 'AuthController@showGroupRegister')->name('register');
-Route::post('/register2', 'AuthController@createUser')->name('register2');
+Route::post('/register', 'AuthController@save_buyer')->name('register');
 //original payment and registration with gtpay
-Route::post('/register', 'AuthController@pay_with_gtpay')->name('register');
+Route::post('/register_with_gt', 'AuthController@pay_with_gtpay')->name('register_with_gt');
 //end original payment and registration with gtpay
 
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');

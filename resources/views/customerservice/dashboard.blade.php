@@ -40,8 +40,9 @@
                                         <th> Phone </th>
                                         <th> role </th>
                                         <th> Registration Date</th>
-                                        <!-- <th> Sub End Date</th> -->
-                                        <!-- <th> Last Plan type</th> -->
+                                        <th> Amount Paid </th>
+                                        <!-- <th> Sub End Date </th> -->
+                                        <!-- <th> Last Plan type </th> -->
                                         <th> Services </th>
                                         <th> Call Status </th>
                                         <th> Call Duration </th>
@@ -63,26 +64,28 @@
                                         <td><span class="text-muted"> </i> {{ $all_subscription->phone ?? 'no phone'}} </span> </td>
                                         <td> {{ $all_subscription->role }} </td>
                                         <td> {{ $all_subscription->created_at->format('d/m/Y') }} </td>
-                                       
+
+                                        <td> {{ $all_subscription->subscriptions->first()->last_amount_paid ?? '' }} </td>
+
                                         <td>
                                         @if($all_subscription->services->count())
 
                                         <p id="active_text">{{$all_subscription->services->count()}} &nbsp; services</p>
-                                        <button type="button" class="btn btn-primary" 
+                                        <button type="button" class="btn btn-primary"
                                         data-toggle="modal" data-target="#allServicess{{ $all_subscription->id }}">
                                         See Services
                                         </button>
                                         @elseif($all_subscription->services->count() == 0)
                                             <span id="active_text2">No Services Yet!</span>
-                                            @endif                                         
-                                            
+                                            @endif
+
                                          <!-- Modal -->
-                                         <div class="modal fade" id="allServicess{{ $all_subscription->id }}" tabindex="-1" role="dialog" 
+                                         <div class="modal fade" id="allServicess{{ $all_subscription->id }}" tabindex="-1" role="dialog"
                                         aria-labelledby="allServicess{{ $all_subscription->id }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="allUsers{{ $all_subscription->id }}Label">Modal title</h5>
+                                                <h5 class="modal-title" id="allUsers{{ $all_subscription->id }}Label">All <strong>{{ $all_subscription->name }}</strong> Services (<strong>Total: {{ $all_subscription->services->count() }}</strong>)</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -99,14 +102,13 @@
                                                 </thead>
                                                 <tbody>
                                                 @if($all_subscription->services->count())
-                                                <p id="active_text">{{$all_subscription->services->count()}} &nbsp; services</p>
-                                                
+
                                                 @foreach($all_subscription->services as $key => $services)
                                                  <tr>
                                                    <th scope="row">{{ $key + 1 }}</th>
-                                                    <td><a href="{{ route('serviceDetail', $services->slug) }}">{{$services->name}}</a></td>
-                                                    <td>{{$services->created_at}}</td>
-                                                    <td>{{$services->is_approved ? 'Approved' : 'Not Yet Approved'}}</td>
+                                                    <td><a href="{{ route('serviceDetail', $services->slug) }}" target="_blank">{{$services->name}}</a></td>
+                                                    <td>{{$services->created_at->format('d/m/Y')}}</td>
+                                                    <td>{!! $services->status ? '<span class="text-success">Approved</span>' : '<span class="text-danger">Not Approved</span>' !!}</td>
                                                     </tr>
                                                     @endforeach
                                                     @endif
@@ -121,7 +123,7 @@
                                         </div>
                                         </div>
                                         </td>
-                                                                                
+
                                         <td> {{$all_subscription->customerservice->call_status ?? ''}} </td>
                                         <td><span class="text-muted"></i> {{$all_subscription->customerservice->call_duration ?? ''}} </span> </td>
                                         <td><span class="text-muted"> </i> {{$all_subscription->customerservice->call_status ?? ''}} </span> </td>
@@ -129,12 +131,12 @@
                                         <td>{{$all_subscription->customerservice->customer_service_comment ?? ''}} </span></td>
                                         <!-- <td>{{$all_subscription->customerservice->customer_service_personel_name ?? ''}} </td>                                         -->
                                         <td>
-                                        <button type="button" class="btn btn-primary" 
+                                        <button type="button" class="btn btn-primary"
                                         data-toggle="modal" data-target="#allUsers{{ $all_subscription->id }}">
                                         Write Report
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="allUsers{{ $all_subscription->id }}" tabindex="-1" role="dialog" 
+                                        <div class="modal fade" id="allUsers{{ $all_subscription->id }}" tabindex="-1" role="dialog"
                                         aria-labelledby="allUsers{{ $all_subscription->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -147,7 +149,7 @@
                                             <div class="modal-body">
                                             <form action="{{ route('save_report') }}" method="POST" class="message-form">
                                                 @csrf
-                                            <input type="hidden" class="form-control" id="user_id" name="user_id" 
+                                            <input type="hidden" class="form-control" id="user_id" name="user_id"
                                             value="{{$all_subscription->id}}">
                                         <div class="form-group">
                                             <label for="call_status">Call Status</label>
@@ -167,13 +169,13 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="customer_service_comment">Customer Service Comments</label>
-                                            <textarea class="form-control" id="customer_service_comment" name="customer_service_comment" rows="3" 
+                                            <textarea class="form-control" id="customer_service_comment" name="customer_service_comment" rows="3"
                                             >{{$all_subscription->customerservice->customer_service_comment ?? ''}}</textarea>
                                         </div>
-                                        
+
                                         <!-- <div class="form-group">
                                             <label for="alternative">Handled By</label>
-                                            <input type="text" class="form-control" id="customer_service_personel_name" name="customer_service_personel_name" 
+                                            <input type="text" class="form-control" id="customer_service_personel_name" name="customer_service_personel_name"
                                              value="{{$all_subscription->customerservice->customer_service_personel_name ?? ''}}">
                                         </div> -->
                                         <div class="modal-footer">
@@ -182,7 +184,7 @@
                                             </div>
                                         </form>
                                             </div>
-                                           
+
                                             </div>
                                         </div>
                                         </div>

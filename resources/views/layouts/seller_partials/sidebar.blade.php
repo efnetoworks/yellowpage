@@ -40,13 +40,22 @@
                 <li><a href=" {{ route('seller.service.all') }} "><i class="fa fa-circle-o"></i> My Services </a></li>
             </ul>
         </li>
-        <li class="{{ url()->current() == route('seller.sub.create') ? 'active' : '' }}" style="">
+
+        <li class="{{ url()->current() == route('seller.service.badges') ? 'active' : '' }}">
+            <a href=" {{ route ('seller.service.badges') }} ">
+              <i class="fa fa-certificate"></i> <span> Apply for Badge </span>
+              <span class="pull-right-container">
+              </span>
+            </a>
+          </li>
+
+        {{-- <li class="{{ url()->current() == route('seller.sub.create') ? 'active' : '' }}" style="">
           <a href=" {{route('seller.sub.create') }}">
             <i class="fa fa-money"></i> <span>My Subscriptions </span>
             <span class="pull-right-container">
             </span>
           </a>
-        </li>
+        </li> --}}
 
         <li class="{{ url()->current() == route('seller.message.all') ? 'active' : '' }}">
           <a href=" {{route ('seller.message.all') }}">
@@ -108,22 +117,15 @@
           </a>
         </li> --}}
 
+       @if (Auth::user()->is_ef_marketer == 1)
         <li class="{{ url()->current() == route('provider.myreferrals') ? 'active' : '' }}">
             <a href=" {{ route ('provider.myreferrals') }} ">
-              <i class="fa fa-group"></i> <span> My Referrals </span>
-              <span class="pull-right-container">
-              </span>
-            </a>
-          </li>
-
-
-        <li class="{{ url()->current() == route('seller.service.badges') ? 'active' : '' }}">
-          <a href=" {{ route ('seller.service.badges') }} ">
-            <i class="fa fa-certificate"></i> <span> Apply for Badge </span>
+            <i class="fa fa-group"></i> <span> My Referrals </span>
             <span class="pull-right-container">
             </span>
-          </a>
+            </a>
         </li>
+       @endif
 
 
         <li class="{{ url()->current() == route('provider.clientfeedbacks.all') ? 'active' : '' }}">
@@ -142,13 +144,13 @@
             @endif
           </a>
         </li>
-        <li class=" {{ url()->current() == route('seller.payment.history') ? 'active' : '' }}">
+        {{-- <li class=" {{ url()->current() == route('seller.payment.history') ? 'active' : '' }}">
           <a href=" {{ route ('seller.payment.history') }}">
             <i class="fa fa-globe"></i> <span> Payment History </span>
             <span class="pull-right-container">
             </span>
           </a>
-        </li>
+        </li> --}}
         <li class="treeview" style="{{ url()->current() == route('pending_dispatch_requestss') ? 'background-color: #CA8309; color: #fff !important' : '' }} {{ url()->current() == route('transit_dispatch_requests') ? 'background-color: #CA8309; color: #fff !important' : '' }} {{ url()->current() == route('delivered_dispatch_requests') ? 'background-color: #CA8309; color: #fff !important' : '' }} {{ url()->current() == route('history_dispatch_requests') ? 'background-color: #CA8309; color: #fff !important' : '' }}">
             <a href="#" style="{{ url()->current() == route('transit_dispatch_requests') ? 'color: #fff !important' : '' }}">
                 <i class="fa fa-truck"></i>

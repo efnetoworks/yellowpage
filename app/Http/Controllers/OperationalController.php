@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Image;
 use App\Payment;
+use App\Referal;
 use App\Siteemaillist;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -390,16 +391,19 @@ class OperationalController extends Controller
 
     public function clientfeedbacks()
     {
-        $success_notification = array(
-            'message' => 'Please renew your subscription to view this page!',
-            'alert-type' => 'error'
-        );
-        $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
 
-        if (Carbon::now() > Carbon::parse($user_sub_date)) {
-            // return redirect()->route('seller.sub.create')->with($success_notification);
-            return redirect()->route('seller.sub.create');
-        }
+        // uncomment this if you want to implement subscription to allow users access their messages
+
+        // $success_notification = array(
+        //     'message' => 'Please renew your subscription to view this page!',
+        //     'alert-type' => 'error'
+        // );
+        // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+
+        // if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //     // return redirect()->route('seller.sub.create')->with($success_notification);
+        //     return redirect()->route('seller.sub.create');
+        // }
 
         $all_services = Service::where('user_id', Auth::id())->get();
 
@@ -417,16 +421,19 @@ class OperationalController extends Controller
 
     public function myFavourites(Request $request)
     {
-        $success_notification = array(
-            'message' => 'Please renew your subscription to view this page!',
-            'alert-type' => 'error'
-        );
-        $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
 
-        if (Carbon::now() > Carbon::parse($user_sub_date)) {
-            // return redirect()->route('seller.sub.create')->with($success_notification);
-            return redirect()->route('seller.sub.create');
-        }
+        //uncomment this if you want to reuse subscription
+        // $success_notification = array(
+        //     'message' => 'Please renew your subscription to view this page!',
+        //     'alert-type' => 'error'
+        // );
+
+        // $user_sub_date = Auth::user()->subscriptions->first()->subscription_end_date;
+
+        // if (Carbon::now() > Carbon::parse($user_sub_date)) {
+        //     // return redirect()->route('seller.sub.create')->with($success_notification);
+        //     return redirect()->route('seller.sub.create');
+        // }
 
         $user = $request->user();
         $likecheck = Like::where(['user_id' => $user->id])->get();
@@ -466,13 +473,11 @@ class OperationalController extends Controller
             $services = Service::query()
             ->where('name', 'LIKE', "%{$request->service}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('description', 'LIKE', "%{$request->service}%");
 
             $seekingworks = SeekingWork::query()
             ->where('job_title', 'LIKE', "%{$request->service}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('fullname', 'LIKE', "%{$request->service}%");
 
 
@@ -500,7 +505,7 @@ class OperationalController extends Controller
     public function dapSearch(Request $request)
     {
         $keyword = $request->keyword ? $request->keyword : 'Nothing!';
-        $featuredServices = Service::where('is_featured', 1)->where('status', 1)->where('subscription_end_date', '>', now())->with('user')->inRandomOrder()->limit(4)->get();
+        $featuredServices = Service::where('is_featured', 1)->where('status', 1)->with('user')->inRandomOrder()->limit(4)->get();
         $categories = Category::orderBy('name', 'asc')->get();
 
         if ($request->category == null && $request->city == null && $request->keyword == null && $request->state == null) {
@@ -526,7 +531,6 @@ class OperationalController extends Controller
                 ->where('city', '=', "$request->city")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('sub_categories')
                 ->whereHas('sub_categories', function ($query) use ($subcategoryId) {
                     $query->where('sub_categorable_id', $subcategoryId);
@@ -542,7 +546,6 @@ class OperationalController extends Controller
                 ->where('status', 1)
                 ->where('user_lga', '=', "$request->city")
                 ->where('user_state', '=', "$request->state")
-                ->where('subscription_end_date', '>', now())
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
                 })
@@ -569,7 +572,6 @@ class OperationalController extends Controller
                 ->where('name', 'LIKE', "%{$request->keyword}%")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('sub_categories')
                 ->whereHas('sub_categories', function ($query) use ($subcategoryId) {
                     $query->where('sub_categorable_id', $subcategoryId);
@@ -589,7 +591,6 @@ class OperationalController extends Controller
                 $services = Service::query()
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('sub_categories')
                 ->whereHas('sub_categories', function ($query) use ($subcategoryId) {
                     $query->where('sub_categorable_id', $subcategoryId);
@@ -620,7 +621,6 @@ class OperationalController extends Controller
                 ->where('city', '=', "$request->city")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -629,7 +629,6 @@ class OperationalController extends Controller
                 $seekingworks = SeekingWork::query()
                 ->where('job_title', 'LIKE', "%{$request->keyword}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
                 })
@@ -660,7 +659,6 @@ class OperationalController extends Controller
                 ->where('name', 'LIKE', "%{$request->keyword}%")
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -676,7 +674,6 @@ class OperationalController extends Controller
                 $services = Service::query()
                 ->where('state', '=', "$request->state")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -691,7 +688,6 @@ class OperationalController extends Controller
             } else {
                 $services = Service::query()
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->with('category')
                 ->whereHas('category', function ($query) use ($categoryId) {
                     $query->where('id', $categoryId);
@@ -722,13 +718,11 @@ class OperationalController extends Controller
                 ->where('city', '=', "%{$request->city}%")
                 ->where('state', '=', "%{$request->state}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->get();
 
                 $seekingworks = SeekingWork::query()
                 ->where('job_title', 'LIKE', "%{$request->keyword}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->where('user_lga', '=', "%{$request->city}%")
                 ->where('user_state', '=', "%{$request->state}%")
                 ->orWhere('fullname', 'LIKE', "%{$request->keyword}%")
@@ -759,13 +753,12 @@ class OperationalController extends Controller
                 ->where('name', 'LIKE', "%{$request->keyword}%")
                 ->where('state', $request->state)
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->get();
 
                 $seekingworks = SeekingWork::query()
                 ->where('job_title', 'LIKE', "%{$request->keyword}%")
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
+
                 ->where('user_state', '=', $request->state)
                 ->orWhere('fullname', 'LIKE', "%{$request->keyword}%")
                 ->get();
@@ -789,13 +782,12 @@ class OperationalController extends Controller
                 $services = Service::query()
                 ->where('state', $request->state)
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
                 ->get();
 
                 $seekingworks = SeekingWork::query()
                 ->where('user_state', '=', $request->state)
                 ->where('status', 1)
-                ->where('subscription_end_date', '>', now())
+
                 ->get();
 
                 if (!$services->isEmpty() && !$services->isEmpty()) {
@@ -820,7 +812,6 @@ class OperationalController extends Controller
             $services = Service::query()
             ->where('name', 'LIKE', "%{$request->keyword}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('city', '=', "$request->city")
             ->orWhere('state', '=', "$request->state")
             ->get();
@@ -828,7 +819,6 @@ class OperationalController extends Controller
             $seekingworks = SeekingWork::query()
             ->where('job_title', 'LIKE', "%{$request->keyword}%")
             ->where('status', 1)
-            ->where('subscription_end_date', '>', now())
             ->orWhere('user_lga', '=', "$request->city")
             ->orWhere('user_state', '=', "$request->state")
             ->orWhere('fullname', 'LIKE', "%{$request->keyword}%")
@@ -867,6 +857,7 @@ class OperationalController extends Controller
 
         $badge = new Badge();
         $badge->user_id = $user->id;
+        $is_refered = Referal::where('user_id', Auth::id())->first();
 
         if ($request->get('badge_type') == 1) {
             $badge->badge_type = 'Super User';
@@ -879,6 +870,8 @@ class OperationalController extends Controller
         $badge->amount = $request->get('amount');
         $badge->ref_no = $request->get('trans_reference');
         $badge->seller_name = $user->name;
+        $badge->referree_id = $is_refered ? $is_refered->referalable_id : null;
+        $badge->referal_id = $is_refered ? $is_refered->id : null;
         $badge->save();
 
 
@@ -1038,12 +1031,11 @@ class OperationalController extends Controller
 
             if($user){
                 $username = explode(' ', trim($user->name))[0];
-
-                try {
+                // try {
                     Mail::to($email)->send(new CustomerServiceMail($username, $request->message, $request->subject));
-                } catch (\Exception $e) {
-                    $failedtosendmail = 'Failed to Mail!.';
-                }
+                // } catch (\Exception $e) {
+                //     $failedtosendmail = 'Failed to Mail!.';
+                // }
             }
         }
         return redirect()->back()->with([
