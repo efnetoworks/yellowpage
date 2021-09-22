@@ -285,48 +285,6 @@ class LogisticController extends Controller
         $logistic->fill($data);
         $request->session()->put('dispatch', $logistic);
 
-        $logistic = $request->session()->get('dispatch');
-
-        //modify registration for companies that have already paid.
-        $number = mt_rand(1, 9);
-        $ref = 'TRX'.mt_rand(1000000000, 9999999999);
-        $dispatch_company = new Logistic;
-        $dispatch_company->create([
-            'first_name' => $logistic->first_name,
-            'last_name' => $logistic->last_name,
-            'company_name' => $logistic->company_name,
-            'address' => $logistic->address,
-            'cac' => $logistic->cac,
-            'cac_document' => $logistic->cac_document,
-            'email' => $logistic->email,
-            'profile_image' => $logistic->profile_image,
-            'password' => Hash::make($logistic->password),
-            'slug' => Str::slug($logistic->company_name, '-').$number,
-            'phone' => $logistic->phone,
-            'state_id' => $logistic->state,
-            'local_government_id' => $logistic->lga,
-            'document' => $logistic->document,
-            'identification_type' => $logistic->identification_type,
-            'identification_id' => $logistic->identification_number,
-            'type_of_bike' => $logistic->type_of_bike,
-            'plate_number' => $logistic->plate_number,
-            'paid' => 1,
-            'paid_amount' => 2000,
-            'payment_id' => $ref
-        ]);
-
-        
-        $name = $dispatch_company->first_name ." ". $dispatch_company->last_name;
-        $email = $dispatch_company->email;
-        try {
-        Mail::to($user->email)->send(new LogisticRegistered($name, $email));
-        } catch (\Exception $e) {
-            $failedtosendmail = 'Failed to Mail!';
-        }
-
-        return view('auth.success', compact('logistic'));
-
-        //end modification
 
         // $number = mt_rand(1, 9);
         // $dispatch_company = new Logistic;
