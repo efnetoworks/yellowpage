@@ -106,7 +106,7 @@
                     <div class="form-section clearfix">
                         <h3>Step Three: Means of Identification</h3>
                         <span>All fields with <span style="color: red;">*</span> are compulsory</span>
-
+                        <br>
                         <div class="clearfix"></div>
 
                           <form action="{{ route('submit_application_step_3') }}" method="POST" enctype="multipart/form-data">
@@ -167,17 +167,18 @@
                                     <div class="col-lg-4">
                                         <div class="form-group form-box">
                                             <label>Upload Means of ID <span style="color: red;">*</span></label>
-
-                                            <input type="file" class="form-control @error('document') is-invalid @enderror" name="document" value="{{ old('document') }}">
+                                            <input type="file" class="form-control @error('document') is-invalid @enderror" name="document" value="{{ old('document') }}" accept="image/*">
+                                            
                                             @error('document')
                                             <span class="helper-text text-danger" data-error="wrong" data-success="right">
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
+                                        <small>Allowed types: jpeg, jpg, png</small>
                                     </div>
                                 </div>
-
+                                <br>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group form-box">
@@ -198,17 +199,23 @@
                                     <div class="col-lg-4">
                                         <div class="form-group form-box">
                                             <label>Upload CAC Document </label>
-                                            <input type="file" id="bank_name" class="form-control" name="cac_document">
+                                            
+                                            <input type="file" id="bank_name" class="form-control" name="cac_document" accept="image/*">
+                                            
                                             @error('cac_document')
                                             <span class="helper-text text-danger" data-error="wrong" data-success="right">
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
+                                        <small>Allowed types: jpeg, jpg, png</small>
+                                        <p>
+
+                                        </p>
                                     </div>
                                 </div>
                                 
-
+                                <br>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group form-box">
@@ -237,18 +244,19 @@
                                     <div class="col-lg-4">
                                         <div class="form-group form-box">
                                             <label>Upload Passport Photograph <span style="color: red;">*</span></label>
-                                            <input type="file" id="bank_name" class="form-control" name="profile_image">
+                                            <input type="file" id="bank_name" class="form-control" name="profile_image" accept="image/*">
                                             @error('profile_image')
                                             <span class="helper-text text-danger" data-error="wrong" data-success="right">
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
+                                        <small>Allowed types: jpeg, jpg, png</small>
                                     </div>
                                 </div>
                                 
 
-                                
+                                <br>
                                 
                                 
 

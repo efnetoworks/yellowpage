@@ -615,16 +615,19 @@ class LogisticController extends Controller
 
     public function downloadDocument($slug)
     {
-        $user = DB::table('logistics')->where('slug', '=', $slug)->get();
-        
-        if(!$user)
-        {
-            abort(404);
-        }
-
-        $path = 'public/documents/' . $user[0]->cac_document;
-        $name = $user[0]->first_name . ' ' . $user[0]->last_name . ' cac-document';
+        $user = DB::table('logistics')->where('slug', '=', $slug)->first();
+        $path = 'public/documents/' . $user->cac_document;
+        $name = $user->first_name . ' ' . $user->last_name . ' cac-document';
         return Storage::download($path, $name);   
+    }
+
+    public function downloadId($slug)
+    {
+        $user = DB::table('logistics')->where('slug', '=', $slug)->first();
+        $path = 'public/documents/' .$user->document;
+        
+        $name = $user->first_name . ' ' . $user->last_name . 'identification';
+        return Storage::download($path, $name);
     }
 
     public function makePayment()
