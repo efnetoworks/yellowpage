@@ -293,6 +293,7 @@ Route::post('logistics/payment-confirmation/{ref}', 'LogisticController@confirmP
 Route::get('logistics/registration-success', 'LogisticController@registrationSuccess');
 Route::get('logistics/account-not-verified', 'LogisticController@notVerified')->name('logistic.not.verified');
 Route::get('/download_logistic_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.logistic.doc');
+Route::get('/download_id_document/{slug}', 'LogisticController@downloadId')->name('logistic.download.id.logistic.doc');
 Route::middleware(['auth:logistic', 'logistic_verified'])->prefix('logistics')->group(function () {
 
     Route::get('dashboard', 'LogisticController@dashboard')->name('logistics_dashboard');
@@ -459,7 +460,7 @@ Route::middleware(['seller'])->group(function () { //Seller Middleware protectio
     Route::prefix('provider')->group(function () {
         Route::get('/dashboard/make_withdrawal_request/{refer_id}', 'DashboardController@make_withdrawal_request')->name('seller.make_withdrawal_request');
         Route::get('/serviceDetail/{slug}', 'ServiceController@serviceDetail')->name('service_detail_4_provider');
-        Route::get('/job-applicant/preview/details/{slug}', 'SeekingWorkController@seekingWorkPreviewDetails')->name('job.applicant.preview.detail');
+        Route::get('/job-applicant/preview/details/{slug}', 'SeekingWorkController@seekingWorkPreviewDetails')->name('user.job.applicant.preview.detail');
 
 
         Route::get('/dashboard', 'DashboardController@seller')->name('seller.dashboard');
@@ -512,9 +513,13 @@ Route::middleware(['seller'])->group(function () { //Seller Middleware protectio
         Route::get('/dashboard/service/active', 'SellerController@activeService')->name('seller.service.active');
         Route::get('/dashboard/service/pending', 'SellerController@pendingService')->name('seller.service.pending');
         Route::get('/dashboard/service/all', 'SellerController@allService')->name('seller.service.all');
+        Route::get('/dashboard/job-applications/all', 'SellerController@allSeekingworks')->name('seller.seekingworks.all');
 
         Route::get('/dashboard/service/view/{slug}', 'SellerController@viewService')->name('service.view');
         Route::get('/dashboard/service/update/{slug}', 'SellerController@updateService')->name('service.update.view');
+
+        Route::get('/dashboard/seekingwork/update/{slug}', 'SeekingWorkController@updateSeekingwork')->name('seekingwork.update.view');
+        Route::post('/dashboard/seekingwork/store-update/{slug}', 'SeekingWorkController@update')->name('seekingwork.update.store');
 
 
         Route::get('my-referrals/', 'SellerController@myreferrals')->name('provider.myreferrals');
@@ -548,6 +553,7 @@ Route::middleware(['seller'])->group(function () { //Seller Middleware protectio
 
 
     Route::get('/service/{id}', 'SellerController@destroy')->name('seller.service.destroy');
+    Route::get('/seekingworkDelete/{id}', 'SeekingWorkController@destroy')->name('seller.service.destroy');
 
 
     Route::any('/save/service/Badge',  'BadgeController@saveService4Badge')->name('saveService4Badge');

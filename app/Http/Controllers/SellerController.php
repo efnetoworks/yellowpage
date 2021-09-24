@@ -28,6 +28,7 @@ use App\PaymentRequest;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Traits\ReusableCode;
+use App\SeekingWork;
 
 
 
@@ -475,6 +476,12 @@ class SellerController extends Controller
 
         $all_services = Service::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
         return view('seller.service.all_service', compact('all_services'));
+    }
+
+    public function allSeekingworks()
+    {
+        $all_services = SeekingWork::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        return view('seller.service.all_seekingworks', compact('all_services'));
     }
 
     public function viewService($slug)

@@ -376,11 +376,11 @@ class LogisticController extends Controller
         
         $name = $dispatch_company->first_name ." ". $dispatch_company->last_name;
         $email = $dispatch_company->email;
-        try {
-        Mail::to($user->email)->send(new LogisticRegistered($name, $email));
-        } catch (\Exception $e) {
-            $failedtosendmail = 'Failed to Mail!';
-        }
+        // try {
+        // Mail::to($user->email)->send(new LogisticRegistered($name, $email));
+        // } catch (\Exception $e) {
+        //     $failedtosendmail = 'Failed to Mail!';
+        // }
 
         // Logistic::create([$logistic, 'paid' => 1, 'paid_amount' => 2000]);
         // $get_user = Auth::guard('logistic')->user();
@@ -615,16 +615,19 @@ class LogisticController extends Controller
 
     public function downloadDocument($slug)
     {
-        $user = DB::table('logistics')->where('slug', '=', $slug)->get();
-        
-        if(!$user)
-        {
-            abort(404);
-        }
-
-        $path = 'public/documents/' . $user[0]->cac_document;
-        $name = $user[0]->first_name . ' ' . $user[0]->last_name . ' cac-document';
+        $user = DB::table('logistics')->where('slug', '=', $slug)->first();
+        $path = 'public/documents/' . $user->cac_document;
+        $name = $user->first_name . ' ' . $user->last_name . ' cac-document';
         return Storage::download($path, $name);   
+    }
+
+    public function downloadId($slug)
+    {
+        $user = DB::table('logistics')->where('slug', '=', $slug)->first();
+        $path = 'public/documents/' .$user->document;
+        
+        $name = $user->first_name . ' ' . $user->last_name . 'identification';
+        return Storage::download($path, $name);
     }
 
     public function makePayment()

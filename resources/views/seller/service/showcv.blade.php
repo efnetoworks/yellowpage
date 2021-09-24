@@ -40,11 +40,15 @@
         <div class="col-md-5">
             <div class="box box-default">
                 <div class="box-header">
-                    {{-- <div>
-                        <img src="{{ $service->thumbnail ? asset('uploads/services/'.$service->thumbnail) : asset('images/00_SEO-and-Digital-Marketing-Agency-Mega-Stationery-Branding-Identity-Design-Template-scaled.jpg') }}" style="width: 70%; height: auto; margin: 0 auto">
-                    </div> --}}
-                    <h2 class="box-title" style="font-weight: 700">Your New Service</h2>
-                    <p>This is your newly created service.</p>
+                    <div style="display: flex; justify-content: space-between">
+                        <div>
+                            <h2 class="box-title" style="font-weight: 700">Your New Service</h2>
+                            <p>This is your newly created service.</p>
+                        </div>
+                        <div>
+                            <a href="{{ route('seekingwork.update.view', $service->slug) }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Update CV</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="box-body">
                     <ul class="list-group">
@@ -62,6 +66,9 @@
                         </li>
                         <li class="list-group-item">
                             <span class="right"><strong>Marital Status: </strong> {{ $service->marital_status }}</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="right"><strong>Employment Status: </strong> {{ $service->employment_status }}</span>
                         </li>
                         <li class="list-group-item">
                             <span class="right"><strong>Still Studying? </strong> {{ $service->still_studying }}</span>
@@ -92,6 +99,11 @@
                         <li class="list-group-item">
                             <strong>City : </strong>
                             <span class="right"> {{ $service->user_lga }}</span>
+                        </li>
+
+                        <li class="list-group-item">
+                            <strong>Phone Number : </strong>
+                            <span class="left"> {{ $service->phone }}</span>
                         </li>
 
                         <li class="list-group-item">
@@ -166,7 +178,7 @@
                         <br>
                         <center>
                             <button id="submit-all" class="btn btn-success" style="height: 40px;"> Click to upload</button>
-                            <a href="{{ route('job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
+                            <a href="{{ route('user.job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
                         </center>
                     @elseif (Auth::User()->badgetype == 2 && $service->images->count() < 8)
                         <p style="color: rgb(252, 85, 85); font-size: 16px"> {{ 8 - $service->images->count() }} image{{ 8 - $service->images->count() > 1 ? 's' : '' }} remaining.</p>
@@ -180,7 +192,7 @@
                         <br>
                         <center>
                             <button id="submit-all" class="btn btn-success" style="height: 40px;"> Click to upload</button>
-                            <a href="{{ route('job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
+                            <a href="{{ route('user.job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
                         </center>
                     @elseif (Auth::User()->badgetype == 3 && $service->images->count() < 6)
                         <p style="color: rgb(252, 85, 85); font-size: 16px"> {{ 6 - $service->images->count() }} image{{ 6 - $service->images->count() > 1 ? 's' : '' }} remaining.</p>
@@ -194,7 +206,7 @@
                         <br>
                         <center>
                             <button id="submit-all" class="btn btn-success" style="height: 40px;"> Click to upload</button>
-                            <a href="{{ route('job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
+                            <a href="{{ route('user.job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
                         </center>
                     @elseif (Auth::User()->badgetype == 0 && $service->images->count() < 4)
                         <p style="color: rgb(252, 85, 85); font-size: 16px"> {{ 4 - $service->images->count() }} image{{ 4 - $service->images->count() > 1 ? 's' : '' }} remaining.</p>
@@ -208,7 +220,7 @@
                         <br>
                         <center>
                             <button id="submit-all" class="btn btn-success" style="height: 40px;"> Click to upload</button>
-                            <a href="{{ route('job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
+                            <a href="{{ route('user.job.applicant.preview.detail', ['slug' => $service->slug]) }}" class="btn btn-danger show-page-vs-btn" style="height: 40px; line-height: 29px;" target="_blank"> View CV</a>
                         </center>
                     @else
                         <p style="font-size: 16px; text-align:center; margin: 20px 0"><a href="{{ route('seller.service.badges') }}" style="color: #cc8a19;" >Upgrade</a> your account with a badge to upload more images.</p>
