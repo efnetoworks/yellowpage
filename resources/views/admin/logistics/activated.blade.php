@@ -34,6 +34,7 @@ Verified Dispatch Riders |
 							<thead>
 								<tr>
 									<th> # </th>
+									<th>Image</th>
 									<th> Name </th>
 									<th> Email </th>
 									<th> Date </th>
@@ -45,6 +46,9 @@ Verified Dispatch Riders |
 								@foreach($riders as $key => $rider)
 								<tr>
 									<td><a href="javascript:void(0)"> {{ ++$key }} </a></td>
+									<td><a href="#">
+										<img src="{{asset('uploads/users')}}/{{$rider->profile_image}}" alt="{{ $rider->first_name }}" width="60" class="img-responsive img-rounded">
+									</a></td>
 									<td> {{ $rider->first_name .' '. $rider->last_name }} </td>
 									<td><span class="text-muted"> </i> {{ $rider->email }} </span> </td>
 									<td> {{ $rider->created_at->format('d/m/Y') }} </span></td>
@@ -79,7 +83,7 @@ Verified Dispatch Riders |
 	                               <p><b>Phone number:</b> {{ $rider->phone }}</p>
 	                               <p><b>Email address:</b> {{ $rider->email }} </p>
 	                               <p><b>Country:</b> Nigeria </p>
-	                               <p><b>State:</b> {{ $rider->state->name }} </p>
+	                               {{-- <p><b>State:</b> {{ $rider->state->name }} </p> --}}
 	                               <p><b>City:</b>{{ $rider->local_government->name }} </p>
 	                               <p><b>Address:</b>{{ $rider->address ?? 'Not provided' }} </p>
 	                               {{-- <p><b>State:</b>{{ $rider->state->name }} </p> --}}
@@ -92,10 +96,14 @@ Verified Dispatch Riders |
 		                               <h4 class="text text-warning">Identification </h4>
 
 		                               <p><b>Means of Identification:</b> {{ $rider->identification_type }} </p>
+									   @if($rider->document == '')
+									   @else
+									   <p><b>Means of ID: <a href="{{ route('logistic.download.id.logistic.doc', $rider->slug) }}" class="btn btn-warning">Download</a></b></p>
+									   @endif
 		                               <p><b>ID Number:</b> {{ $rider->identification_id }} </p>
 		                               <p><b>BVN:</b> {{ $rider->bvn }} </p>
 		                               @if($rider->cac = 1)
-		                               <p><b>CAC Document:</b><a href=" {{ route('logistic.download.doc', $rider->slug) }} " class="btn btn-warning">Download </a></p>
+		                               <p><b>CAC Document:</b><a href=" {{ route('logistic.download.logistic.doc', $rider->slug) }} " class="btn btn-warning">Download </a></p>
 		                               @else
 		                               <p><b>CAC Document:</b> Non provided</p>
 		                            	@endif

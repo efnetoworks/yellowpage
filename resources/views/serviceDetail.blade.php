@@ -775,7 +775,7 @@
                                                     <input type="hidden" name="provider_id" id="provider_id" value="{{ $serviceDetail->user->id }}">
 
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Deliver with <span style="color: red;">*</span></label>
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Select a delivery company <span style="color: red;">*</span></label>
                                                         <select class="form-control text-dark" id="logistic_id" name="logistic_id" value="{{ old('logistic_id') }}">
                                                             @foreach($logistic_companies as $logistic)
                                                                 <option value="{{ $logistic->id }}">{{ $logistic->company_name }}</option>
@@ -788,8 +788,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's name <span style="color: red;">*</span></label>
-                                                        <input type="text" id="customer_name" name="customer_name" class="text-dark form-control" placeholder="Enter the reciever's name" value="{{ old('customer_name') }}">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's name <span style="color: red;">*</span></label>
+                                                        <input type="text" id="customer_name" name="customer_name" class="text-dark form-control" placeholder="Enter the Receiver's name" value="{{ old('customer_name') }}">
                                                         @if ($errors->has('customer_name'))
                                                             <span>
                                                                 <strong class="text-danger">{{ $errors->first('customer_name') }}</strong>
@@ -797,8 +797,8 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's phone number <span style="color: red;">*</span></label>
-                                                        <input type="text" id="customer_phone" name="customer_phone" class="text-dark form-control" placeholder="Enter the  reciever's phone number" value="{{ old('customer_phone') }}">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's phone number <span style="color: red;">*</span></label>
+                                                        <input type="text" id="customer_phone" name="customer_phone" class="text-dark form-control" placeholder="Enter the  Receiver's phone number" value="{{ old('customer_phone') }}">
                                                         @if ($errors->has('customer_phone'))
                                                             <span>
                                                                 <strong class="text-danger">{{ $errors->first('customer_phone') }}</strong>
@@ -806,16 +806,49 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's email <span style="color: red;">*</span></label>
-                                                        <input type="text" id="customer_email" name="customer_email" class="text-dark form-control" placeholder="Enter the reciever's email address" value="{{ old('customer_email') }}">
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's email <span style="color: red;">*</span></label>
+                                                        <input type="text" id="customer_email" name="customer_email" class="text-dark form-control" placeholder="Enter the Receiver's email address" value="{{ old('customer_email') }}">
                                                         @if ($errors->has('customer_email'))
                                                             <span>
                                                                 <strong class="text-danger">{{ $errors->first('customer_email') }}</strong>
                                                             </span>
                                                         @endif
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's State <span style="color: red;">*</span></label>
+                                                                <select id="state_register" name="customer_state" class="text-dark form-control">
+                                                                    <option>--select city--</option>
+                                                                    @foreach($all_states as $state)
+                                                                    <option value="{{$state->id}}">{{$state->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @if ($errors->has('customer_state'))
+                                                                    <span>
+                                                                        <strong class="text-danger">{{ $errors->first('customer_state') }}</strong>
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's city <span style="color: red;">*</span></label>
+                                                                <select id="city_register" name="customer_city" class="text-dark form-control">
+                                                                    <option>--select city--</option>
+                                                                   
+                                                                </select>
+                                                                {{-- <input type="text" id="customer_email" name="customer_email" class="text-dark form-control" placeholder="Enter the Receiver's email address" value="{{ old('customer_email') }}"> --}}
+                                                                @if ($errors->has('customer_city'))
+                                                                    <span>
+                                                                        <strong class="text-danger">{{ $errors->first('customer_city') }}</strong>
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Reciever's address <span style="color: red;">*</span></label>
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's address <span style="color: red;">*</span></label>
                                                         <input type="text" id="customer_address" name="customer_address" class="text-dark form-control" placeholder="Enter the reciever's delivery address" value="{{ old('customer_address') }}">
                                                         @if ($errors->has('customer_address'))
                                                             <span>
@@ -855,7 +888,32 @@
 
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $('#state_register').on('change',function(){
+        console.log('ys')
+        var stateID = $(this).val();
+        if(stateID){
+            $.ajax({
+                type:"GET",
+                url: '../../get-city-list-by-id/'+stateID,
+                success:function(res){
+                    if(res){
+                        $("#city_register").empty();
+                        $.each(res,function(key,value){
+                            $("#city_register").append('<option value="'+value+'">'+value+'</option>');
+                        });
 
+                    }else{
+                        $("#city_register").empty();
+                    }
+                }
+            });
+        }else{
+            $("#city_register").empty();
+        }
+
+    });
+  </script>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGdhbG9uZSIsImEiOiJja21nbHA4bTgzMWFyMndsYW84ZWxmODV2In0._Ffx_yk8R2WAgjc0a0CD4A';
     var map = new mapboxgl.Map({
@@ -1322,6 +1380,10 @@
         btn.classList.add('.disabled');
         btn.innerHTML = 'Submitting...please wait!';
     });
+</script>
+<script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
+<script>
+     console.log('kai ji mana')
 </script>
 
 <script async defer

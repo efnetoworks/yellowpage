@@ -37,8 +37,9 @@
                 <div class="col-lg-12 align-self-center pad-0">
                     <div class="form-section clearfix">
                         <h3>Create an account for your logistics company</h3>
-                       
-
+                        <span>All fields with <span style="color: red;">*</span> are compulsory</span>
+                        <p></p>
+                        <br>
                         <div class="clearfix"></div>
 
                           <form action="{{ route('submit_application') }}" method="POST">
@@ -48,89 +49,103 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group form-box">
+                                            <label>First Name <span style="color: red;">*</span></label>
                                             <input type="text" id="name" class="input-text @error('first_name') is-invalid @enderror" name="first_name"  autofocus placeholder="First Name" value="{{ old('first_name') }}">
 
-                                            @error('first_name')
-                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            
                                         </div>
+                                        @error('first_name')
+                                        <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="form-group form-box">
+                                            <label>Last Name <span style="color: red;">*</span></label>
                                             <input type="text" id="name" class="input-text @error('last_name') is-invalid @enderror" name="last_name"  autofocus placeholder="Last Name" value="{{ old('last_name') }}">
 
-                                            @error('last_name')
-                                            <span class="helper-text text-danger" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                            
                                         </div>
+                                        @error('last_name')
+                                        <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 
 
                                 <div class="form-group form-box">
+                                    <label>Company Name <span style="color: red;">*</span></label>
                                     <input type="text" id="company_name" class="input-text" name="company_name"  autofocus placeholder="Company Name" value="{{ old('company_name') }}">
 
-                                    @error('company_name')
-                                    <span class="helper-text text-danger" data-error="wrong" data-success="right">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    
+                                    
                                 </div>
+                                @error('company_name')
+                                <span class="helper-text text-danger" data-error="wrong" data-success="right">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                                @enderror
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group form-box">
+                                            <label>Email Address <span style="color: red;">*</span></label>
                                             <input type="text" id="email" placeholder="Company Email Address" class="input-text"  name='email' value="{{ old('email') }}">
-                                            @if ($errors->has('email'))
-                                            <span class="helper-text" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $errors->first('email') }}</strong>
-                                            </span>
-                                            @endif
+                                            
                                         </div>
+                                        @if ($errors->has('email'))
+                                        <span class="helper-text" data-error="wrong" data-success="right">
+                                            <strong class="text-danger">{{ $errors->first('email') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group form-box">
+                                            <label>Phone Number <span style="color: red;">*</span></label>
                                             <input type="number" id="phone" placeholder="Phone Number, e.g 080XXXXXXXX" class="input-text" minlength="11" maxlength="11"  name='phone' value="{{ old('phone') }}">
-                                            @if ($errors->has('phone'))
-                                                <span class="helper-text" data-error="wrong" data-success="right">
-                                                    <strong class="text-danger">{{ $errors->first('phone') }}</strong>
-                                                </span>
-                                            @endif
+                                            
                                         </div>
+                                        @if ($errors->has('phone'))
+                                            <span class="helper-text" data-error="wrong" data-success="right">
+                                                <strong class="text-danger">{{ $errors->first('phone') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-
+                                            <label>Password <span style="color: red;">*</span></label>
                                             <div class="input-group mb-3">
                                                 <input type="password" id="password" name="password" id="passwordField" class="form-control" placeholder="Password (min: 6 chars)" aria-label="Password" aria-describedby="Password" name='password'>
                                                 
                                             </div>
-                                            @if ($errors->has('password'))
-                                            <span class="helper-text" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $errors->first('password') }}</strong>
-                                            </span>
-                                            @endif
+                                            
                                         </div>
+                                        @if ($errors->has('password'))
+                                        <span class="helper-text" data-error="wrong" data-success="right">
+                                            <strong class="text-danger">{{ $errors->first('password') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-
+                                            <label>Confirm Password <span style="color: red;">*</span></label>
                                             <div class="input-group mb-3">
+                                                
                                                 <input type="password" id="password" name="password_confirmation" id="passwordField" class="form-control" placeholder="Confirm Password" aria-label="Password" aria-describedby="Password">
                                                 
                                             </div>
-                                            @if ($errors->has('password_confirmation'))
-                                            <span class="helper-text" data-error="wrong" data-success="right">
-                                                <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
-                                            </span>
-                                            @endif
+                                            
                                         </div>
+                                        @if ($errors->has('password_confirmation'))
+                                        <span class="helper-text" data-error="wrong" data-success="right">
+                                            <strong class="text-danger">{{ $errors->first('password_confirmation') }}</strong>
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -190,7 +205,7 @@
                                     {{-- btn for pay --}}
                                     <script src="https://js.paystack.co/v1/inline.js"></script>
 
-                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-right" style="background-color: #cc8a19; color: #fff">Next</button>
+                                    <button id="paystack_btn_control1" type="submit" class="btn-md float-right" style="background-color: #cc8a19; color: #fff">Next <i class="fa fa-arrow-right"></i></button>
 
                                     
 

@@ -34,6 +34,8 @@ Unverified Dispatch Riders |
 							<thead>
 								<tr>
 									<th> # </th>
+									<th>Image</th>
+								
 									<th> Name </th>
 									<th> Email </th>
 									<th> Date </th>
@@ -45,6 +47,9 @@ Unverified Dispatch Riders |
 								@foreach($riders as $key => $rider)
 								<tr>
 									<td><a href="javascript:void(0)"> {{ ++$key }} </a></td>
+									<td><a href="#">
+										<img src="{{asset('uploads/users')}}/{{$rider->profile_image}}" alt="{{ $rider->first_name }}" width="60" class="img-responsive img-rounded">
+									</a></td>
 									<td> {{ $rider->first_name .' '. $rider->last_name }} </td>
 									<td><span class="text-muted"> </i> {{ $rider->email }} </span> </td>
 									<td> {{ $rider->created_at->format('d/m/Y') }} </span></td>
@@ -79,7 +84,7 @@ Unverified Dispatch Riders |
 	                               <p><b>Phone number:</b> {{ $rider->phone }}</p>
 	                               <p><b>Email address:</b> {{ $rider->email }} </p>
 	                               <p><b>Country:</b> Nigeria </p>
-	                               <p><b>State:</b> {{ $rider->state->name }} </p>
+	                               {{-- <p><b>State:</b> {{ $rider->state->name }} </p> --}}
 	                               <p><b>City:</b>{{ $rider->local_government->name }} </p>
 	                               <p><b>Address:</b>{{ $rider->address ?? 'Not provided' }} </p>
 	                               {{-- <p><b>State:</b>{{ $rider->state->name }} </p> --}}
@@ -92,10 +97,14 @@ Unverified Dispatch Riders |
 		                               <h4 class="text text-warning">Identification </h4>
 
 		                               <p><b>Means of Identification:</b> {{ $rider->identification_type }} </p>
+									   @if($rider->document == '')
+									   @else
+									   <p><b>Means of ID: <a href="{{ route('logistic.download.id.logistic.doc', $rider->slug) }}" class="btn btn-warning">Download</a></b></p>
+									   @endif
 		                               <p><b>ID Number:</b> {{ $rider->identification_id }} </p>
-		                               <p><b>BVN:</b> {{ $rider->bvn }} </p>
+		                               {{-- <p><b>BVN:</b> {{ $rider->bvn }} </p> --}}
 		                               @if($rider->cac = 1)
-		                               <p><b>CAC Document:</b><a href=" {{ route('logistic.download.doc', $rider->slug) }} " class="btn btn-warning">Download </a></p>
+		                               <p><b>CAC Document:</b><a href=" {{ route('logistic.download.logistic.doc', $rider->slug) }} " class="btn btn-warning">Download </a></p>
 		                               @else
 		                               <p><b>CAC Document:</b> Non provided</p>
 		                            	@endif
@@ -120,11 +129,9 @@ Unverified Dispatch Riders |
                             		@endif
 
                             		
-                                  <div class="form-group">
-                                      <button type="submit" onclick="activateUser({{$rider->id}})" class="btn btn-md btn-success" style="border-radius:5px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Verify</button>
-                                              <p class="text-success" style="font-size: 15px" id="successMessage">
-                                     <div class="send-btn">
-                                              </p>
+                                  <div class="text-center">
+                                      <a type="submit" onclick="activateUser({{$rider->id}})" class="btn btn-md btn-success" style="border-radius:5px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);">Click here to verify this rider</a>
+                                             
                                       </div>
                                   </div>
                                   
