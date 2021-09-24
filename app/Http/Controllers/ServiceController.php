@@ -158,6 +158,7 @@ class ServiceController extends Controller
             ->where('paid_featured', 1)
             ->with('user')
             ->orderBy('badge_type', 'asc')
+            ->inRandomOrder()
             ->paginate(30);
 
         $allServices = Service::where([
@@ -1626,7 +1627,7 @@ public function show($id)
             'logistic_id' => $request->logistic_id,
             'tracking_id' => 'TRCK' . $this->gen_tracking_id(),
             'customer_name' => $request->customer_name,
-            'customer_email' => $request->customer_email, 
+            'customer_email' => $request->customer_email,
             'customer_phone' => $request->customer_phone,
             'customer_address' => $request->customer_address
         );
@@ -1650,7 +1651,7 @@ public function show($id)
 
         try {
           SmsHelper::send_sms($message, $phone, $sender);
-        } 
+        }
         catch (\Exception $e) {
         }
 
@@ -1663,9 +1664,9 @@ public function show($id)
         // );
 
         return redirect()->back();
-        
-        
-        
+
+
+
     }
 
     public function gen_tracking_id()
