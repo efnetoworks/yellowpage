@@ -376,11 +376,11 @@ class LogisticController extends Controller
         
         $name = $dispatch_company->first_name ." ". $dispatch_company->last_name;
         $email = $dispatch_company->email;
-        try {
-        Mail::to($user->email)->send(new LogisticRegistered($name, $email));
-        } catch (\Exception $e) {
-            $failedtosendmail = 'Failed to Mail!';
-        }
+        // try {
+        // Mail::to($user->email)->send(new LogisticRegistered($name, $email));
+        // } catch (\Exception $e) {
+        //     $failedtosendmail = 'Failed to Mail!';
+        // }
 
         // Logistic::create([$logistic, 'paid' => 1, 'paid_amount' => 2000]);
         // $get_user = Auth::guard('logistic')->user();
