@@ -1744,7 +1744,7 @@ public function add_old_payments() {
 
         public function nonActivatedRiders()
         {
-           $dispatch_companies = Logistic::where('is_verified', 0)->get();
+           $dispatch_companies = Logistic::where('is_verified', 0)->orderBy('created_at', 'desc')->get();
 
            return view('admin.logistics.non_activated', [
             'riders' => $dispatch_companies
@@ -1775,7 +1775,7 @@ public function add_old_payments() {
 
         public function activatedRiders()
         {
-          $dispatch_companies = Logistic::where('is_verified', 1)->get();
+          $dispatch_companies = Logistic::where('is_verified', 1)->orderBy('created_at', 'desc')->get();
 
            return view('admin.logistics.activated', [
             'riders' => $dispatch_companies
@@ -1784,7 +1784,7 @@ public function add_old_payments() {
 
         public function allRiders()
         {
-          $dispatch_companies = Logistic::all();
+          $dispatch_companies = Logistic::orderBy('created_at', 'desc')->get();
 
            return view('admin.logistics.all', [
             'riders' => $dispatch_companies
@@ -1793,7 +1793,7 @@ public function add_old_payments() {
 
         public function allDispatchRequests()
         {
-          $requests = DeliveryRequest::all();
+          $requests = DeliveryRequest::orderBy('created_at', 'desc')->get();
 
           return view('admin.requests.all', [
             'requests' => $requests
@@ -1802,7 +1802,7 @@ public function add_old_payments() {
 
         public function allProfileUpdateRequests()
         {
-          $all_profile_update_requests = ProfileUpdateRequest::all();
+          $all_profile_update_requests = ProfileUpdateRequest::orderBy('created_at', 'desc')->get();
 
           return view('admin.requests.profile_update_requests', [
               'update_requests' => $all_profile_update_requests

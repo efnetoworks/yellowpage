@@ -24,7 +24,7 @@
 			<div class="form-group">
 				<img class="profile-user-img img-responsive" src="{{ Auth::guard('logistic')->user()->profile_image = null ? '/images/user-icon.png' : asset('uploads/users/'.Auth::guard('logistic')->user()->profile_image) }}" alt="User profile picture">
 				<div class="custom-file text-center">
-				  <input type="file" class="custom-file-input" id="customFile" name="profile_image" style="padding-left: 150px; display: none;">
+				  <input type="file" class="custom-file-input" id="customFile" name="profile_image" style="padding-left: 150px; display: none;" accept="image/*">
 				  <label class="custom-file-label" for="customFile">Click to choose profile image/logo</label>
 				</div>
 			</div>
@@ -138,7 +138,7 @@
 				@else
 				<label for="bank_name" class="control-label">Upload Means of ID</label>
 				<div class="">
-					<input type="file" id="bank_name" class="form-control" name="document">
+					<input type="file" id="bank_name" class="form-control" name="document" accept="image/*">
 				</div>
 				@endif
 				{{-- <label for="bank_name" class="control-label">BVN <span style="color: red;">*</span></label>
@@ -175,12 +175,12 @@
 					<br>
 					<label>Upload</label>
 					<div class="">
-						<input type="file" id="bank_name" class="form-control" name="cac_document">
+						<input type="file" id="bank_name" class="form-control" name="cac_document" accept="image/*">
 					</div>
 				@else
 				<label for="bank_name" class="control-label">Upload CAC document</label>
 				<div class="">
-					<input type="file" id="bank_name" class="form-control" name="cac_document">
+					<input type="file" id="bank_name" class="form-control" name="cac_document" accept="image/*">
 				</div>
 				@endif
 			</div>
