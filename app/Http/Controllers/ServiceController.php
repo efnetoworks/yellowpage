@@ -158,6 +158,7 @@ class ServiceController extends Controller
             ->where('paid_featured', 1)
             ->with('user')
             ->orderBy('badge_type', 'asc')
+            ->inRandomOrder()
             ->paginate(30);
 
         $allServices = Service::where([

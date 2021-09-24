@@ -18,6 +18,7 @@ use App\Siteemaillists;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\SeekingWorkController;
 
 /*
 |--------------------------------------------------------------------------
