@@ -63,15 +63,18 @@
                     <div class="services-2 categories-pg-area content-area-5 bg-grea-3">
                         <div class="tabbing tabbing-box agent-registration-modal">
                             <ul class="nav nav-tabs" id="carTab" role="tablist" style="padding: 10px;">
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link active show" id="one-tab" data-toggle="tab" href="#aboutreferral" role="tab" aria-controls="two" aria-selected="false">Referral Program</a>
-                                </li>
-                                <li class="nav-item">
+                                </li> --}}
+                                {{-- <li class="nav-item">
                                     <a class="nav-link" id="two-tab" data-toggle="tab" href="#efagent" role="tab" aria-controls="one" aria-selected="false" style="margin-left: 3px">EFContact Agent</a>
+                                </li> --}}
+                                <li class="nav-item">
+                                    <a class="nav-link active show" id="one-tab" data-toggle="tab" href="#efagent" role="tab" aria-controls="two" aria-selected="false">EFContact Agent</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="carTabContent" style="padding-left: 10px; padding-right: 10px">
-                                <div class="tab-pane fade active show" id="aboutreferral" role="tabpanel" aria-labelledby="one-tab">
+                                {{-- <div class="tab-pane fade active show" id="aboutreferral" role="tabpanel" aria-labelledby="one-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <div style="padding-bottom: 30px;">
@@ -192,10 +195,10 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
-                                <div class="tab-pane fade" id="efagent" role="tabpanel" aria-labelledby="two-tab">
+                                <div class="tab-pane fade active show" id="efagent" role="tabpanel" aria-labelledby="two-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <div style="padding-bottom: 30px;">
