@@ -1635,7 +1635,7 @@ public function show($id)
 
         $this->validate($request, [
             'customer_name' => 'required',
-            'customer_email' => 'required',
+            'customer_email' => 'nullable',
             'customer_address' => 'required',
             'customer_phone' => 'required',
             'customer_city' => 'required',

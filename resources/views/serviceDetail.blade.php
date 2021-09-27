@@ -806,7 +806,7 @@
                                                         @endif
                                                     </div>
                                                     <div class="form-group">
-                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's email <span style="color: red;">*</span></label>
+                                                        <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Receiver's email (optional)</label>
                                                         <input type="text" id="customer_email" name="customer_email" class="text-dark form-control" placeholder="Enter the Receiver's email address" value="{{ old('customer_email') }}">
                                                         @if ($errors->has('customer_email'))
                                                             <span>

@@ -465,9 +465,9 @@ class LogisticController extends Controller
 
             //if credentials are complete, get all of the company's requests
             $requests = Logistic::find($dispatch_company->id)->delivery_request;
-            $incoming_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 0)->where('is_delivered', 0)->orderBy('created_at', 'asc')->get();
-            $active_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 1)->where('is_delivered', 0)->orderBy('created_at', 'asc')->get();
-            $delivered_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('is_delivered', 1)->orderBy('created_at', 'asc')->get();
+            $incoming_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 0)->where('is_delivered', 0)->orderBy('created_at', 'desc')->get();
+            $active_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('in_transit', 1)->where('is_delivered', 0)->orderBy('created_at', 'desc')->get();
+            $delivered_requests = DeliveryRequest::where('logistic_id', $dispatch_company->id)->where('is_delivered', 1)->orderBy('created_at', 'desc')->get();
             
 
 
@@ -702,7 +702,7 @@ class LogisticController extends Controller
 
     public function delivered()
     {
-        $delivered_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 1)->where('in_transit', 0)->orderBy('created_at', 'asc')->get();
+        $delivered_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 1)->where('in_transit', 0)->orderBy('created_at', 'desc')->get();
         
         // $incomplete = $this->check_if_profile_is_complete();
 
@@ -742,7 +742,7 @@ class LogisticController extends Controller
         //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
         // }
 
-        $incoming_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 0)->orderBy('created_at', 'asc')->get();
+        $incoming_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 0)->orderBy('created_at', 'desc')->get();
         // $provider_details = User::find($incoming_requests->user_id)->delivery_requests;
 
         // dd($incoming_requests->user_id);
@@ -760,7 +760,7 @@ class LogisticController extends Controller
         //     return redirect()->route('logistics_profile')->with($this->incomplete_profile_notification());
         // }
 
-        $in_transit_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 1)->orderBy('created_at', 'asc')->get();
+        $in_transit_requests = DeliveryRequest::where('logistic_id', Auth::guard('logistic')->user()->id)->where('is_delivered', 0)->where('in_transit', 1)->orderBy('created_at', 'desc')->get();
 
         return view('logistics.requests.transit', [
             'requests' => $in_transit_requests
