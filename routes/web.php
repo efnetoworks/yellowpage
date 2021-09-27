@@ -290,6 +290,7 @@ Route::get('logistics/login', 'LogisticController@loginView')->name('logistics_l
 Route::post('logistics/login', 'LogisticController@login')->name('login_dashboard');
 Route::post('logistics/payment-confirmation/{ref}', 'LogisticController@confirmPayment')->name('logistic.confirm.payment');
 
+Route::get('get_user_details/{id}', 'LogisticController@getUserDetails');
 Route::get('logistics/registration-success', 'LogisticController@registrationSuccess');
 Route::get('logistics/account-not-verified', 'LogisticController@notVerified')->name('logistic.not.verified');
 Route::get('/download_logistic_document/{slug}', 'LogisticController@downloadDocument')->name('logistic.download.logistic.doc');

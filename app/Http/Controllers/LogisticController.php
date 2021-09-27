@@ -516,6 +516,7 @@ class LogisticController extends Controller
 
             $get_user = Auth::guard('logistic')->user();
 
+            $check_if_user_has_requested = ProfileUpdateRequest::where('logistic_id', $get_user->id)->first();
 
             $this->validate($request, [
                 'identification_type' => 'nullable',
@@ -529,7 +530,10 @@ class LogisticController extends Controller
                 'type_of_bike' =>'nullable',
                 'plate_number' => 'nullable',
                 'company_name' => ['nullable', Rule::unique('logistics')->ignore($get_user->id)],
-                'email' => ['nullable', Rule::unique('logistics')->ignore($get_user->id)]
+                'email' => ['nullable', Rule::unique('logistics')->ignore($get_user->id)],
+                'about' => 'nullable',
+                'state_id' => 'nullable',
+                'lga' => 'nullable'
             ]);
 
             // dd($request->profile_image);
@@ -586,8 +590,12 @@ class LogisticController extends Controller
                 'type_of_bike' => $request->type_of_bike,
                 'plate_number' => $request->plate_number,
                 'has_requested_to_update_profile' => 1,
+                'approval_status' => 0,
                 'logistic_id' => $get_user->id,
-                'slug' => Str::slug($request->company_name, '-').$number
+                'slug' => Str::slug($request->company_name, '-').$number,
+                'about' => $request->about,
+                'state_id' => $request->state_id,
+                'local_government_id' => $request->lga
             );
 
             
@@ -873,6 +881,25 @@ class LogisticController extends Controller
     public function notVerified()
     {
         return view('auth.not_verified');
+    }
+
+    public function getUserDetails($id)
+    {
+        $user = Logistic::findOrFail($id);
+
+        if(!$user)
+        {
+
+            return response()->json([
+                'status' => 'empty'
+            ], 200);
+
+        }
+
+        return response()->json([
+            'status' => 'content',
+            'user' => $user
+        ], 200);
     }
 
 

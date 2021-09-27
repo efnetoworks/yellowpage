@@ -776,8 +776,10 @@
 
                                                     <div class="form-group">
                                                         <label class="form-label" style="text-transform: uppercase;font-weight:700 !important;">Select a delivery company <span style="color: red;">*</span></label>
-                                                        <select class="form-control text-dark" id="logistic_id" name="logistic_id" value="{{ old('logistic_id') }}">
+                                                        <select class="form-control text-dark" id="logistic_id" name="logistic_id" value="{{ old('logistic_id') }}" onchange="getUserDetails()">
+                                                            <option value="no_value" selected>--select--</option>
                                                             @foreach($logistic_companies as $logistic)
+                                                            
                                                                 <option value="{{ $logistic->id }}">{{ $logistic->company_name }}</option>
                                                             @endforeach
                                                         </select>
@@ -856,7 +858,38 @@
                                                             </span>
                                                         @endif
                                                     </div>
+                                                    <div class="accordion_view_details" id="view_details_accordion">
+                                                        <div class="card">
+                                                          <div class="card-header" id="headingOne">
+                                                            <h2 class="mb-0">
+                                                              <button 
+                                                                class="text-center" 
+                                                                type="button" 
+                                                                style="background: transparent; display: block; padding: 15px 20px; width: 100%; border: none; font-size: 15px;"
+                                                                onclick="viewLogisticCompDetails()">
 
+                                                               Click to view details
+
+                                                              </button>
+                                                            </h2>
+                                                          </div>
+                                                      
+                                                          <div 
+                                                            id="collapse_view_details" 
+                                                            class="collapse_view_details" 
+                                                            style="text-transform: uppercase;font-weight:700 !important;">
+                                                            <div class="card-body">
+                                                              <h5>Address:</h5>
+                                                              <p id="dispatch_company_name"></p>
+                                                              <h5>Overview:</h5>
+                                                              <p id="dispatch_company_overview"></p>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                       
+                                                      </div>
+                                                      
+                                                    <br>
                                                     <div class="form-group">
                                                         <button type="submit" class="btn btn-md btn-warning" style="border-radius:25px;box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);" id="submit_request_btn">Submit</button>
                                                                 <p class="text-success" style="font-size: 15px" id="successMessage">
@@ -1337,6 +1370,63 @@
 
     }
 </script>
+<script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
+<script type="text/javascript">
+    $('#view_details_accordion').hide();
+     function getUserDetails()
+     {
+       
+        let user_id = document.getElementById('logistic_id').value
+
+        if(user_id == 'no_value')
+        {
+            $('#view_details_accordion').hide(); 
+        } else {
+            $.ajax({
+
+            url: "/get_user_details/"+user_id,
+            method: 'GET',
+            success: function(result){
+                
+                if(result.status == 'content') 
+                {
+                    $('#view_details_accordion').show();
+                    document.getElementById('dispatch_company_name').innerText = result.user.address
+                    document.getElementById('dispatch_company_overview').innerText = result.user.about
+                } else {
+                    $('#view_details_accordion').hide();
+                
+                }
+
+            }});
+        }
+         
+     }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#collapse_view_details').hide();
+
+        
+    });
+
+
+    var collapse_open = true;
+
+    function viewLogisticCompDetails()
+    {
+        
+        if(collapse_open)
+        {
+            $('#collapse_view_details').show();
+            collapse_open = false;
+        } else {
+            $('#collapse_view_details').hide();
+            collapse_open = true;
+        }
+        
+    }
+</script>
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-60643ce977f333d6"></script>
 @endsection
 <script type="text/javascript">
@@ -1381,9 +1471,8 @@
         btn.innerHTML = 'Submitting...please wait!';
     });
 </script>
-<script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
-<script>
-     console.log('kai ji mana')
+
+
 </script>
 
 <script async defer

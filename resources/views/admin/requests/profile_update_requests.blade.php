@@ -74,7 +74,7 @@ All Profile Update Requests |
                     <span class="text text-danger">Pending</span>
                     @endif
                   </td>
-                  <td>{{ $request->created_at->diffForHumans() }}</td>
+                  <td>{{ $request->updated_at->diffForHumans() }}</td>
                   <td>
                     @if(Auth::user()->role == 'superadmin')
                     <form action="{{ route('superadmin.approve.profile.update', $request->id) }}" method="POST">

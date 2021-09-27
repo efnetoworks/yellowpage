@@ -155,5 +155,31 @@ Update Profile |
 
 </div>
 
+<script src="{{ asset('js/jquery-2.2.0.min.js') }}"></script>
+  <script>
+    $('#state_register').on('change',function(){
+        var stateID = $(this).val();
+        if(stateID){
+            $.ajax({
+                type:"GET",
+                url: '../../get-city-list-by-id/'+stateID,
+                success:function(res){
+                    if(res){
+                        $("#city_register").empty();
+                        $.each(res,function(key,value){
+                            $("#city_register").append('<option value="'+key+'">'+value+'</option>');
+                        });
+
+                    }else{
+                        $("#city_register").empty();
+                    }
+                }
+            });
+        }else{
+            $("#city_register").empty();
+        }
+
+    });
+  </script>
 
 @endsection

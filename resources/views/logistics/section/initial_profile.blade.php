@@ -34,15 +34,13 @@
 	<div class="row" style="padding-top: 10px;">
 		<div class="col-md-4">
 			<div class="form-group">
-				<label for="inputEmail" class="control-label">Company</label>
+				<label for="inputEmail" class="control-label">Company Name</label>
 
 				<div class="">
 					<input type="type" class="form-control" name="company_name" value=" {{ Auth::guard('logistic')->user()->company_name }}">
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
 		<div class="col-md-4">
 			<div class="form-group">
 				<label for="inputName" class="control-label">Email Address</label>
@@ -52,6 +50,9 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		
 		<div class="col-md-4">
 			<div class="form-group">
 				<label for="inputName" class="control-label">Phone</label>
@@ -66,13 +67,27 @@
 				<label for="inputName" class="control-label">State</label>
 
 				<div class="">
-					<select class="form-control" name="state_id">
-						<option value="1">Abuja</option>
+					<select class="form-control" name="state_id" id="state_register">
+						<option value="1">--select state--</option>
+						@foreach ($states as $state)
+							<option value="{{$state->id}}">{{$state->name}}</option>
+						@endforeach
 					</select>
 				</div>
 			</div>
 		</div>
-		
+		<div class="col-md-4">
+			<div class="form-group">
+				<label for="inputName" class="control-label">City</label>
+
+				<div class="">
+					<select class="form-control" name="lga" id="city_register">
+						<option value="1">--select city--</option>
+						
+					</select>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
@@ -207,7 +222,14 @@
 		</div>
 
 	</div>
-
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="about" class="control-label">About Company</label>
+				<textarea id="" cols="30" rows="10" class="form-control" name="about" placeholder="Enter details here"></textarea>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-3">
 			<div class="form-group">
@@ -226,3 +248,4 @@
 
 
 </form>
+

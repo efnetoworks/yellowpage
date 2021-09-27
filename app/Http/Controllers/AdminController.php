@@ -1811,10 +1811,36 @@ public function add_old_payments() {
 
         public function approveProfileUpdate(Request $request, $id)
         {
-          $get_profile_update_request = ProfileUpdateRequest::findOrFail($id)->update(['approval_status' => 1]);
+          $get_profile_update_request = ProfileUpdateRequest::findOrFail($id);
+          $get_profile_update_request->update(['approval_status' => 1]);
 
           // $get_profile_update_request->approval_status = 1;
+          $get_user = Logistic::where('id', $get_profile_update_request->logistic_id)->first();
 
+          $data = array(
+            'first_name' => $get_profile_update_request->first_name,
+            'last_name' => $get_profile_update_request->last_name,
+            'email' => $get_profile_update_request->email,
+            'company_name' => $get_profile_update_request->company_name,
+            'phone' => $get_profile_update_request->phone,
+            'address' => $get_profile_update_request->address,
+            'cac' => $get_profile_update_request->cac,
+            'cac_document' => $get_profile_update_request->cac_document,
+            'profile_image' => $get_profile_update_request->profile_image,
+            'document' => $get_profile_update_request->document,
+            'identification_type' => $get_profile_update_request->identification_type,
+            'identification_id' => $get_profile_update_request->identification_number,
+            'type_of_bike' => $get_profile_update_request->type_of_bike,
+            'plate_number' => $get_profile_update_request->plate_number,
+            'slug' => $get_profile_update_request->slug,
+            'about' => $get_profile_update_request->about,
+            'state_id' => $get_profile_update_request->state_id,
+            'local_government_id' => $get_profile_update_request->lga
+          );
+
+          $get_user->update($data);
+
+          
           $success_notification = array(
             'message' => 'Done!',
             'alert-type' => 'success'

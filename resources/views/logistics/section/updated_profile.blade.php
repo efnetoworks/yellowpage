@@ -34,15 +34,13 @@
 	<div class="row" style="padding-top: 10px;">
 		<div class="col-md-4">
 			<div class="form-group">
-				<label for="inputEmail" class="control-label">Company</label>
+				<label for="inputEmail" class="control-label">Company Name</label>
 
 				<div class="">
 					<input type="type" class="form-control" name="company_name" value=" {{ $updated_profile->company_name }}">
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
 		<div class="col-md-4">
 			<div class="form-group">
 				<label for="inputName" class="control-label">Email Address</label>
@@ -52,12 +50,15 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		
 		<div class="col-md-4">
 			<div class="form-group">
 				<label for="inputName" class="control-label">Phone</label>
 
 				<div class="">
-					<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control"  minlength="11" maxlength="11" name="phone" value="{{ $updated_profile->phone }}">
+					<input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" class="form-control"  minlength="11" maxlength="11" name="phone" value="{{ Auth::guard('logistic')->user()->phone }}">
 				</div>
 			</div>
 		</div>
@@ -66,8 +67,23 @@
 				<label for="inputName" class="control-label">State</label>
 
 				<div class="">
-					<select class="form-control" name="state_id">
-						<option value="1">Abuja</option>
+					<select class="form-control" name="state_id" id="state_register">
+						<option value="1">--select state--</option>
+						@foreach ($states as $state)
+							<option value="{{$state->id}}">{{$state->name}}</option>
+						@endforeach
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label for="inputName" class="control-label">City</label>
+
+				<div class="">
+					<select class="form-control" name="lga" id="city_register">
+						<option value="1">--select city--</option>
+						
 					</select>
 				</div>
 			</div>
@@ -141,10 +157,28 @@
 
 		<div class="col-md-4">
 			<div class="form-group">
-				<label for="bank_name" class="control-label">BVN <span style="color: red;">*</span></label>
+				@if($updated_profile->document != '')
+				<label>Download</label>
+				<br>
+				<a href="{{ route('logistic.download.doc', $updated_profile->slug) }}" class="text text-danger">Click here to download</a>
+					{{-- <button type="button" class="btn btn-default">Download CAC Document</button> --}}
+					<br>
+					or
+					<br>
+					<label>Upload</label>
+					<div class="">
+						<input type="file" id="bank_name" class="form-control" name="document">
+					</div>
+				@else
+				<label for="bank_name" class="control-label">Upload Means of ID</label>
 				<div class="">
-					<input type="number" class="form-control" name="bvn" value="{{$updated_profile->bvn ? $updated_profile->bvn : '' }}" placeholder="Enter your bvn">
+					<input type="file" id="bank_name" class="form-control" name="document" accept="image/*">
 				</div>
+				@endif
+				{{-- <label for="bank_name" class="control-label">BVN <span style="color: red;">*</span></label>
+				<div class="">
+					<input type="number" class="form-control" name="bvn" value="{{Auth::guard('logistic')->user()->bvn ? Auth::guard('logistic')->user()->bvn : '' }}" placeholder="Enter your bvn">
+				</div> --}}
 			</div>
 		</div>
 	</div>
@@ -207,12 +241,19 @@
 		</div>
 
 	</div>
-
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="about" class="control-label">About Company</label>
+				<textarea id="" cols="30" rows="10" class="form-control" name="about" placeholder="Enter details here">{{ $updated_profile->about }}</textarea>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-3">
 			<div class="form-group">
 				<div class="col-sm-10">
-					<button type="submit" class="btn btn-warning">Request Update <i class="fa fa-refresh"></i></button>
+					<button type="submit" class="btn btn-warning"> Update <i class="fa fa-refresh"></i></button>
 				</div>
 			</div>
 		</div>
