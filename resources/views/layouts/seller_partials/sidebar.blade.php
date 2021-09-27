@@ -27,8 +27,8 @@
           </a>
         </li>
 
-        <li class="treeview" style="{{ url()->current() == route('seller.service.all') ? 'background-color: #CA8309; color: #fff !important' : '' }}">
-            <a href="#" style="{{ url()->current() == route('seller.service.all') ? 'color: #fff !important' : '' }}">
+        <li class="treeview" style="{{ url()->current() == route('seller.service.all') ? 'background-color: #CA8309;' : '' }} {{ url()->current() == route('seller.service.create') ? 'background-color: #CA8309; color: #fff !important' : '' }} {{ url()->current() == route('seller.seekingworks.all') ? 'background-color: #CA8309;' : '' }}">
+            <a href="#" style="{{ url()->current() == route('seller.service.all') ? 'color: #fff !important' : '' }} {{ url()->current() == route('seller.seekingworks.all') ? 'color: #fff !important' : '' }} {{ url()->current() == route('seller.service.create') ? 'color: #fff !important' : '' }}">
                 <i class="fa fa-briefcase"></i>
                 <span> My Services </span>
                 <span class="pull-right-container">
@@ -38,6 +38,9 @@
             <ul class="treeview-menu">
                 <li><a href=" {{ route('seller.service.create') }} "><i class="fa fa-circle-o"></i> Create New Service</a></li>
                 <li><a href=" {{ route('seller.service.all') }} "><i class="fa fa-circle-o"></i> My Services </a></li>
+                @if (Auth::user()->seeking_works)
+                    <li><a href=" {{ route('seller.seekingworks.all') }} "><i class="fa fa-circle-o"></i> My Applications </a></li>
+                @endif
             </ul>
         </li>
 

@@ -39,7 +39,7 @@
 
                           <div class="act-btns pull-right">
                               <a href="{{ route('service.update.view', $service->slug) }}" class="btn btn-danger">Edit Service</a>
-                              <a href="{{ route('serviceDetail', $service->slug) }}" class="btn btn-warning">Preview Service</a>
+                              <a href="{{ route('serviceDetail', $service->slug) }}" class="btn btn-warning" target="_blank">Preview Service</a>
                           </div>
                         </div>
 

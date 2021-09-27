@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Image;
+use App\SubCategory;
 
 class SeekingWorkController extends Controller
 {
@@ -94,6 +95,78 @@ class SeekingWorkController extends Controller
 
             return redirect()->route('seller.show.cv', ['slug' => $sWork->slug])->with([
                 'message' => 'CV succesfully created!',
+                'alert-type' => 'success'
+            ]);
+        } else {
+            return redirect()->back()->with([
+                'message' => 'CV couldn\'t updated!',
+                'alert-type' => 'error'
+            ]);
+        }
+    }
+
+    public function updateSeekingwork($slug)
+    {
+        $service = SeekingWork::where('slug', $slug)->firstOrFail();
+
+        return view('seller.service.update_seekingwork', [
+            'service' => $service,
+        ]);
+    }
+
+    public function update($slug, Request $request)
+    {
+        $this->validate($request, [
+            'name'                  => 'string|required',
+            'phone'                 => 'numeric',
+            'job_type'              => 'string|required',
+            'job_title'             => 'string|required',
+            'job_experience'        => 'required',
+            'still_studying'        => 'string',
+            'gender'                => 'string|required',
+            'age'                   => 'numeric',
+            'marital_status'        => 'string',
+            'employment_status'     => 'string|required',
+            'highest_qualification' => 'required',
+            'expected_salary'       => 'required',
+            'user_state'            => 'string|required',
+            'user_lga'              => 'string|required',
+            'address'               => 'nullable',
+            'work_experience'       => 'nullable',
+            'education'             => 'required',
+            'certifications'        => 'nullable',
+            'skills'                => 'required',
+        ]);
+
+        $sWork = SeekingWork::where('slug', $slug)->firstOrFail();
+
+        $sWork->user_id               = Auth::user()->id;
+        $sWork->fullname              = $request->name;
+        $sWork->phone                 = $request->phone;
+        $sWork->job_type              = $request->job_type;
+        $sWork->job_title             = $request->job_title;
+        $sWork->slug                  = $request->job_title != $sWork->job_title ? Str::of($request->job_title)->slug('-') . '-' . time() : $sWork->slug;
+        $sWork->job_experience        = $request->job_experience;
+        $sWork->still_studying        = $request->still_studying;
+        $sWork->gender                = $request->gender;
+        $sWork->age                   = $request->age;
+        $sWork->marital_status        = $request->marital_status;
+        $sWork->employment_status     = $request->employment_status;
+        $sWork->highest_qualification = $request->highest_qualification;
+        $sWork->expected_salary       = $request->expected_salary;
+        $sWork->user_state            = $request->user_state;
+        $sWork->user_lga              = $request->user_lga;
+        $sWork->address               = $request->address;
+        $sWork->work_experience       = $request->work_experience;
+        $sWork->education             = $request->education;
+        $sWork->certifications        = $request->certifications;
+        $sWork->skills                = $request->skills;
+        $sWork->category_id           = $sWork->category_id;
+        $sWork->is_featured           = $request->is_featured;
+
+        if ($sWork->save()) {
+            return redirect()->route('seller.show.cv', ['slug' => $sWork->slug])->with([
+                'message' => 'CV succesfully updated!',
                 'alert-type' => 'success'
             ]);
         } else {
@@ -232,4 +305,12 @@ class SeekingWorkController extends Controller
 
         return view('seekingWorkDetail', compact(['seekingWorkDetail', 'images_4_service', 'seekingWorkDetail_id', 'approvedServices',  'similarProducts', 'seekingWorkDetail_likes', 'featuredServices', 'userMessages', 'the_provider_f_name', 'likecheck', 'allServiceComments']));
     }
+
+    public function destroy($id)
+    {
+        $service = SeekingWork::findOrFail($id);
+        $service->delete();
+        return $service;
+    }
+
 }

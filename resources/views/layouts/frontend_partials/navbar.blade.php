@@ -216,7 +216,7 @@
 
                 @guest
                 <li class="nav-item rainbow">
-                    <a href="{{ route('register') }}"  class="nav-link">Free Registration</a>
+                    <a href="{{ route('register') }}"  class="nav-link">Promo Registration</a>
                 </li>
                 @endguest
 
