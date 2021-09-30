@@ -38,7 +38,7 @@
             <ul class="treeview-menu">
                 <li><a href=" {{ route('seller.service.create') }} "><i class="fa fa-circle-o"></i> Create New Service</a></li>
                 <li><a href=" {{ route('seller.service.all') }} "><i class="fa fa-circle-o"></i> My Services </a></li>
-                @if (Auth::user()->seeking_works)
+                @if (count(Auth::user()->seeking_works))
                     <li><a href=" {{ route('seller.seekingworks.all') }} "><i class="fa fa-circle-o"></i> My Applications </a></li>
                 @endif
             </ul>
