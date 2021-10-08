@@ -11,6 +11,7 @@ use DB;
 use Image;
 use App\Local_government;
 use App\SubCategory;
+use App\SeekingWork;
 
 
 
@@ -268,6 +269,33 @@ return $this->index();
      */
     public function show($slug)
     {
+        if ($slug == 'job-applicant') {
+            $categories = Category::orderBy('id', 'asc')->paginate(35);
+            $states = State::all();
+            $local_governments = Local_government::all();
+            $search_form_categories = Category::orderBy('name')->get();
+
+            $one_category = Category::where('slug', $slug)->first();
+            $category_id = $one_category->id;
+            $category_services = SeekingWork::where('category_id', $category_id)->orderBy('badge_type', 'asc')->inRandomOrder()->paginate(100);
+
+            $sub_categories = SubCategory::where("category_id",$category_id)->orderBy('name', 'asc')->get();
+
+            //return $category_services;
+            //$category_city = Service::all()->pluck("city");
+            $category_city = Service::all();
+            $all_states = State::all();
+            // dd($all_states);
+            $toShowOtherSearch = null;
+            $all_categories = Category::all();
+            $featuredServices = Service::where('is_featured', 1)->with('user')->inRandomOrder()->limit(4)->get();
+            //$category_id = $id;
+            //return $category_city;
+
+            $category_type = 'job_applicant';
+
+            return view ('services', compact('category_services', 'toShowOtherSearch', 'one_category', 'category_city', 'all_categories', 'all_states', 'featuredServices', 'categories', 'states', 'local_governments', 'sub_categories', 'search_form_categories', 'category_type') );
+        }
         //$service = Service::find($id);
       //$service_slug = $service->slug;//
         $categories = Category::orderBy('id', 'asc')->paginate(35);
@@ -292,7 +320,9 @@ return $this->index();
         //$category_id = $id;
         //return $category_city;
 
-        return view ('services', compact('category_services', 'toShowOtherSearch', 'one_category', 'category_city', 'all_categories', 'all_states', 'featuredServices', 'categories', 'states', 'local_governments', 'sub_categories', 'search_form_categories') );
+        $category_type = 'allOther';
+
+        return view ('services', compact('category_services', 'toShowOtherSearch', 'one_category', 'category_city', 'all_categories', 'all_states', 'featuredServices', 'categories', 'states', 'local_governments', 'sub_categories', 'search_form_categories', 'category_type') );
     }
 
 
