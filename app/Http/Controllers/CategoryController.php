@@ -269,7 +269,7 @@ return $this->index();
      */
     public function show($slug)
     {
-        if ($slug == 'job-applicant') {
+        if ($slug == 'job-applicants') {
             $categories = Category::orderBy('id', 'asc')->paginate(35);
             $states = State::all();
             $local_governments = Local_government::all();
