@@ -16,22 +16,27 @@
 <div id="floatReferrer" onclick="closeReferrerFloatPop()" class="float-referrer animate__animated animate__fadeInLeft">
     <button type="button" class="close-referrer-float" id="closeReferrerFloat"><i class="fa fa-close"></i></button>
     <a href="{{ route('referralprogram') }}" target="_blank">
-        <img class="refer-slides refer-slides-hidden animate__animated animate__fadeInLeft" src="{{ asset('image 1.png') }}">
+        {{-- <img class="refer-slides refer-slides-hidden animate__animated animate__fadeInLeft" src="{{ asset('image 1.png') }}">
         <img class="refer-slides refer-slides-hidden animate__animated animate__fadeInLeft" src="{{ asset('image 2.png') }}">
-        <img class="refer-slides refer-slides-hidden animate__animated animate__fadeInLeft" src="{{ asset('image 3.png') }}">
+        <img class="refer-slides refer-slides-hidden animate__animated animate__fadeInLeft" src="{{ asset('image 3.png') }}"> --}}
+        <iframe id="myIframe" src="https://www.youtube.com/embed/5ERBVHd2Xuc?autoplay=1&controls=0&showinfo=0&autohide=1&mute=1" title="FOCUS AFRICA - ANNOUNCEMENT TO THE WORLD" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </a>
 </div>
 
 <style>
     .float-referrer{
         position: fixed;
-        top:466px;
+        top:566px;
+        /* top:466px; */
         left:0;
         width: 80px;
         z-index: 99999;
     }
     .float-referrer img{
         width: 250px;
+    }
+    .float-referrer iframe{
+        width: 260px;
     }
     .close-referrer-float{
         display: block;
