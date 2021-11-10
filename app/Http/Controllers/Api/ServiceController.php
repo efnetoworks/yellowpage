@@ -1323,17 +1323,16 @@ class ServiceController extends Controller
         $longitude = $request->longitude;
         $radius = 100000;
         $services = Service::selectRaw("id, name, description, city, phone, address, state, thumbnail, user_id, badge_type, slug,
-        ( 6371000 * acos( cos( radians(?) ) *
-        cos( radians( latitude ) )
+        (6371000 * acos( cos( radians(?) ) *
+        cos(radians( latitude ))
                         * cos( radians( longitude ) - radians(?)
         ) + sin( radians(?) ) *
-        sin( radians( latitude ) ) )
+        sin( radians( latitude )))
         ) AS distance", [$latitude, $longitude, $latitude])
             ->having("distance", "<", $radius)->with('user')->with('images')
             ->orderBy("distance", 'asc')
             ->offset(0)
             ->where('status', 1)
-
             ->inRandomOrder()->limit(15)->get();
 
         return response()->json([
