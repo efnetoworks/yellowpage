@@ -9,7 +9,7 @@ class SmsHelper {
 
         $username = 'info@eftechnology.net';
         $password = 'eftechnology@123';
-            
+
         $postdata = http_build_query(
 
             array(
@@ -31,7 +31,7 @@ class SmsHelper {
             )
         );
 
-        // craete a stream to communicate with betasms api
+        // create a stream to communicate with betasms api
         $context  = stream_context_create($opts);
 
         //get result from communication
@@ -39,6 +39,6 @@ class SmsHelper {
 
         // return result to client, this will return the appropriate respond code
         return $result;
-    
+
     }
 }

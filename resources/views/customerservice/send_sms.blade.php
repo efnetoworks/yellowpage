@@ -121,7 +121,21 @@ Send SMS |
 </section>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+$(document).ready(function(){
+  $("#btn3").click(function(event){
+      event.preventDefault();
+    let c = $("#site_name").val() ;
+    console.log(c);
+    let newText = $("#site_name").val().replace(/  +/g, ',');
+    newText = newText.split(' ').join(',');
+    console.log(newText);
+    $("#site_name").val(newText);
+  });
+});
+</script>
 
 @endsection
 
