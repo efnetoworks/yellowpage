@@ -91,6 +91,11 @@ Send SMS |
                                             <button type="submit" class="btn btn-warning btn-sm"> Send SMS </button>
                                         </div>
                                     </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <button type="button" id="btn3" class="btn btn-warning btn-sm"> Sanitize </button>
+                                        </div>
+                                    </div>
 
                                 </form>
 
