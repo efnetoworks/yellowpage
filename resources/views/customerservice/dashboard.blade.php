@@ -283,8 +283,8 @@
                                     <div class="form-group">
                                         <label for="service">Has Service</label>
                                         <select class="form-control" id="service" name="service">
-                                            <option value="seller">Seller</option>
-                                            <option value="buyer">Buyer</option>
+                                            <option value="service">Have Service</option>
+                                            <option value="no-service">Have No Service</option>
                                         </select>
                                         @error('role')
                                         <span class="error">

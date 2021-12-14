@@ -73,10 +73,10 @@
                                        <td> {{ $all_services->state }} </td>
                                        <td> {{ $all_services->user->name }} </td>
 
-                                       {{-- <td> {{ Carbon\Carbon::parse($all_services->user->subscriptions
+                                       <td> {{ Carbon\Carbon::parse($all_services->user->subscriptions
                                        ->first()->subscription_end_date)->format('d/m/y') }} </td>
                                            <!-- <td> {{ $all_services->featured == 1 ? 'Yes' : 'No' }} </td> -->
-                                           <td> {{ $all_services->created_at->format('d/m/Y') }} </td> --}}
+                                           <td> {{ $all_services->created_at->format('d/m/Y') }} </td>
 
 
 

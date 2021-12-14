@@ -46,6 +46,7 @@ use App\Refererlink;
 use App\CustomerService;
 
 
+
 class customerServiceController extends Controller
 {
 	public function allSubscription()
@@ -167,6 +168,7 @@ class customerServiceController extends Controller
     public function allServices_4_Cus_service()
     {
         $mySortedServices = Service::all();
+        // dd($mySortedServices);
         // foreach($all_subscriptions as $all_subscription){
         //   $all_subscriptions = $all_subscription->subscriptionable->services;
 
@@ -341,6 +343,34 @@ class customerServiceController extends Controller
             $all_subscriptions = User::where('role', $request->role)->get();
             // dd($all_subscriptions);
             return view('customerservice.dashboard', compact('all_subscriptions'));
+
+        }
+
+        if ($request->service) {
+            $usersWithService = [];
+            if ($request->service == 'service') {
+                $services = Service::all();
+
+                foreach ($services as $service) {
+                    $userWithService = User::where('id', $service->user_id)
+                    ->first();
+                    array_push($usersWithService, $userWithService);
+                }
+                // dd($usersWithService);
+                $all_subscriptions = collect($usersWithService)->unique();
+                // dd($all_subscriptions);
+                return view('customerservice.dashboard', compact('all_subscriptions'));
+
+              }
+
+            if ($request->service == 'no-service') {
+                $users = User::where('hasUploadedService', 0)->get();
+                $all_subscriptions = $users;
+                // dd($all_subscriptions);
+                return view('customerservice.dashboard', compact('all_subscriptions'));
+            }
+
+
 
         }
 

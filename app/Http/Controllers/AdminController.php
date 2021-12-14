@@ -770,7 +770,7 @@ class AdminController extends Controller
 
     public function storeSystemConfig(Request $request, $id)
     {
-
+        dd($request->about_site);
       $general_info = $id == 1 ? General_Info::find($id) : new General_Info;
       $general_info->site_name = $request->site_name;
       $general_info->about_site = $request->about_site;
