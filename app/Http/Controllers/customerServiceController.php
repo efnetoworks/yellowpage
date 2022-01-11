@@ -114,6 +114,14 @@ class customerServiceController extends Controller
         }
 	}
 
+    public function featured_services()
+    {
+        $services = Service::where('is_featured', '=', 1)->get();
+        return view('customerservice.featured', [
+          'services' => $services
+        ]);
+    }
+
 
 
     public function save_user_Report(Request $request)
