@@ -201,13 +201,111 @@
 
                     </div>
                     <!-- /.box-body -->
+                    <div class="form-stretch">
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title"> Sort By Date </h3>
+                            </div>
+                            <!-- form start -->
+                            <form class="form-horizontal form-element"
+                            action="{{ route('customer_service.sort') }}" method="GET">
+                                @csrf
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">From</label>
+                                        <input type="date" name="start_date" class="form-control">
+                                        @error('start_date')
+                                        <span class="error">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="">To</label>
+                                        <input type="date" name="end_date" class="form-control">
+                                        @error('end_date')
+                                        <span class="error">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="">
+                                        <button type="submit" class="btn btn-warning"> Submit </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title"> Sort By Role </h3>
+                            </div>
+                            <!-- form start -->
+                            <form class="form-horizontal form-element"
+                            action="{{ route('customer_service.sort') }}" method="GET">
+                                @csrf
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="role">User Role</label>
+                                        <select class="form-control" id="role" name="role">
+                                            <option value="seller">Seller</option>
+                                            <option value="buyer">Buyer</option>
+                                        </select>
+                                        @error('role')
+                                        <span class="error">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="">
+                                        <button type="submit" class="btn btn-warning"> Submit </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3 class="box-title"> Sort By Services </h3>
+                            </div>
+                            <!-- form start -->
+                            <form class="form-horizontal form-element"
+                            action="{{ route('customer_service.sort') }}" method="GET">
+                                @csrf
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="service">Has Service</label>
+                                        <select class="form-control" id="service" name="service">
+                                            <option value="service">Have Service</option>
+                                            <option value="no-service">Have No Service</option>
+                                        </select>
+                                        @error('role')
+                                        <span class="error">
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="">
+                                        <button type="submit" class="btn btn-warning"> Submit </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
 
 
                 <!-- /.content -->
             </div>
-
-
 
         </div>
 

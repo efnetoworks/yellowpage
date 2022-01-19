@@ -230,6 +230,8 @@ Route::middleware(['customerservice'])->group(function () {
     Route::post('customer_service/send-sms', 'customerServiceController@submit_sms')->name('cus.submit.sms');
     Route::post('customer_service/send-email', 'customerServiceController@submitEmail')->name('cus.submit.email');
     Route::get('/dashboard/customer_service', 'customerServiceController@allSubscription')->name('customer_service.dashboard');
+    Route::get('/dashboard/customer_service/featured_services', 'customerServiceController@featured_services')->name('customer_service.featured_services');
+    Route::get('/dashboard/customer_services', 'customerServiceController@sortCustomers')->name('customer_service.sort');
     Route::get('/dashboard/customer_service/all_services', 'customerServiceController@allServices_4_Cus_service')
     ->name('customer_service.all_services');
     Route::get('/user_sub_almost_ended', 'customerServiceController@ending_seller')->name('user_sub_almost_ended');

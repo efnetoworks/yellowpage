@@ -86,11 +86,19 @@ Send SMS |
 				                            </span>
 				                            @endif
                                         </div>
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-warning btn-sm"> Send SMS </button>
+                                        <div class="d-flex">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-warning btn-sm"> Send SMS </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <button type="button" id="btn3" class="btn btn-info btn-sm"> Sanitize Numbers Field </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+
 
                                 </form>
 
@@ -121,7 +129,21 @@ Send SMS |
 </section>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+$(document).ready(function(){
+  $("#btn3").click(function(event){
+      event.preventDefault();
+    let c = $("#site_name").val() ;
+    console.log(c);
+    let newText = $("#site_name").val().replace(/  +/g, ',');
+    newText = newText.split(' ').join(',');
+    console.log(newText);
+    $("#site_name").val(newText);
+  });
+});
+</script>
 
 @endsection
 

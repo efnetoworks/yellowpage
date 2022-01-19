@@ -143,7 +143,7 @@
                             </div>
                             <p id="featuredText" class="text-info">This will attract a fee of &#8358;1000 which will be paid before the service is displayed.</p>
                         </div> --}}
-
+ 
                         @if ($service->is_featured == 0 && $service->paid_featured == 0)
                         <li class="list-group-item pt-3 pb-3 my-5 mb-5">
                             <span class="left">Do you want this service featured?</span><small class="infoLinkNote">
@@ -162,7 +162,7 @@
                             </form>
 
                         </li>
-                    @endif
+                        @endif
                     <br />
 
                         <div class="form-group mt-5" id="youtubeLink">

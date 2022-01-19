@@ -651,6 +651,10 @@
         'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href=" {{ route('customer_service.dashboard') }} "><i class="fa fa-circle-o"></i> Users</a>
         </li>
+        <li style="{{ url()->current() == route('customer_service.featured_services') ?
+        'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
+        <a href=" {{ route('customer_service.featured_services') }} "><i class="fa fa-circle-o"></i> Featured Services</a>
+        </li>
         <li style="{{ url()->current() == route('customer_service.all_services') ?
         'background-color: #cc8a19; color: #ffffff !important;' : '' }}">
         <a href=" {{ route('customer_service.all_services') }} "><i class="fa fa-circle-o"></i> Services</a>
