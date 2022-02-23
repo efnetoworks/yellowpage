@@ -128,7 +128,7 @@ class ServiceController extends Controller
     }
 
 
-    public function index2(Request $request)
+    public function index2(Request $request, $column = 'featured_end_date')
     {
         // $value = $request->session()->get('names2');
         //             dd($value);
@@ -157,8 +157,8 @@ class ServiceController extends Controller
             ->where('status', 1)
             ->where('paid_featured', 1)
             ->with('user')
-            ->orderBy('badge_type', 'asc')
-            ->inRandomOrder()
+            // ->orderBy('badge_type', 'asc')
+            ->orderBy($column, 'desc')
             ->paginate(30);
 
         $allServices = Service::where([
