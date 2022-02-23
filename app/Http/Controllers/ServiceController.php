@@ -159,6 +159,7 @@ class ServiceController extends Controller
             ->with('user')
             // ->orderBy('badge_type', 'asc')
             ->orderBy($column, 'desc')
+            // ->inRandomOrder()
             ->paginate(30);
 
         $allServices = Service::where([
